@@ -1,11 +1,13 @@
 // import logo from "./logo.svg";
 import { Routes, Route } from "react-router-dom";
+import { lazy } from "react";
 
-import Home from "../../pages/Home";
-import NotFound from "../../pages/NotFound";
-import ProductDetails from "../../pages/ProductDetails";
-import Products from "../../pages/Products";
 import { SharedLayot } from "../SharedLayout";
+
+const Home = lazy(() => import("../../pages/Home"));
+const Products = lazy(() => import("../../pages/Products"));
+const ProductDetails = lazy(() => import("../../pages/ProductDetails"));
+const NotFound = lazy(() => import("../../pages/NotFound"));
 
 function App() {
   return (
