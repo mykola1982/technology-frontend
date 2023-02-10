@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/407.4d220ea3.chunk.js","mappings":"sKAIA,EAJiB,WACf,OAAO,uBAAG,4IACZ,C","sources":["pages/Products/Products.jsx"],"sourcesContent":["const Products = () => {\r\n  return <p>тут буде лист з продукцією</p>;\r\n};\r\n\r\nexport default Products;\r\n"],"names":[],"sourceRoot":""}
