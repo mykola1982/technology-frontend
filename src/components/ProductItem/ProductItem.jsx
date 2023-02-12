@@ -1,13 +1,9 @@
-import { Link } from "react-router-dom";
-
-export const ProductItem = ({ id, name, number }) => {
+export const ProductItem = ({ id, name, number, onSelectProduct }) => {
   return (
-    <li>
-      <Link to={`/products/${id}`}>
-        <p>
-          {name} - {number}
-        </p>
-      </Link>
+    <li onClick={() => onSelectProduct(id)}>
+      <p>
+        {name} - {number}
+      </p>
     </li>
   );
 };

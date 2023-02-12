@@ -1,9 +1,10 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
-// const Department = {
-//   CNC: "Дільниця з ЧПУ",
-//   PRESSING: "Штамповочна дільниця",
-// };
+
+const Department = {
+  CNC: "Дільниця з ЧПУ",
+  PRESSING: "Штамповочна дільниця",
+};
 
 export const AddForm = ({ onSubmit }) => {
   const nameInputId = nanoid();
@@ -27,6 +28,8 @@ export const AddForm = ({ onSubmit }) => {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
     const quantity = form.elements.quantity.value;
+    const department = form.elements.department.value;
+
     onSubmit({ name, number, quantity });
 
     //   почитати про форм дата FormData
@@ -43,27 +46,28 @@ export const AddForm = ({ onSubmit }) => {
       <label htmlFor={quantityInputId}>Кількість деталей з листа</label>
       <input type="number" name="quantity" id={quantityInputId} />
 
-      {/* <label>
+      <p>Виберіть виробничу дільницю</p>
+      <label>
         ЧПУ
         <input
           type="radio"
-          checked={department === Department.CNC}
+          //   checked={department === Department.CNC}
           name="department"
           value={Department.CNC}
           //   onChange={ }
         />
       </label>
-      <p>Виберіть виробничу дільницю</p>
+
       <label>
         Штамповка
         <input
           type="radio"
-          checked={department === Department.PRESSING}
+          //   checked={department === Department.PRESSING}
           name="department"
           value={Department.PRESSING}
           //   onChange={}
         />
-      </label> */}
+      </label>
 
       <label>
         Всі дані введені вірно
