@@ -27,12 +27,22 @@ const Products = () => {
     // дописати логігу вибраного продукту
   };
 
-  const addProduct = ({ name, number, quantity }) => {
+  const addProduct = ({
+    name,
+    number,
+    quantity,
+    department,
+    thickness,
+    material,
+  }) => {
     const newProduct = {
       id: nanoid(),
       name: name,
       number: number,
       quantity: quantity,
+      department: department,
+      thickness: thickness,
+      material: material,
     };
 
     setProducts((prevProducts) => [newProduct, ...prevProducts]);

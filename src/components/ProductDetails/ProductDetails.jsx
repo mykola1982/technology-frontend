@@ -1,5 +1,5 @@
 export const ProductDetails = ({ product }) => {
-  const { name, number, quantity, department } = product;
+  const { name, number, quantity, department, thickness, material } = product;
   return (
     <div>
       Тут буде дельний опис про деталь
@@ -9,10 +9,11 @@ export const ProductDetails = ({ product }) => {
       <p>Найменування - {name}</p>
       <p>Децимальний номер - {number}</p>
       <p>Дільниця виготовлення -{department}</p>
-      <p>Матеріал</p>
+      <p>Матеріал -{material} </p>
+      {/* написати фунцію для прорахунку норм  */}
       <p>Норма витрати</p>
-      <p>Товщина металу</p>
-      <p>Кількість деталей листа-{quantity}</p>
+      <p>Товщина металу-{thickness} мм.</p>
+      <p>Кількість деталей листа-{quantity} шт.</p>
     </div>
   );
 };

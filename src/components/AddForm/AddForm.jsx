@@ -1,10 +1,16 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
+import { MATERIALS } from "../../data/materials";
+import { VALUES_THICKNESS } from "../../data/materials";
+
 const Department = {
   CNC: "Дільниця з ЧПУ",
   PRESSING: "Штамповочна дільниця",
 };
+
+const materials = MATERIALS;
+const valuesThikness = VALUES_THICKNESS;
 
 export const AddForm = ({ onSubmit }) => {
   const nameInputId = nanoid();
@@ -29,8 +35,10 @@ export const AddForm = ({ onSubmit }) => {
     const number = form.elements.number.value;
     const quantity = form.elements.quantity.value;
     const department = form.elements.department.value;
+    const thickness = form.elements.thickness.value;
+    const material = form.elements.material.value;
 
-    onSubmit({ name, number, quantity });
+    onSubmit({ name, number, quantity, department, thickness, material });
 
     //   почитати про форм дата FormData
 
@@ -51,7 +59,7 @@ export const AddForm = ({ onSubmit }) => {
         ЧПУ
         <input
           type="radio"
-          //   checked={department === Department.CNC}
+          checked
           name="department"
           value={Department.CNC}
           //   onChange={ }
@@ -70,6 +78,30 @@ export const AddForm = ({ onSubmit }) => {
       </label>
 
       <label>
+        Товщина матеріалу:
+        <select name="thickness">
+          {valuesThikness.map((value) => (
+            <option key={nanoid()} value={value}>
+              {value} мм.
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <label>
+        Розмір листа матеріалу:
+        <select name="material">
+          {materials.map((material) => (
+            <option key={nanoid()} value={material}>
+              {material}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      {/* {розглянути можливість формування опцій з файлу даних} */}
+
+      <label>
         Всі дані введені вірно
         <input
           type="checkbox"
@@ -77,7 +109,7 @@ export const AddForm = ({ onSubmit }) => {
           onChange={handleChangeChecked}
         />
       </label>
-
+      {/* групування полів */}
       <button type="submit" disabled={!agreed}>
         Додати деталь до списку
       </button>
