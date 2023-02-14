@@ -12,7 +12,7 @@ const Department = {
 const materials = MATERIALS;
 const valuesThikness = VALUES_THICKNESS;
 
-export const AddForm = ({ onSubmit }) => {
+export const AddForm = ({ onSubmit, onClose }) => {
   const nameInputId = nanoid();
   const numberInputId = nanoid();
   const quantityInputId = nanoid();
@@ -41,7 +41,7 @@ export const AddForm = ({ onSubmit }) => {
     onSubmit({ name, number, quantity, department, thickness, material });
 
     //   почитати про форм дата FormData
-
+    onClose();
     form.reset();
   };
 

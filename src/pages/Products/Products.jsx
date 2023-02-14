@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
 import { nanoid } from "nanoid";
+import { Container } from "@mui/material";
 
 import { AddForm } from "../../components/AddForm";
 import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
 import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
 import { getProducts } from "../../fakeAPI";
+import { Modal } from "../../components/Modal";
 
 const Products = () => {
   const [products, setProducts] = useState(getProducts());
@@ -17,6 +18,16 @@ const Products = () => {
     number: "600.000.054.50-01",
     quantity: 160,
   });
+
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   // useEffect(() => {}, [products]);
 
@@ -66,14 +77,24 @@ const Products = () => {
 
   return (
     <>
-      <AddForm onSubmit={addProduct} />
-      <p>тут буде лист з продукцією</p>
-      <Filter value={filter} onChange={handleChangeFilter} />
-      <ProductsList
-        products={visibleProducts}
-        onSelectProduct={selectProduct}
-      />
-      <ProductDetails product={selectedProduct} />
+      <Container maxWidth="sm">
+        <button type="button" onClick={openModal}>
+          Добавити деталь до списку
+        </button>
+
+        <p>тут буде лист з продукцією</p>
+        <Filter value={filter} onChange={handleChangeFilter} />
+        <ProductsList
+          products={visibleProducts}
+          onSelectProduct={selectProduct}
+        />
+        <ProductDetails product={selectedProduct} />
+      </Container>
+      {showModal && (
+        <Modal onClose={closeModal}>
+          <AddForm onSubmit={addProduct} onClose={closeModal} />
+        </Modal>
+      )}
     </>
   );
 };

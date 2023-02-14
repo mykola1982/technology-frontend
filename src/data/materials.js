@@ -8,6 +8,7 @@ export const MATERIALS = [
   "2000x1000 AISI 304",
   "2000x1000 AISI 430",
   "щось",
+  "хуйня",
 ];
 
 export const VALUES_THICKNESS = [

@@ -11,7 +11,7 @@ export const ProductsList = ({ products, onSelectProduct }) => {
         bgcolor: "background.paper",
         position: "relative",
         overflow: "auto",
-        maxHeight: 300,
+        maxHeight: "75vh",
         "& ul": { padding: 0 },
       }}
     >
@@ -21,6 +21,7 @@ export const ProductsList = ({ products, onSelectProduct }) => {
             <ProductItem
               key={id}
               id={id}
+              д
               name={name}
               number={number}
               onSelectProduct={onSelectProduct}
