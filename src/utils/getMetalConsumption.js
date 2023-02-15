@@ -30,16 +30,40 @@ export function getMetalConsumption(quantity, thickness, material) {
   ) {
     return (31.2 / quantity).toFixed(3);
   }
-  if (thickness === "1.5" && material === "2500x1250 Оц.") {
+  if (
+    thickness === "1.5" &&
+    (material === "2500x1250 Оц." ||
+      material === "2500x1250 Ст3." ||
+      material === "2500x1250 AISI 304" ||
+      material === "2500x1250 AISI 430")
+  ) {
     return (39 / quantity).toFixed(3);
   }
-  if (thickness === "2.0" && material === "2500x1250 Оц.") {
+  if (
+    thickness === "2.0" &&
+    (material === "2500x1250 Оц." ||
+      material === "2500x1250 Ст3." ||
+      material === "2500x1250 AISI 304" ||
+      material === "2500x1250 AISI 430")
+  ) {
     return (52 / quantity).toFixed(3);
   }
-  if (thickness === "2.5" && material === "2500x1250 Оц.") {
+  if (
+    thickness === "2.5" &&
+    (material === "2500x1250 Оц." ||
+      material === "2500x1250 Ст3." ||
+      material === "2500x1250 AISI 304" ||
+      material === "2500x1250 AISI 430")
+  ) {
     return (65 / quantity).toFixed(3);
   }
-  if (thickness === "3.0" && material === "2500x1250 Оц.") {
+  if (
+    thickness === "3.0" &&
+    (material === "2500x1250 Оц." ||
+      material === "2500x1250 Ст3." ||
+      material === "2500x1250 AISI 304" ||
+      material === "2500x1250 AISI 430")
+  ) {
     (79 / quantity).toFixed(3);
   }
 }
