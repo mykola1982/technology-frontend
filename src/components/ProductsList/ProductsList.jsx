@@ -15,20 +15,17 @@ export const ProductsList = ({ products, onSelectProduct }) => {
         "& ul": { padding: 0 },
       }}
     >
-      <li>
-        {products.map(({ id, name, number }) => {
-          return (
-            <ProductItem
-              key={id}
-              id={id}
-              д
-              name={name}
-              number={number}
-              onSelectProduct={onSelectProduct}
-            />
-          );
-        })}
-      </li>
+      {products.map(({ id, name, number }) => {
+        return (
+          <ProductItem
+            key={id}
+            id={id}
+            name={name}
+            number={number}
+            onSelectProduct={onSelectProduct}
+          />
+        );
+      })}
     </List>
   );
 };

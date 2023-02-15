@@ -7,8 +7,6 @@ export const MATERIALS = [
   "2000x1000 Ст3.",
   "2000x1000 AISI 304",
   "2000x1000 AISI 430",
-  "щось",
-  "хуйня",
 ];
 
 export const VALUES_THICKNESS = [
@@ -21,3 +19,15 @@ export const VALUES_THICKNESS = [
   "2.5",
   "3.0",
 ];
+
+// подумати як записати всы даны через таблицю
+// зробити як мазив обєктів добавити в кожний елемент поле вага листа!!!
+
+// export const MATERIALS = [
+// {sizeSheet: "2500x1250 Оц.",
+// thickness: "1.0",
+// weightSheet: 26}
+
+// ];
+
+//  подивитись як прописано в панші назви 

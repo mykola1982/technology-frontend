@@ -12,12 +12,7 @@ import { Modal } from "../../components/Modal";
 const Products = () => {
   const [products, setProducts] = useState(getProducts());
   const [filter, setFilter] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState({
-    id: "1",
-    name: "Підсилювач",
-    number: "600.000.054.50-01",
-    quantity: 160,
-  });
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -32,7 +27,6 @@ const Products = () => {
   // useEffect(() => {}, [products]);
 
   const selectProduct = (idProduct) => {
-    console.log("це вибрав в productpage", idProduct);
     setSelectedProduct(products.find((product) => product.id === idProduct));
 
     // дописати логігу вибраного продукту
@@ -88,7 +82,12 @@ const Products = () => {
           products={visibleProducts}
           onSelectProduct={selectProduct}
         />
-        <ProductDetails product={selectedProduct} />
+
+        {selectedProduct ? (
+          <ProductDetails product={selectedProduct} />
+        ) : (
+          <div> тут буде вибраний продукт </div>
+        )}
       </Container>
       {showModal && (
         <Modal onClose={closeModal}>

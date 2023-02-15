@@ -16,6 +16,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
   const nameInputId = nanoid();
   const numberInputId = nanoid();
   const quantityInputId = nanoid();
+  const weightInputId = nanoid();
 
   // стейт що контролює вибір виробничої дільниці цеху
   //   const [department, setDepartment] = useState("");
@@ -33,12 +34,21 @@ export const AddForm = ({ onSubmit, onClose }) => {
 
     const name = form.elements.name.value;
     const number = form.elements.number.value;
+    const weight = form.elements.weight.value;
     const quantity = form.elements.quantity.value;
     const department = form.elements.department.value;
     const thickness = form.elements.thickness.value;
     const material = form.elements.material.value;
 
-    onSubmit({ name, number, quantity, department, thickness, material });
+    onSubmit({
+      name,
+      number,
+      weight,
+      quantity,
+      department,
+      thickness,
+      material,
+    });
 
     //   почитати про форм дата FormData
     onClose();
@@ -51,9 +61,18 @@ export const AddForm = ({ onSubmit, onClose }) => {
       <input type="text" name="name" id={nameInputId} />
       <label htmlFor={numberInputId}>Децимальний номер</label>
       <input type="text" name="number" id={numberInputId} />
-      <label htmlFor={quantityInputId}>Кількість деталей з листа</label>
-      <input type="number" name="quantity" id={quantityInputId} />
+      <label htmlFor={weightInputId}>Вага деталі, кг.</label>
 
+      <input
+        type="number"
+        name="weight"
+        min="0"
+        step="0.001"
+        id={weightInputId}
+      />
+
+      <label htmlFor={quantityInputId}>Кількість деталей з листа, шт.</label>
+      <input type="number" name="quantity" min="0" id={quantityInputId} />
       <p>Виберіть виробничу дільницю</p>
       <label>
         ЧПУ
@@ -65,7 +84,6 @@ export const AddForm = ({ onSubmit, onClose }) => {
           //   onChange={ }
         />
       </label>
-
       <label>
         Штамповка
         <input
@@ -76,7 +94,6 @@ export const AddForm = ({ onSubmit, onClose }) => {
           //   onChange={}
         />
       </label>
-
       <label>
         Товщина матеріалу:
         <select name="thickness">
@@ -87,7 +104,6 @@ export const AddForm = ({ onSubmit, onClose }) => {
           ))}
         </select>
       </label>
-
       <label>
         Розмір листа матеріалу:
         <select name="material">
@@ -98,9 +114,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
           ))}
         </select>
       </label>
-
       {/* {розглянути можливість формування опцій з файлу даних} */}
-
       <label>
         Всі дані введені вірно
         <input
