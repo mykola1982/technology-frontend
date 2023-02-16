@@ -1,10 +1,10 @@
 import { getMetalConsumption } from "../../utils/getMetalConsumption";
 
 export const ProductDetails = ({ product }) => {
-  const { name, number, weight, quantity, department, thickness, material } =
+  const { name, number, weight, quantity, department, thickness, sheet } =
     product;
 
-  const metalConsumption = getMetalConsumption(quantity, thickness, material);
+  const metalConsumption = getMetalConsumption(quantity, thickness, sheet);
   return (
     <div>
       Тут буде дельний опис про деталь
@@ -14,7 +14,7 @@ export const ProductDetails = ({ product }) => {
       <p>Найменування - {name}</p>
       <p>Децимальний номер - {number}</p>
       <p>Дільниця виготовлення -{department}</p>
-      <p>Матеріал -{material} </p>
+      <p>Матеріал -{sheet} </p>
       {/* написати фунцію для прорахунку норм  */}
       <p>Норма витрати- {metalConsumption}</p>
       <p>Товщина металу-{thickness} мм.</p>

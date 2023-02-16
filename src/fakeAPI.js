@@ -5,7 +5,7 @@ const products = [
     number: "600.000.054.50-01",
     quantity: 100,
     thickness: "0.8",
-    material: "2500x1250 Оц.",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "2",
@@ -13,7 +13,7 @@ const products = [
     number: "600.000.054.51",
     quantity: 100,
     thickness: "1.0",
-    material: "2500x1250 Оц.",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "3",
@@ -21,7 +21,7 @@ const products = [
     number: "600.000.054.52",
     quantity: 100,
     thickness: "1.2",
-    material: "2500x1250 Оц.",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "4",
@@ -29,7 +29,7 @@ const products = [
     number: "600.000.054.53",
     quantity: 100,
     thickness: "1.5",
-    material: "2500x1250 Оц.",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "5",
@@ -37,7 +37,7 @@ const products = [
     number: "600.000.054.54",
     quantity: 100,
     thickness: "2.0",
-    material: "2500x1250 Оц.",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "6",
@@ -45,7 +45,7 @@ const products = [
     number: "600.000.054.55",
     quantity: 100,
     thickness: "2.5",
-    material: "2500x1250 Оц.",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "7",
@@ -53,19 +53,23 @@ const products = [
     number: "600.000.054.56",
     quantity: 100,
     thickness: "3.0",
-    material: "2500x1250 Оц.",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "8",
     name: "Направляюча платформи",
     number: "600.000.054.56-01",
     quantity: 154,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "9",
     name: "Направляюча платформи",
     number: "600.000.054.56-02",
     quantity: 16,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "10",
@@ -78,6 +82,8 @@ const products = [
     name: "Пластина агрегата",
     number: "600.000.054.60",
     quantity: 1169,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "12",

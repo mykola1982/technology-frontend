@@ -2,7 +2,6 @@ import { nanoid } from "nanoid";
 import { useState } from "react";
 
 import { MATERIALS } from "../../data/materials";
-import { VALUES_THICKNESS } from "../../data/materials";
 
 const Department = {
   CNC: "Дільниця з ЧПУ",
@@ -10,13 +9,24 @@ const Department = {
 };
 
 const materials = MATERIALS;
-const valuesThikness = VALUES_THICKNESS;
 
 export const AddForm = ({ onSubmit, onClose }) => {
   const nameInputId = nanoid();
   const numberInputId = nanoid();
   const quantityInputId = nanoid();
   const weightInputId = nanoid();
+
+  //  визначаємо унікальни розміри листів та товщини листів
+  // треба прописати через функцію яка буде фільтрувати унікальні елементи в масивіЙЙ
+  const valuesSheet = materials
+    .map(({ sizeSheet }) => sizeSheet)
+    .filter((sizeSheet, index, array) => array.indexOf(sizeSheet) === index);
+
+  const valuesThikness = materials
+    .map(({ thicknessSheet }) => thicknessSheet)
+    .filter(
+      (thicknessSheet, index, array) => array.indexOf(thicknessSheet) === index
+    );
 
   // стейт що контролює вибір виробничої дільниці цеху
   //   const [department, setDepartment] = useState("");
@@ -38,7 +48,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
     const quantity = form.elements.quantity.value;
     const department = form.elements.department.value;
     const thickness = form.elements.thickness.value;
-    const material = form.elements.material.value;
+    const sheet = form.elements.sheet.value;
 
     onSubmit({
       name,
@@ -47,7 +57,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
       quantity,
       department,
       thickness,
-      material,
+      sheet,
     });
 
     //   почитати про форм дата FormData
@@ -106,8 +116,8 @@ export const AddForm = ({ onSubmit, onClose }) => {
       </label>
       <label>
         Розмір листа матеріалу:
-        <select name="material">
-          {materials.map((material) => (
+        <select name="sheet">
+          {valuesSheet.map((material) => (
             <option key={nanoid()} value={material}>
               {material}
             </option>
