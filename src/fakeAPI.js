@@ -3,7 +3,7 @@ const products = [
     id: "1",
     name: "Підсилювач",
     number: "600.000.054.50-01",
-    quantity: 100,
+    quantity: 0,
     thickness: "0.8",
     sheet: "2500x1250 Оц.",
   },
@@ -52,7 +52,7 @@ const products = [
     name: "Направляюча платформи",
     number: "600.000.054.56",
     quantity: 100,
-    thickness: "3.0",
+    thickness: "2.5",
     sheet: "2500x1250 Оц.",
   },
   {

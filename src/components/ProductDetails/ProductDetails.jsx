@@ -4,7 +4,7 @@ export const ProductDetails = ({ product }) => {
   const { name, number, weight, quantity, department, thickness, sheet } =
     product;
 
-  const metalConsumption = getMetalConsumption(quantity, thickness, sheet);
+  const metalConsumption = getMetalConsumption(quantity, sheet, thickness);
   return (
     <div>
       Тут буде дельний опис про деталь
