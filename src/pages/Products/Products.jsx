@@ -6,7 +6,7 @@ import { AddForm } from "../../components/AddForm";
 import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
 import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
-import { getProducts } from "../../fakeAPI";
+import { getProducts } from "../../data/fakeAPI";
 import { Modal } from "../../components/Modal";
 
 const Products = () => {
@@ -38,7 +38,7 @@ const Products = () => {
     quantity,
     department,
     thickness,
-    material,
+    sheet,
   }) => {
     const newProduct = {
       id: nanoid(),
@@ -47,7 +47,7 @@ const Products = () => {
       quantity: quantity,
       department: department,
       thickness: thickness,
-      material: material,
+      sheet: sheet,
     };
 
     setProducts((prevProducts) => [newProduct, ...prevProducts]);

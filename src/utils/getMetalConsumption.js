@@ -1,8 +1,8 @@
 // функція отримання норми витрати маталу
 
-import { MATERIALS } from "../data/materials";
+import { getMaterials } from "../data/fakeAPI";
 
-const materials = MATERIALS;
+const materials = getMaterials();
 
 export function getMetalConsumption(quantity, sheet, thickness) {
   // потрібна перевірка на кількість деталей щоб була

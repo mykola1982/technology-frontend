@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { getMaterials } from "../../fakeAPI";
+import { getMaterials } from "../../data/fakeAPI";
 
 const Materials = () => {
   const [materials, setMaterials] = useState(getMaterials());

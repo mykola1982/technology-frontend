@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
-import { getMaterials } from "../../fakeAPI";
+import { getMaterials } from "../../data/fakeAPI";
 
 const Department = {
   CNC: "Дільниця з ЧПУ",
