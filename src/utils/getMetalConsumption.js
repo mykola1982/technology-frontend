@@ -12,9 +12,6 @@ export function getMetalConsumption(quantity, sheet, thickness) {
       material.sizeSheet === sheet && material.thicknessSheet === thickness
   );
 
-  return isMaterial.weightSheet / quantity;
+  return (isMaterial.weightSheet / quantity).toFixed(3);
   // потрібна буде перевірка щоб математичний вираз виконувася
 }
-
-// треба попрацювати над логікою отримання та обробки даних
-// перебрати масив обєктів і вивести дані перевіривши при переборі товщину та розкрій !!!!!

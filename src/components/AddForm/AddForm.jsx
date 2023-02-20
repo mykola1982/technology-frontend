@@ -1,14 +1,12 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
-import { MATERIALS } from "../../data/materials";
+import { getMaterials } from "../../fakeAPI";
 
 const Department = {
   CNC: "Дільниця з ЧПУ",
   PRESSING: "Штамповочна дільниця",
 };
-
-const materials = MATERIALS;
 
 export const AddForm = ({ onSubmit, onClose }) => {
   const nameInputId = nanoid();
@@ -18,6 +16,9 @@ export const AddForm = ({ onSubmit, onClose }) => {
 
   //  визначаємо унікальни розміри листів та товщини листів
   // треба прописати через функцію яка буде фільтрувати унікальні елементи в масивіЙЙ
+
+  const materials = getMaterials();
+
   const valuesSheet = materials
     .map(({ sizeSheet }) => sizeSheet)
     .filter((sizeSheet, index, array) => array.indexOf(sizeSheet) === index);

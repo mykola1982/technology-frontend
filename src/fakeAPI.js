@@ -76,6 +76,8 @@ const products = [
     name: "Направляюча платформи",
     number: "600.000.054.56-03",
     quantity: 154,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "11",
@@ -90,29 +92,72 @@ const products = [
     name: "Облицювання нижнє",
     number: "300.000.054.61",
     quantity: 100,
+    thickness: "1.2",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "13",
     name: "Основа лайт-бокса",
     number: "321.000.054.62",
     quantity: 32,
+    thickness: "1.2",
+    sheet: "2500x1250 Оц.",
   },
   {
     id: "14",
     name: "Підсилювач верхнбої вставки",
     number: "600.000.054.63",
     quantity: 166,
+    thickness: "1.2",
+    sheet: "2500x1250 Оц.",
   },
-  { id: "15", name: "Заглушка", number: "000.000.054.64", quantity: 1000 },
-  { id: "16", name: "Облицювання", number: "600.000.054.65", quantity: 14 },
-  { id: "17", name: "Підсилювач", number: "600.000.054.66", quantity: 154 },
-  { id: "18", name: "Підсилювач", number: "600.000.054.67", quantity: 15 },
-  { id: "19", name: "Стійка полиці", number: "600.000.054.58", quantity: 198 },
+  {
+    id: "15",
+    name: "Заглушка",
+    number: "000.000.054.64",
+    quantity: 1000,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
+  },
+  {
+    id: "16",
+    name: "Облицювання",
+    number: "600.000.054.65",
+    quantity: 14,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
+  },
+  {
+    id: "17",
+    name: "Підсилювач",
+    number: "600.000.054.66",
+    quantity: 154,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
+  },
+  {
+    id: "18",
+    name: "Підсилювач",
+    number: "600.000.054.67",
+    quantity: 15,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
+  },
+  {
+    id: "19",
+    name: "Стійка полиці",
+    number: "600.000.054.58",
+    quantity: 198,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
+  },
   {
     id: "20",
     name: "Кронштейн полиці",
     number: "600.000.054.59",
     quantity: 154,
+    thickness: "3.0",
+    sheet: "2500x1250 Оц.",
   },
 ];
 
@@ -122,4 +167,179 @@ export const getProducts = () => {
 
 export const getProductById = (productId) => {
   return products.find((product) => product.id === productId);
+};
+
+export const materials = [
+  {
+    id: "1",
+    sizeSheet: "2500x1250 Оц.",
+    thicknessSheet: "0.8",
+    weightSheet: 20.8,
+  },
+  {
+    id: "2",
+    sizeSheet: "2500x1250 Оц.",
+    thicknessSheet: "1.0",
+    weightSheet: 26,
+  },
+  {
+    id: "3",
+    sizeSheet: "2500x1250 Оц.",
+    thicknessSheet: "1.2",
+    weightSheet: 31.2,
+  },
+  {
+    id: "4",
+    sizeSheet: "2500x1250 Оц.",
+    thicknessSheet: "1.5",
+    weightSheet: 39,
+  },
+  {
+    id: "5",
+    sizeSheet: "2500x1250 Оц.",
+    thicknessSheet: "2.0",
+    weightSheet: 52,
+  },
+  {
+    id: "6",
+    sizeSheet: "2500x1250 Оц.",
+    thicknessSheet: "2.5",
+    weightSheet: 65,
+  },
+  {
+    id: "7",
+    sizeSheet: "2500x1250 Оц.",
+    thicknessSheet: "3.0",
+    weightSheet: 78,
+  },
+  {
+    id: "8",
+    sizeSheet: "2500x1250 Ст3.",
+    thicknessSheet: "0.8",
+    weightSheet: 20.8,
+  },
+  {
+    id: "9",
+    sizeSheet: "2500x1250 Ст3.",
+    thicknessSheet: "1.0",
+    weightSheet: 26,
+  },
+  {
+    id: "10",
+    sizeSheet: "2500x1250 Ст3.",
+    thicknessSheet: "1.2",
+    weightSheet: 31.2,
+  },
+  {
+    id: "11",
+    sizeSheet: "2500x1250 Ст3.",
+    thicknessSheet: "1.5",
+    weightSheet: 39,
+  },
+  {
+    id: "12",
+    sizeSheet: "2500x1250 Ст3.",
+    thicknessSheet: "2.0",
+    weightSheet: 52,
+  },
+  {
+    id: "13",
+    sizeSheet: "2500x1250 Ст3.",
+    thicknessSheet: "2.5",
+    weightSheet: 65,
+  },
+  {
+    id: "14",
+    sizeSheet: "2500x1250 Ст3.",
+    thicknessSheet: "3.0",
+    weightSheet: 78,
+  },
+  {
+    id: "15",
+    sizeSheet: "2500x1250 AISI 430",
+    thicknessSheet: "0.8",
+    weightSheet: 20,
+  },
+  {
+    id: "16",
+    sizeSheet: "2500x1250 AISI 430",
+    thicknessSheet: "1.0",
+    weightSheet: 25,
+  },
+  {
+    id: "17",
+    sizeSheet: "2500x1250 AISI 430",
+    thicknessSheet: "1.2",
+    weightSheet: 30,
+  },
+  {
+    id: "18",
+    sizeSheet: "2500x1250 AISI 430",
+    thicknessSheet: "1.5",
+    weightSheet: 37.5,
+  },
+  {
+    id: "19",
+    sizeSheet: "2500x1250 AISI 430",
+    thicknessSheet: "2.0",
+    weightSheet: 50,
+  },
+  {
+    id: "20",
+    sizeSheet: "2500x1250 AISI 430",
+    thicknessSheet: "2.5",
+    weightSheet: 62.5,
+  },
+  {
+    id: "21",
+    sizeSheet: "2500x1250 AISI 430",
+    thicknessSheet: "3.0",
+    weightSheet: 75,
+  },
+  {
+    id: "22",
+    sizeSheet: "2500x1250 AISI 304",
+    thicknessSheet: "0.8",
+    weightSheet: 20,
+  },
+  {
+    id: "23",
+    sizeSheet: "2500x1250 AISI 304",
+    thicknessSheet: "1.0",
+    weightSheet: 25,
+  },
+  {
+    id: "24",
+    sizeSheet: "2500x1250 AISI 304",
+    thicknessSheet: "1.2",
+    weightSheet: 30,
+  },
+  {
+    id: "25",
+    sizeSheet: "2500x1250 AISI 304",
+    thicknessSheet: "1.5",
+    weightSheet: 37.5,
+  },
+  {
+    id: "26",
+    sizeSheet: "2500x1250 AISI 304",
+    thicknessSheet: "2.0",
+    weightSheet: 50,
+  },
+  {
+    id: "27",
+    sizeSheet: "2500x1250 AISI 304",
+    thicknessSheet: "2.5",
+    weightSheet: 62.5,
+  },
+  {
+    id: "28",
+    sizeSheet: "2500x1250 AISI 304",
+    thicknessSheet: "3.0",
+    weightSheet: 75,
+  },
+];
+
+export const getMaterials = () => {
+  return materials;
 };
