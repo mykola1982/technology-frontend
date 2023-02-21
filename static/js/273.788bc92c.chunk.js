@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunktechnology=self.webpackChunktechnology||[]).push([[273],{273:function(n,e,t){t.r(e),t.d(e,{default:function(){return c}});var u=t(184),c=function(){return(0,u.jsx)("p",{children:"\u0422\u0430\u043a\u043e\u0457 \u0441\u0442\u043e\u0440\u0456\u043d\u043a\u0438 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e"})}}}]);
-//# sourceMappingURL=273.788bc92c.chunk.js.map
