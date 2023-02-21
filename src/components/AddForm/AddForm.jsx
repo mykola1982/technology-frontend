@@ -83,7 +83,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
       />
 
       <label htmlFor={quantityInputId}>Кількість деталей з листа, шт.</label>
-      <input type="number" name="quantity" min="0" id={quantityInputId} />
+      <input type="number" name="quantity" min="1" id={quantityInputId} />
       <p>Виберіть виробничу дільницю</p>
       <label>
         ЧПУ
