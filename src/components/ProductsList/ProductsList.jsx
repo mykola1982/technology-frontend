@@ -15,11 +15,11 @@ export const ProductsList = ({ products, onSelectProduct }) => {
         "& ul": { padding: 0 },
       }}
     >
-      {products.map(({ id, name, number }) => {
+      {products.map(({ _id, name, number }) => {
         return (
           <ProductItem
-            key={id}
-            id={id}
+            key={_id}
+            id={_id}
             name={name}
             number={number}
             onSelectProduct={onSelectProduct}

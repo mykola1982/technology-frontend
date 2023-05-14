@@ -3,7 +3,9 @@ import { useState } from "react";
 
 import { getMaterials } from "../../data/fakeAPI";
 
-const Department = {
+import * as API from "../../services/products-API";
+
+const Workshop = {
   CNC: "Дільниця з ЧПУ",
   PRESSING: "Штамповочна дільниця",
 };
@@ -39,7 +41,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
     setAgreed(evt.target.checked);
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     const form = evt.currentTarget;
 
@@ -47,7 +49,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
     const number = form.elements.number.value;
     const weight = form.elements.weight.value;
     const quantity = form.elements.quantity.value;
-    const department = form.elements.department.value;
+    const workshop = form.elements.workshop.value;
     const thickness = form.elements.thickness.value;
     const sheet = form.elements.sheet.value;
 
@@ -56,11 +58,10 @@ export const AddForm = ({ onSubmit, onClose }) => {
       number,
       weight,
       quantity,
-      department,
+      workshop,
       thickness,
       sheet,
     });
-
     //   почитати про форм дата FormData
     onClose();
     form.reset();
@@ -90,8 +91,8 @@ export const AddForm = ({ onSubmit, onClose }) => {
         <input
           type="radio"
           checked
-          name="department"
-          value={Department.CNC}
+          name="workshop"
+          value={Workshop.CNC}
           //   onChange={ }
         />
       </label>
@@ -100,8 +101,8 @@ export const AddForm = ({ onSubmit, onClose }) => {
         <input
           type="radio"
           //   checked={department === Department.PRESSING}
-          name="department"
-          value={Department.PRESSING}
+          name="workshop"
+          value={Workshop.PRESSING}
           //   onChange={}
         />
       </label>

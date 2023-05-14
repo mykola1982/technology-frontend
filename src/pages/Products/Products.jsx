@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
+
 import { Container } from "@mui/material";
 
 import { AddForm } from "../../components/AddForm";
-import { Filter } from "../../components/Filter";
+// import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
-import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
-import { getProducts } from "../../data/fakeAPI";
+// import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
 import { Modal } from "../../components/Modal";
 
+import * as API from "../../services/products-API";
+
 const Products = () => {
-  const [products, setProducts] = useState(getProducts());
-  const [filter, setFilter] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  // const [filter, setFilter] = useState("");
+  // const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -24,50 +24,71 @@ const Products = () => {
     setShowModal(false);
   };
 
-  // useEffect(() => {}, [products]);
+  const [products, setProducts] = useState([]);
 
-  const selectProduct = (idProduct) => {
-    setSelectedProduct(products.find((product) => product.id === idProduct));
+  useEffect(() => {
+    async function getAllProducts() {
+      try {
+        const { data } = await API.fetchAllProductAPI();
+        setProducts(data.products);
+      } catch (error) {}
+    }
+    getAllProducts();
+  }, []);
 
-    // дописати логігу вибраного продукту
-  };
+  // const selectProduct = (idProduct) => {
+  //   setSelectedProduct(products.find((product) => product.id === idProduct));
 
-  const addProduct = ({
+  // дописати логігу вибраного продукту
+  // };
+
+  const addProduct = async ({
     name,
     number,
+    weight,
     quantity,
-    department,
+    workshop,
     thickness,
     sheet,
   }) => {
     const newProduct = {
-      id: nanoid(),
-      name: name,
-      number: number,
-      quantity: quantity,
-      department: department,
-      thickness: thickness,
-      sheet: sheet,
+      name,
+      number,
+      weight,
+      quantity,
+      workshop,
+      material: {
+        thickness,
+        sheet,
+      },
     };
 
-    setProducts((prevProducts) => [newProduct, ...prevProducts]);
+    try {
+      const { data } = await API.addProductAPI(newProduct);
+      console.log("при додаванні", data.product);
+      setProducts((prevProducts) => [data.product, ...prevProducts]);
+    } catch (error) {
+    } finally {
+    }
+
+    // setProducts((prevProducts) => [newProduct, ...prevProducts]);
   };
 
-  const handleChangeFilter = (evt) => {
-    const { value } = evt.currentTarget;
-    setFilter(value);
-  };
+  // const handleChangeFilter = (evt) => {
+  //   const { value } = evt.currentTarget;
+  //   setFilter(value);
+  // };
 
-  const getVisibelProducts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return products.filter(
-      (product) =>
-        product.name.toLowerCase().includes(normalizedFilter) ||
-        product.number.startsWith(normalizedFilter)
-    );
-  };
+  // const getVisibelProducts = () => {
+  //   const normalizedFilter = filter.toLowerCase();
+  //   return products.filter(
+  //     (product) =>
+  //       product.name.toLowerCase().includes(normalizedFilter) ||
+  //       product.number.startsWith(normalizedFilter)
+  //   );
+  // };
 
-  const visibleProducts = getVisibelProducts();
+  // const visibleProducts = getVisibelProducts();
 
   return (
     <>
@@ -77,17 +98,17 @@ const Products = () => {
         </button>
 
         <p>тут буде лист з продукцією</p>
-        <Filter value={filter} onChange={handleChangeFilter} />
+        {/* <Filter value={filter} onChange={handleChangeFilter} /> */}
         <ProductsList
-          products={visibleProducts}
-          onSelectProduct={selectProduct}
+          products={products}
+          // onSelectProduct={selectProduct}
         />
 
-        {selectedProduct ? (
+        {/* {selectedProduct ? (
           <ProductDetails product={selectedProduct} />
         ) : (
           <div> тут буде вибраний продукт </div>
-        )}
+        )} */}
       </Container>
       {showModal && (
         <Modal onClose={closeModal}>
