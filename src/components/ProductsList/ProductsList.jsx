@@ -2,7 +2,11 @@ import { ProductItem } from "../ProductItem";
 
 import List from "@mui/material/List";
 
-export const ProductsList = ({ products, onSelectProduct }) => {
+export const ProductsList = ({
+  products,
+  onDeleteProduct,
+  onSelectProduct,
+}) => {
   return (
     <List
       sx={{
@@ -22,6 +26,7 @@ export const ProductsList = ({ products, onSelectProduct }) => {
             id={_id}
             name={name}
             number={number}
+            onDeleteProduct={onDeleteProduct}
             onSelectProduct={onSelectProduct}
           />
         );

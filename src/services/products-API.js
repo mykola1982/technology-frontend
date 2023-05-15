@@ -14,6 +14,9 @@ export const addProductAPI = async (body) => {
   return data;
 };
 
-export const deleteProductAPI = async () => {};
+export const removeProductAPI = async (id) => {
+  const { data } = await axios.delete(`/products/${id}`);
+  return data;
+};
 
 export const updateProductAPI = async () => {};

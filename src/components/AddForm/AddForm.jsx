@@ -31,17 +31,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
       (thicknessSheet, index, array) => array.indexOf(thicknessSheet) === index
     );
 
-  // стейт що контролює вибір виробничої дільниці цеху
-  //   const [department, setDepartment] = useState("");
-
-  // стейт що контролює кнопку сабміту форми через чекбокс
-  const [agreed, setAgreed] = useState(false);
-
-  const handleChangeChecked = (evt) => {
-    setAgreed(evt.target.checked);
-  };
-
-  const handleSubmit = async (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     const form = evt.currentTarget;
 
@@ -62,7 +52,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
       thickness,
       sheet,
     });
-    //   почитати про форм дата FormData
+
     onClose();
     form.reset();
   };
@@ -127,18 +117,16 @@ export const AddForm = ({ onSubmit, onClose }) => {
         </select>
       </label>
       {/* {розглянути можливість формування опцій з файлу даних} */}
-      <label>
+      {/* <label>
         Всі дані введені вірно
         <input
           type="checkbox"
           checked={agreed}
           onChange={handleChangeChecked}
         />
-      </label>
+      </label> */}
       {/* групування полів */}
-      <button type="submit" disabled={!agreed}>
-        Додати деталь до списку
-      </button>
+      <button type="submit">Додати деталь до списку</button>
     </form>
   );
 };

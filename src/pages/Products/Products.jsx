@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 
 import { AddForm } from "../../components/AddForm";
-// import { Filter } from "../../components/Filter";
+import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
 // import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
 import { Modal } from "../../components/Modal";
@@ -11,7 +11,8 @@ import { Modal } from "../../components/Modal";
 import * as API from "../../services/products-API";
 
 const Products = () => {
-  // const [filter, setFilter] = useState("");
+  const [products, setProducts] = useState([]);
+  const [filter, setFilter] = useState("");
   // const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
@@ -23,8 +24,6 @@ const Products = () => {
   const closeModal = () => {
     setShowModal(false);
   };
-
-  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     async function getAllProducts() {
@@ -65,30 +64,39 @@ const Products = () => {
 
     try {
       const { data } = await API.addProductAPI(newProduct);
-      console.log("при додаванні", data.product);
+
       setProducts((prevProducts) => [data.product, ...prevProducts]);
     } catch (error) {
     } finally {
     }
-
-    // setProducts((prevProducts) => [newProduct, ...prevProducts]);
   };
 
-  // const handleChangeFilter = (evt) => {
-  //   const { value } = evt.currentTarget;
-  //   setFilter(value);
-  // };
+  const deleteProduct = async (id) => {
+    try {
+      const response = await API.removeProductAPI(id);
+      setProducts((prevProducts) =>
+        prevProducts.filter(({ _id }) => _id !== response.id)
+      );
+    } catch (error) {
+      console.log(error.mesage);
+    }
+  };
 
-  // const getVisibelProducts = () => {
-  //   const normalizedFilter = filter.toLowerCase();
-  //   return products.filter(
-  //     (product) =>
-  //       product.name.toLowerCase().includes(normalizedFilter) ||
-  //       product.number.startsWith(normalizedFilter)
-  //   );
-  // };
+  const handleChangeFilter = (evt) => {
+    const { value } = evt.currentTarget;
+    setFilter(value);
+  };
 
-  // const visibleProducts = getVisibelProducts();
+  const getVisibelProducts = () => {
+    const normalizedFilter = filter.toLowerCase();
+    return products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(normalizedFilter) ||
+        product.number.startsWith(normalizedFilter)
+    );
+  };
+
+  const visibleProducts = getVisibelProducts();
 
   return (
     <>
@@ -98,9 +106,10 @@ const Products = () => {
         </button>
 
         <p>тут буде лист з продукцією</p>
-        {/* <Filter value={filter} onChange={handleChangeFilter} /> */}
+        <Filter value={filter} onChange={handleChangeFilter} />
         <ProductsList
-          products={products}
+          products={visibleProducts}
+          onDeleteProduct={deleteProduct}
           // onSelectProduct={selectProduct}
         />
 
