@@ -19,4 +19,7 @@ export const removeProductAPI = async (id) => {
   return data;
 };
 
-export const updateProductAPI = async () => {};
+export const updateProductAPI = async (id, body) => {
+  const { data } = await axios.put(`/products/${id}`, body);
+  return data;
+};

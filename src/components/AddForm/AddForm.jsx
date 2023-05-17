@@ -1,16 +1,13 @@
 import { nanoid } from "nanoid";
-import { useState } from "react";
 
 import { getMaterials } from "../../data/fakeAPI";
-
-import * as API from "../../services/products-API";
 
 const Workshop = {
   CNC: "Дільниця з ЧПУ",
   PRESSING: "Штамповочна дільниця",
 };
 
-export const AddForm = ({ onSubmit, onClose }) => {
+export const AddForm = ({ onSubmit, onClose, productForUpdate }) => {
   const nameInputId = nanoid();
   const numberInputId = nanoid();
   const quantityInputId = nanoid();
@@ -30,6 +27,24 @@ export const AddForm = ({ onSubmit, onClose }) => {
     .filter(
       (thicknessSheet, index, array) => array.indexOf(thicknessSheet) === index
     );
+
+  console.log("productForUpdate в  формі", productForUpdate);
+
+  const initialValues = {};
+
+  if (productForUpdate) {
+    initialValues.name = productForUpdate.name;
+    initialValues.number = productForUpdate.number;
+    initialValues.weight = productForUpdate.weight;
+
+    initialValues.quantity = productForUpdate.quantity;
+    initialValues.workshop = productForUpdate.workshop;
+    initialValues.thickness = productForUpdate.material.thickness;
+    initialValues.sheet = productForUpdate.material.sheet;
+    console.log(initialValues);
+
+    console.log("ми тут");
+  }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -60,9 +75,19 @@ export const AddForm = ({ onSubmit, onClose }) => {
   return (
     <form style={{ display: " inline-grid" }} onSubmit={handleSubmit}>
       <label htmlFor={nameInputId}>Найменування</label>
-      <input type="text" name="name" id={nameInputId} />
+      <input
+        type="text"
+        name="name"
+        id={nameInputId}
+        defaultValue={initialValues.name}
+      />
       <label htmlFor={numberInputId}>Децимальний номер</label>
-      <input type="text" name="number" id={numberInputId} />
+      <input
+        type="text"
+        name="number"
+        id={numberInputId}
+        defaultValue={initialValues.number}
+      />
       <label htmlFor={weightInputId}>Вага деталі, кг.</label>
 
       <input
@@ -71,34 +96,39 @@ export const AddForm = ({ onSubmit, onClose }) => {
         min="0"
         step="0.001"
         id={weightInputId}
+        defaultValue={initialValues.weight}
       />
 
       <label htmlFor={quantityInputId}>Кількість деталей з листа, шт.</label>
-      <input type="number" name="quantity" min="1" id={quantityInputId} />
+      <input
+        type="number"
+        name="quantity"
+        min="1"
+        id={quantityInputId}
+        defaultValue={initialValues.quantity}
+      />
       <p>Виберіть виробничу дільницю</p>
       <label>
         ЧПУ
         <input
           type="radio"
-          checked
           name="workshop"
           value={Workshop.CNC}
-          //   onChange={ }
+          defaultChecked={initialValues.workshop === Workshop.CNC}
         />
       </label>
       <label>
         Штамповка
         <input
           type="radio"
-          //   checked={department === Department.PRESSING}
           name="workshop"
           value={Workshop.PRESSING}
-          //   onChange={}
+          defaultChecked={initialValues.workshop === Workshop.PRESSING}
         />
       </label>
       <label>
         Товщина матеріалу:
-        <select name="thickness">
+        <select name="thickness" defaultValue={initialValues.thickness}>
           {valuesThikness.map((value) => (
             <option key={nanoid()} value={value}>
               {value} мм.
@@ -108,7 +138,7 @@ export const AddForm = ({ onSubmit, onClose }) => {
       </label>
       <label>
         Розмір листа матеріалу:
-        <select name="sheet">
+        <select name="sheet" defaultValue={initialValues.sheet}>
           {valuesSheet.map((material) => (
             <option key={nanoid()} value={material}>
               {material}
@@ -126,7 +156,13 @@ export const AddForm = ({ onSubmit, onClose }) => {
         />
       </label> */}
       {/* групування полів */}
-      <button type="submit">Додати деталь до списку</button>
+      <button type="submit">
+        {!productForUpdate ? (
+          <span>Додати деталь до списку</span>
+        ) : (
+          <span>Гедагувати дані про деталь</span>
+        )}
+      </button>
     </form>
   );
 };

@@ -3,16 +3,10 @@ export const ProductItem = ({
   name,
   number,
   onDeleteProduct,
-  onSelectProduct,
+  onOpenModalOnUpdate,
 }) => {
   return (
-    <li
-      // onClick={() => {
-      //   onSelectProduct(id);
-      // }}
-      onFocus={() => console.log(id)}
-      style={{ cursor: "pointer" }}
-    >
+    <li>
       <p>
         {name} - {number}
       </p>
@@ -20,7 +14,10 @@ export const ProductItem = ({
       <button type="button" onClick={() => onDeleteProduct(id)}>
         Видалити
       </button>
-      <button type="button">Редагувати</button>
+
+      <button type="button" onClick={() => onOpenModalOnUpdate(id)}>
+        Редагувати
+      </button>
     </li>
   );
 };

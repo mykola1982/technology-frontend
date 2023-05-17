@@ -5,7 +5,7 @@ import List from "@mui/material/List";
 export const ProductsList = ({
   products,
   onDeleteProduct,
-  onSelectProduct,
+  onOpenModalOnUpdate,
 }) => {
   return (
     <List
@@ -27,7 +27,7 @@ export const ProductsList = ({
             name={name}
             number={number}
             onDeleteProduct={onDeleteProduct}
-            onSelectProduct={onSelectProduct}
+            onOpenModalOnUpdate={onOpenModalOnUpdate}
           />
         );
       })}

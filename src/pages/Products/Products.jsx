@@ -13,16 +13,21 @@ import * as API from "../../services/products-API";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
+  // const [isUpdate, setIsUpdate] = useState(false);
+  const [productForUpdate, setProductForUpdate] = useState(null);
+
   // const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
     setShowModal(true);
+    setProductForUpdate(null);
   };
 
   const closeModal = () => {
     setShowModal(false);
+    // setIsUpdate(false);
   };
 
   useEffect(() => {
@@ -82,6 +87,62 @@ const Products = () => {
     }
   };
 
+  const openModalOnUpdate = async (id) => {
+    openModal();
+    console.log("відправляємо на редагування");
+    setProductForUpdate(() => products.find((product) => product._id === id));
+  };
+
+  const updateProduct = async ({
+    name,
+    number,
+    weight,
+    quantity,
+    workshop,
+    thickness,
+    sheet,
+  }) => {
+    const updateData = {
+      name,
+      number,
+      weight,
+      quantity,
+      workshop,
+      material: {
+        thickness,
+        sheet,
+      },
+    };
+
+    console.log("редагуємо");
+    console.log("productForUpdate._id", productForUpdate._id);
+    console.log("updateData", updateData);
+
+    try {
+      const response = await API.updateProductAPI(
+        productForUpdate._id,
+        updateData
+      );
+      // мені здається що можна змінити тут більш простим методом
+
+      setProducts((prevProducts) => {
+        const indexUpdatedProduct = prevProducts.findIndex(
+          (product) => product._id === productForUpdate._id
+        );
+
+        if (indexUpdatedProduct !== -1) {
+          prevProducts[indexUpdatedProduct] = {
+            ...prevProducts[indexUpdatedProduct],
+            ...response.data,
+          };
+        }
+
+        const updatetedProducts = [...prevProducts];
+        return updatetedProducts;
+      });
+    } catch (error) {}
+  };
+
   const handleChangeFilter = (evt) => {
     const { value } = evt.currentTarget;
     setFilter(value);
@@ -110,18 +171,16 @@ const Products = () => {
         <ProductsList
           products={visibleProducts}
           onDeleteProduct={deleteProduct}
-          // onSelectProduct={selectProduct}
+          onOpenModalOnUpdate={openModalOnUpdate}
         />
-
-        {/* {selectedProduct ? (
-          <ProductDetails product={selectedProduct} />
-        ) : (
-          <div> тут буде вибраний продукт </div>
-        )} */}
       </Container>
       {showModal && (
         <Modal onClose={closeModal}>
-          <AddForm onSubmit={addProduct} onClose={closeModal} />
+          <AddForm
+            onSubmit={!productForUpdate ? addProduct : updateProduct}
+            onClose={closeModal}
+            productForUpdate={productForUpdate}
+          />
         </Modal>
       )}
     </>
