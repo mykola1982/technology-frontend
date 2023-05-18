@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { Container } from "@mui/material";
 
@@ -19,6 +20,8 @@ const Products = () => {
   // const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
+
+  const location = useLocation();
 
   const openModal = () => {
     setShowModal(true);
@@ -114,10 +117,6 @@ const Products = () => {
       },
     };
 
-    console.log("редагуємо");
-    console.log("productForUpdate._id", productForUpdate._id);
-    console.log("updateData", updateData);
-
     try {
       const response = await API.updateProductAPI(
         productForUpdate._id,
@@ -153,7 +152,7 @@ const Products = () => {
     return products.filter(
       (product) =>
         product.name.toLowerCase().includes(normalizedFilter) ||
-        product.number.startsWith(normalizedFilter)
+        product.number?.startsWith(normalizedFilter)
     );
   };
 
@@ -172,6 +171,7 @@ const Products = () => {
           products={visibleProducts}
           onDeleteProduct={deleteProduct}
           onOpenModalOnUpdate={openModalOnUpdate}
+          location={location}
         />
       </Container>
       {showModal && (

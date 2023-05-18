@@ -7,7 +7,10 @@ export const fetchAllProductAPI = async () => {
   return data;
 };
 
-export const fetchProductAPI = async () => {};
+export const fetchProductAPI = async (id) => {
+  const { data } = await axios.get(`/products/${id}`);
+  return data;
+};
 
 export const addProductAPI = async (body) => {
   const { data } = await axios.post("/products", body);

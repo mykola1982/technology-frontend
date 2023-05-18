@@ -1,23 +1,26 @@
+import { Link } from "react-router-dom";
+
 export const ProductItem = ({
-  id,
-  name,
-  number,
+  product,
   onDeleteProduct,
   onOpenModalOnUpdate,
+  location,
 }) => {
+  const { _id, name, number } = product;
+
   return (
-    <li>
-      <p>
-        {name} - {number}
-      </p>
-
-      <button type="button" onClick={() => onDeleteProduct(id)}>
-        Видалити
-      </button>
-
-      <button type="button" onClick={() => onOpenModalOnUpdate(id)}>
-        Редагувати
-      </button>
+    <li style={{ cursor: "pointer" }}>
+      <Link to={`/products/${_id}`} state={{ from: location }}>
+        <p>
+          {name} - {number}
+        </p>
+        <button type="button" onClick={() => onDeleteProduct(_id)}>
+          Видалити
+        </button>
+        <button type="button" onClick={() => onOpenModalOnUpdate(_id)}>
+          Редагувати
+        </button>
+      </Link>
     </li>
   );
 };
