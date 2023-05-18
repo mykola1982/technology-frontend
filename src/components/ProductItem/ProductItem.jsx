@@ -14,13 +14,13 @@ export const ProductItem = ({
         <p>
           {name} - {number}
         </p>
-        <button type="button" onClick={() => onDeleteProduct(_id)}>
-          Видалити
-        </button>
-        <button type="button" onClick={() => onOpenModalOnUpdate(_id)}>
-          Редагувати
-        </button>
       </Link>
+      <button type="button" onClick={() => onDeleteProduct(_id)}>
+        Видалити
+      </button>
+      <button type="button" onClick={() => onOpenModalOnUpdate(_id)}>
+        Редагувати
+      </button>
     </li>
   );
 };
