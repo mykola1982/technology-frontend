@@ -4,6 +4,7 @@ export const ProductItem = ({
   product,
   onDeleteProduct,
   onOpenModalOnUpdate,
+  onSelectProduct,
   location,
 }) => {
   const { _id, name, number } = product;
@@ -20,6 +21,14 @@ export const ProductItem = ({
       </button>
       <button type="button" onClick={() => onOpenModalOnUpdate(_id)}>
         Редагувати
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          onSelectProduct(_id);
+        }}
+      >
+        добавити деталь в список замовлення
       </button>
     </li>
   );

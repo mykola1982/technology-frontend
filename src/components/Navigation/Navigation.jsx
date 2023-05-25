@@ -8,7 +8,10 @@ export const Navigation = () => {
           <NavLink to="/">Домашня сторінка</NavLink>
         </li>
         <li>
-          <NavLink to="/products">Ппродукція</NavLink>
+          <NavLink to="/products">Продукція</NavLink>
+        </li>
+        <li>
+          <NavLink to="/orders">Замовлення</NavLink>
         </li>
         <li>
           <NavLink to="/materials">Матеріали</NavLink>

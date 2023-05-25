@@ -6,7 +6,7 @@ import { Container } from "@mui/material";
 import { AddForm } from "../../components/AddForm";
 import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
-// import { ProductDetails } from "../../components/ProductDetails/ProductDetails";
+import { SelectedProductList } from "../../components/SelectedProductList";
 import { Modal } from "../../components/Modal";
 
 import * as API from "../../services/products-API";
@@ -14,10 +14,9 @@ import * as API from "../../services/products-API";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
-  // const [isUpdate, setIsUpdate] = useState(false);
   const [productForUpdate, setProductForUpdate] = useState(null);
 
-  // const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -42,12 +41,6 @@ const Products = () => {
     }
     getAllProducts();
   }, []);
-
-  // const selectProduct = (idProduct) => {
-  //   setSelectedProduct(products.find((product) => product.id === idProduct));
-
-  // дописати логігу вибраного продукту
-  // };
 
   const addProduct = async ({
     name,
@@ -92,7 +85,6 @@ const Products = () => {
 
   const openModalOnUpdate = async (id) => {
     openModal();
-    console.log("відправляємо на редагування");
     setProductForUpdate(() => products.find((product) => product._id === id));
   };
 
@@ -157,6 +149,27 @@ const Products = () => {
   };
 
   const visibleProducts = getVisibelProducts();
+  // функцію пошуку прожуку можна винести в Utils
+  const selectProduct = (id) => {
+    const selectedProduct = products.find((product) => product._id === id);
+
+    const hasProduct = selectedProducts.some(
+      (product) => product._id === selectedProduct._id
+    );
+
+    if (hasProduct) {
+      // замінити на тостер
+      console.log(
+        `Деталь ${selectedProduct.name}- ${selectedProduct.number} вже є в списку замовлення `
+      );
+      return;
+    }
+
+    setSelectedProducts((prevSelectedProducts) => [
+      selectedProduct,
+      ...prevSelectedProducts,
+    ]);
+  };
 
   return (
     <>
@@ -171,9 +184,15 @@ const Products = () => {
           products={visibleProducts}
           onDeleteProduct={deleteProduct}
           onOpenModalOnUpdate={openModalOnUpdate}
+          onSelectProduct={selectProduct}
           location={location}
         />
+        <SelectedProductList products={selectedProducts} />
+        <button type="button" disabled={selectedProducts.length <= 0}>
+          Сформувати замовлення
+        </button>
       </Container>
+
       {showModal && (
         <Modal onClose={closeModal}>
           <AddForm

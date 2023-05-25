@@ -6,6 +6,7 @@ export const ProductsList = ({
   products,
   onDeleteProduct,
   onOpenModalOnUpdate,
+  onSelectProduct,
   location,
 }) => {
   return (
@@ -20,13 +21,14 @@ export const ProductsList = ({
         "& ul": { padding: 0 },
       }}
     >
-      {products.map((product, location) => {
+      {products.map((product) => {
         return (
           <ProductItem
             key={product._id}
             product={product}
             onDeleteProduct={onDeleteProduct}
             onOpenModalOnUpdate={onOpenModalOnUpdate}
+            onSelectProduct={onSelectProduct}
             location={location}
           />
         );
