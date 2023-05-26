@@ -6,7 +6,7 @@ import { SharedLayot } from "../SharedLayout";
 
 const Home = lazy(() => import("../../pages/Home"));
 const Products = lazy(() => import("../../pages/Products"));
-const Materials = lazy(() => import("../../pages/Materials"));
+// const Materials = lazy(() => import("../../pages/Materials"));
 const Orders = lazy(() => import("../../pages/Orders"));
 const ProductDetails = lazy(() => import("../../pages/ProductDetails"));
 
@@ -21,7 +21,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<ProductDetails />} />
 
-          <Route path="/materials" element={<Materials />} />
+          {/* <Route path="/materials" element={<Materials />} /> */}
           <Route path="/orders" element={<Orders />} />
 
           <Route path="*" element={<NotFound />} />

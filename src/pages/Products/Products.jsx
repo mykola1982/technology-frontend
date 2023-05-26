@@ -8,6 +8,7 @@ import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
 import { SelectedProductList } from "../../components/SelectedProductList";
 import { Modal } from "../../components/Modal";
+import { FormQuantityProduct } from "../../components/FormQuantityProduct";
 
 import * as API from "../../services/products-API";
 
@@ -17,8 +18,10 @@ const Products = () => {
   const [productForUpdate, setProductForUpdate] = useState(null);
 
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedOneProduct, setSelectedOneProduct] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
+  const [showModalFormQuantity, setShowModalFormQuantity] = useState(false);
 
   const location = useLocation();
 
@@ -29,8 +32,17 @@ const Products = () => {
 
   const closeModal = () => {
     setShowModal(false);
-    // setIsUpdate(false);
   };
+
+  // можливо прописати функцію окрему для закриття і відкриття різних модалок.
+  const openModalFormQuantity = () => {
+    setShowModalFormQuantity(true);
+  };
+  const closeModalFormQuantity = () => {
+    setShowModalFormQuantity(false);
+  };
+
+  //
 
   useEffect(() => {
     async function getAllProducts() {
@@ -164,12 +176,32 @@ const Products = () => {
       );
       return;
     }
+    setSelectedOneProduct(selectedProduct);
+    openModalFormQuantity();
 
+    // setSelectedProducts((prevSelectedProducts) => [
+    //   selectedProduct,
+    //   ...prevSelectedProducts,
+    // ]);
+  };
+
+  const addProductToOrder = (reserved, product) => {
+    console.log("Ми в формі додавання деталі");
+    console.log("кількість замовлених деталей", reserved);
+    console.log("вибраний продук", product);
+    const productOne = { ...product, reserved };
+    console.log(
+      "вибраний продук після додавання кількості в замовлення ",
+      productOne
+    );
     setSelectedProducts((prevSelectedProducts) => [
-      selectedProduct,
+      productOne,
       ...prevSelectedProducts,
     ]);
+    setSelectedOneProduct(null);
   };
+  console.log(selectedProducts);
+  console.log(selectedOneProduct);
 
   return (
     <>
@@ -199,6 +231,15 @@ const Products = () => {
             onSubmit={!productForUpdate ? addProduct : updateProduct}
             onClose={closeModal}
             productForUpdate={productForUpdate}
+          />
+        </Modal>
+      )}
+      {showModalFormQuantity && (
+        <Modal onClose={closeModalFormQuantity}>
+          <FormQuantityProduct
+            onClose={closeModalFormQuantity}
+            onSubmit={addProductToOrder}
+            product={selectedOneProduct}
           />
         </Modal>
       )}

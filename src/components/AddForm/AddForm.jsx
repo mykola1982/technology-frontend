@@ -41,9 +41,6 @@ export const AddForm = ({ onSubmit, onClose, productForUpdate }) => {
     initialValues.workshop = productForUpdate.workshop;
     initialValues.thickness = productForUpdate.material.thickness;
     initialValues.sheet = productForUpdate.material.sheet;
-    console.log(initialValues);
-
-    console.log("ми тут");
   }
 
   const handleSubmit = (evt) => {
