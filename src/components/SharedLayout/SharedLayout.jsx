@@ -1,13 +1,15 @@
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material/";
+// import { AppBar, Toolbar, Typography } from "@mui/material/";
 
-import { Navigation } from "../Navigation/Navigation";
+// import { Navigation } from "../Navigation/Navigation";
+import { Header } from "../Header";
 
 export const SharedLayot = () => {
   return (
     <>
-      <AppBar position="static">
+      <Header />
+      {/* <AppBar position="static">
         <Toolbar>
           <Typography variant="h5" component="span">
             Технолог
@@ -16,7 +18,7 @@ export const SharedLayot = () => {
 
           <Navigation />
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Suspense fallback={<div>Зачекайте поки завантажаться дані...</div>}>
         <Outlet />
       </Suspense>
