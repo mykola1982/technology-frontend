@@ -204,7 +204,7 @@ const Products = () => {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{ display: "flex", maxHeight: "100%" }}>
+      <Container maxWidth="lg" sx={{ display: "flex", height: "100vh" }}>
         <Box
           sx={{
             maxWidth: "380px",
@@ -215,9 +215,11 @@ const Products = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "20px",
-            mt: 2,
+            gap: "10px",
+            mt: 10,
+            mb: 2,
             backgroundColor: "#eeeeee",
+            p: 1,
           }}
         >
           <Button

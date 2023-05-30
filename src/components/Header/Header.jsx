@@ -33,7 +33,9 @@ export const Header = () => {
     setAnchorElNav(null);
   };
   return (
-    <AppBar position="static">
+    <AppBar
+    // position="static"
+    >
       <Container maxWidth="x1">
         <Toolbar disableGutters>
           <PrecisionManufacturingIcon
