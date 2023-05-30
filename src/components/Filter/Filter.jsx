@@ -1,7 +1,20 @@
+import { TextField } from "@mui/material";
+
 export const Filter = ({ value, onChange }) => {
   return (
-    <div>
-      <input type="text" name="filter" value={value} onChange={onChange} />
-    </div>
+    <>
+      <TextField
+        id="filled-search"
+        label="Пошук деталі"
+        type="search"
+        variant="outlined"
+        name="filter"
+        sx={{
+          width: "300px",
+        }}
+        value={value}
+        onChange={onChange}
+      />
+    </>
   );
 };

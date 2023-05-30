@@ -109,10 +109,10 @@ export const Header = () => {
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
           />
           <Typography
-            variant="h5"
+            variant="h6"
             noWrap
-            component="a"
-            href=""
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -133,7 +133,12 @@ export const Header = () => {
                 onClick={handleCloseNavMenu}
                 component={Link}
                 to={to}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  mr: 1,
+                }}
               >
                 {name}
               </Button>

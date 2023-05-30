@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { Container } from "@mui/material";
+import { Container, Box, Button, Typography } from "@mui/material";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import { AddForm } from "../../components/AddForm";
 import { Filter } from "../../components/Filter";
@@ -200,29 +201,66 @@ const Products = () => {
     ]);
     setSelectedOneProduct(null);
   };
-  console.log(selectedProducts);
-  console.log(selectedOneProduct);
 
   return (
     <>
-      <Container maxWidth="sm">
-        <button type="button" onClick={openModal}>
-          Добавити деталь до списку
-        </button>
+      <Container maxWidth="lg" sx={{ display: "flex", maxHeight: "100%" }}>
+        <Box
+          sx={{
+            maxWidth: "380px",
 
-        <p>тут буде лист з продукцією</p>
-        <Filter value={filter} onChange={handleChangeFilter} />
-        <ProductsList
-          products={visibleProducts}
-          onDeleteProduct={deleteProduct}
-          onOpenModalOnUpdate={openModalOnUpdate}
-          onSelectProduct={selectProduct}
-          location={location}
-        />
-        <SelectedProductList products={selectedProducts} />
-        <button type="button" disabled={selectedProducts.length <= 0}>
-          Сформувати замовлення
-        </button>
+            flexGrow: 1,
+            border: "1px solid",
+            borderRadius: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "20px",
+            mt: 2,
+            backgroundColor: "#eeeeee",
+          }}
+        >
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<PostAddIcon />}
+            onClick={openModal}
+            sx={{
+              mt: 2,
+              width: "300px",
+            }}
+          >
+            Добавити деталь
+          </Button>
+
+          <Filter value={filter} onChange={handleChangeFilter} />
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 700,
+            }}
+          >
+            Список деталей
+          </Typography>
+          <ProductsList
+            products={visibleProducts}
+            onDeleteProduct={deleteProduct}
+            onOpenModalOnUpdate={openModalOnUpdate}
+            onSelectProduct={selectProduct}
+            location={location}
+          />
+        </Box>
+        <Box
+          sx={{
+            flexGrow: 1,
+            // display: { xs: "none" },
+          }}
+        >
+          <SelectedProductList products={selectedProducts} />
+          <button type="button" disabled={selectedProducts.length <= 0}>
+            Сформувати замовлення
+          </button>
+        </Box>
       </Container>
 
       {showModal && (
