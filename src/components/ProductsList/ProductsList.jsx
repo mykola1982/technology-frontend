@@ -14,16 +14,16 @@ export const ProductsList = ({
       sx={{
         width: "100%",
         maxWidth: 360,
-        bgcolor: "background.paper",
         position: "relative",
         overflow: "auto",
         maxHeight: "75vh",
         "& ul": { padding: 0 },
       }}
     >
-      {products.map((product) => {
+      {products.map((product, index) => {
         return (
           <ProductItem
+            index={index}
             key={product._id}
             product={product}
             onDeleteProduct={onDeleteProduct}

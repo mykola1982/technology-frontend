@@ -204,22 +204,23 @@ const Products = () => {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{ display: "flex", height: "100vh" }}>
+      <Container
+        maxWidth="lg"
+        sx={{ display: "flex", height: "100vh", gap: 2 }}
+      >
         <Box
           sx={{
             maxWidth: "380px",
-
-            flexGrow: 1,
-            border: "1px solid",
             borderRadius: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "10px",
+            gap: "12px",
             mt: 10,
             mb: 2,
-            backgroundColor: "#eeeeee",
             p: 1,
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
           }}
         >
           <Button
@@ -244,6 +245,9 @@ const Products = () => {
           >
             Список деталей
           </Typography>
+          <Typography variant="body1">
+            Всього в базі - {products.length} дет.
+          </Typography>
           <ProductsList
             products={visibleProducts}
             onDeleteProduct={deleteProduct}
@@ -255,7 +259,13 @@ const Products = () => {
         <Box
           sx={{
             flexGrow: 1,
-            // display: { xs: "none" },
+            display: { xs: "none", md: "block" },
+            borderRadius: 4,
+            gap: "12px",
+            mt: 10,
+            mb: 2,
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
           }}
         >
           <SelectedProductList products={selectedProducts} />

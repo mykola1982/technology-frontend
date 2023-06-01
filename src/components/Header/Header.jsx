@@ -33,9 +33,7 @@ export const Header = () => {
     setAnchorElNav(null);
   };
   return (
-    <AppBar
-    // position="static"
-    >
+    <AppBar>
       <Container maxWidth="x1">
         <Toolbar disableGutters>
           <PrecisionManufacturingIcon
@@ -43,7 +41,7 @@ export const Header = () => {
           />
 
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component={Link}
             to="/"
