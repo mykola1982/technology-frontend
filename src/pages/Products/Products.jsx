@@ -179,27 +179,23 @@ const Products = () => {
     }
     setSelectedOneProduct(selectedProduct);
     openModalFormQuantity();
-
-    // setSelectedProducts((prevSelectedProducts) => [
-    //   selectedProduct,
-    //   ...prevSelectedProducts,
-    // ]);
   };
 
   const addProductToOrder = (reserved, product) => {
-    console.log("Ми в формі додавання деталі");
-    console.log("кількість замовлених деталей", reserved);
-    console.log("вибраний продук", product);
     const productOne = { ...product, reserved };
-    console.log(
-      "вибраний продук після додавання кількості в замовлення ",
-      productOne
-    );
+
     setSelectedProducts((prevSelectedProducts) => [
-      productOne,
       ...prevSelectedProducts,
+      productOne,
     ]);
     setSelectedOneProduct(null);
+  };
+
+  const deleteProductFromOrder = (id) => {
+    console.log("id продукта що видаляється", id);
+    setSelectedProducts((prevSelectedProducts) =>
+      prevSelectedProducts.filter((product) => product._id !== id)
+    );
   };
 
   return (
@@ -259,19 +255,29 @@ const Products = () => {
         <Box
           sx={{
             flexGrow: 1,
-            display: { xs: "none", md: "block" },
+            display: { xs: "none", md: "flex" },
             borderRadius: 4,
+            flexDirection: "column",
+            alignItems: "center",
             gap: "12px",
             mt: 10,
             mb: 2,
+            p: 1,
             backgroundColor: "#f5f5f5",
             boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
           }}
         >
-          <SelectedProductList products={selectedProducts} />
-          <button type="button" disabled={selectedProducts.length <= 0}>
+          <SelectedProductList
+            products={selectedProducts}
+            onDeleteProductFromOrder={deleteProductFromOrder}
+          />
+          <Button
+            variant="contained"
+            size="large"
+            disabled={selectedProducts.length <= 0}
+          >
             Сформувати замовлення
-          </button>
+          </Button>
         </Box>
       </Container>
 
