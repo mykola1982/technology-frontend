@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/technology-frontend/static/css/main.bc1dca3e.css",
-    "main.js": "/technology-frontend/static/js/main.3b51aa4d.js",
+    "main.js": "/technology-frontend/static/js/main.d68b316f.js",
     "static/js/859.8e7f0614.chunk.js": "/technology-frontend/static/js/859.8e7f0614.chunk.js",
-    "static/js/942.6140c60b.chunk.js": "/technology-frontend/static/js/942.6140c60b.chunk.js",
+    "static/js/942.1ed0426f.chunk.js": "/technology-frontend/static/js/942.1ed0426f.chunk.js",
     "static/js/473.131a220d.chunk.js": "/technology-frontend/static/js/473.131a220d.chunk.js",
     "static/js/234.a8cff0f7.chunk.js": "/technology-frontend/static/js/234.a8cff0f7.chunk.js",
     "static/js/273.6c209e32.chunk.js": "/technology-frontend/static/js/273.6c209e32.chunk.js",
@@ -12,9 +12,9 @@
     "static/js/140.74793575.chunk.js": "/technology-frontend/static/js/140.74793575.chunk.js",
     "index.html": "/technology-frontend/index.html",
     "main.bc1dca3e.css.map": "/technology-frontend/static/css/main.bc1dca3e.css.map",
-    "main.3b51aa4d.js.map": "/technology-frontend/static/js/main.3b51aa4d.js.map",
+    "main.d68b316f.js.map": "/technology-frontend/static/js/main.d68b316f.js.map",
     "859.8e7f0614.chunk.js.map": "/technology-frontend/static/js/859.8e7f0614.chunk.js.map",
-    "942.6140c60b.chunk.js.map": "/technology-frontend/static/js/942.6140c60b.chunk.js.map",
+    "942.1ed0426f.chunk.js.map": "/technology-frontend/static/js/942.1ed0426f.chunk.js.map",
     "473.131a220d.chunk.js.map": "/technology-frontend/static/js/473.131a220d.chunk.js.map",
     "234.a8cff0f7.chunk.js.map": "/technology-frontend/static/js/234.a8cff0f7.chunk.js.map",
     "273.6c209e32.chunk.js.map": "/technology-frontend/static/js/273.6c209e32.chunk.js.map",
@@ -24,6 +24,6 @@
   },
   "entrypoints": [
     "static/css/main.bc1dca3e.css",
-    "static/js/main.3b51aa4d.js"
+    "static/js/main.d68b316f.js"
   ]
 }
