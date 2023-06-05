@@ -2,6 +2,9 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy } from "react";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { SharedLayot } from "../SharedLayout";
 
 const Home = lazy(() => import("../../pages/Home"));
@@ -27,6 +30,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <ToastContainer />
     </>
   );
 }

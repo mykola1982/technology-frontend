@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { Container, Box, Button, Typography } from "@mui/material";
+import {
+  Container,
+  Box,
+  Button,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import { AddForm } from "../../components/AddForm";
@@ -16,6 +23,8 @@ import * as API from "../../services/products-API";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
   const [productForUpdate, setProductForUpdate] = useState(null);
 
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -48,9 +57,14 @@ const Products = () => {
   useEffect(() => {
     async function getAllProducts() {
       try {
+        setIsLoading(true);
         const { data } = await API.fetchAllProductAPI();
         setProducts(data.products);
-      } catch (error) {}
+      } catch (error) {
+        toast.error(`Щось пішло не так. Спробуй знову...`);
+      } finally {
+        setIsLoading(false);
+      }
     }
     getAllProducts();
   }, []);
@@ -78,10 +92,14 @@ const Products = () => {
 
     try {
       const { data } = await API.addProductAPI(newProduct);
-
       setProducts((prevProducts) => [data.product, ...prevProducts]);
+      toast.success(`Деталь  ${name}-${number} успішно додана до списку`);
     } catch (error) {
-    } finally {
+      if (error.response.status === 409) {
+        toast.error(`Деталь з децимальним номером  ${number} вже є в списку`);
+      } else {
+        toast.error(`Щось пішло не так. Спробуй знову...`);
+      }
     }
   };
 
@@ -91,8 +109,9 @@ const Products = () => {
       setProducts((prevProducts) =>
         prevProducts.filter(({ _id }) => _id !== response.id)
       );
+      toast.success(`Деталь успішно видалена iз списку`);
     } catch (error) {
-      console.log(error.mesage);
+      toast.error(`Щось пішло не так. Спробуй знову...`);
     }
   };
 
@@ -162,19 +181,16 @@ const Products = () => {
   };
 
   const visibleProducts = getVisibelProducts();
-  // функцію пошуку прожуку можна винести в Utils
+
   const selectProduct = (id) => {
     const selectedProduct = products.find((product) => product._id === id);
+    const { _id, name, number } = selectProduct;
 
-    const hasProduct = selectedProducts.some(
-      (product) => product._id === selectedProduct._id
-    );
+    const hasProduct = selectedProducts.some((product) => product._id === _id);
 
     if (hasProduct) {
-      // замінити на тостер
-      console.log(
-        `Деталь ${selectedProduct.name}- ${selectedProduct.number} вже є в списку замовлення `
-      );
+      toast.warn(`Деталь ${name}- ${number} вже є в списку замовлення `);
+
       return;
     }
     setSelectedOneProduct(selectedProduct);
@@ -192,7 +208,6 @@ const Products = () => {
   };
 
   const deleteProductFromOrder = (id) => {
-    console.log("id продукта що видаляється", id);
     setSelectedProducts((prevSelectedProducts) =>
       prevSelectedProducts.filter((product) => product._id !== id)
     );
@@ -241,16 +256,25 @@ const Products = () => {
           >
             Список деталей
           </Typography>
-          <Typography variant="body1">
-            Всього в базі - {products.length} дет.
-          </Typography>
-          <ProductsList
-            products={visibleProducts}
-            onDeleteProduct={deleteProduct}
-            onOpenModalOnUpdate={openModalOnUpdate}
-            onSelectProduct={selectProduct}
-            location={location}
-          />
+          {products.length > 0 && (
+            <Typography variant="body1">
+              Всього в базі - {products.length} дет.
+            </Typography>
+          )}
+
+          {isLoading && (
+            <CircularProgress size={80} sx={{ mt: "auto", mb: "auto" }} />
+          )}
+
+          {products && (
+            <ProductsList
+              products={visibleProducts}
+              onDeleteProduct={deleteProduct}
+              onOpenModalOnUpdate={openModalOnUpdate}
+              onSelectProduct={selectProduct}
+              location={location}
+            />
+          )}
         </Box>
         <Box
           sx={{
