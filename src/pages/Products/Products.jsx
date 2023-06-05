@@ -184,7 +184,7 @@ const Products = () => {
 
   const selectProduct = (id) => {
     const selectedProduct = products.find((product) => product._id === id);
-    const { _id, name, number } = selectProduct;
+    const { _id, name, number } = selectedProduct;
 
     const hasProduct = selectedProducts.some((product) => product._id === _id);
 
