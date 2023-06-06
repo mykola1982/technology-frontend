@@ -1,18 +1,26 @@
 import { createPortal } from "react-dom";
 
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 import { ModalBackdrop, ModalContet } from "./Modal.styled";
 
 const modalRoot = document.querySelector("#modal-root");
 
 export const Modal = ({ children, onClose }) => {
-  const hendleBackdropClick = (evt) => {
-    if (evt.target === evt.currentTarget) {
-      onClose();
-    }
-  };
   return createPortal(
-    <ModalBackdrop onClick={hendleBackdropClick}>
-      <ModalContet>{children}</ModalContet>
+    <ModalBackdrop>
+      <ModalContet>
+        {children}
+        <IconButton
+          aria-label="close"
+          size="medium"
+          onClick={onClose}
+          sx={{ position: "absolute", top: 3, right: 3 }}
+        >
+          <CloseIcon fontSize="medium" sx={{ color: "#1976d2" }} />
+        </IconButton>
+      </ModalContet>
     </ModalBackdrop>,
     modalRoot
   );

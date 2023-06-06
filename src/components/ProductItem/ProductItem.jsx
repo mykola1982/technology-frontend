@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { IconButton, Typography, Box, ListItem } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
+// import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+// import EditIcon from "@mui/icons-material/Edit";
 
 export const ProductItem = ({
   product,
@@ -45,31 +45,15 @@ export const ProductItem = ({
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <IconButton
-          aria-label="delete"
-          size="small"
-          onClick={() => onDeleteProduct(_id)}
-        >
-          <DeleteForeverIcon fontSize="small" sx={{ color: "#1976d2" }} />
-        </IconButton>
-        <IconButton
-          aria-label="edit"
-          size="small"
-          onClick={() => onOpenModalOnUpdate(_id)}
-        >
-          <EditIcon fontSize="small" sx={{ color: "#1976d2" }} />
-        </IconButton>
-        <IconButton
-          aria-label="add to order list"
-          size="small"
-          onClick={() => {
-            onSelectProduct(_id);
-          }}
-        >
-          <AddIcon fontSize="small" sx={{ color: "#1976d2" }} />
-        </IconButton>
-      </Box>
+      <IconButton
+        aria-label="add to order list"
+        size="medium"
+        onClick={() => {
+          onSelectProduct(_id);
+        }}
+      >
+        <AddIcon fontSize="medium" sx={{ color: "#1976d2" }} />
+      </IconButton>
     </ListItem>
   );
 };

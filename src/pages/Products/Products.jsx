@@ -25,7 +25,7 @@ const Products = () => {
   const [filter, setFilter] = useState("");
 
   const [isLoading, setIsLoading] = useState(true);
-  const [productForUpdate, setProductForUpdate] = useState(null);
+  // const [productForUpdate, setProductForUpdate] = useState(null);
 
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedOneProduct, setSelectedOneProduct] = useState(null);
@@ -37,7 +37,7 @@ const Products = () => {
 
   const openModal = () => {
     setShowModal(true);
-    setProductForUpdate(null);
+    // setProductForUpdate(null);
   };
 
   const closeModal = () => {
@@ -103,68 +103,68 @@ const Products = () => {
     }
   };
 
-  const deleteProduct = async (id) => {
-    try {
-      const response = await API.removeProductAPI(id);
-      setProducts((prevProducts) =>
-        prevProducts.filter(({ _id }) => _id !== response.id)
-      );
-      toast.success(`Деталь успішно видалена iз списку`);
-    } catch (error) {
-      toast.error(`Щось пішло не так. Спробуй знову...`);
-    }
-  };
+  // const deleteProduct = async (id) => {
+  //   try {
+  //     const response = await API.removeProductAPI(id);
+  //     setProducts((prevProducts) =>
+  //       prevProducts.filter(({ _id }) => _id !== response.id)
+  //     );
+  //     toast.success(`Деталь успішно видалена iз списку`);
+  //   } catch (error) {
+  //     toast.error(`Щось пішло не так. Спробуй знову...`);
+  //   }
+  // };
 
-  const openModalOnUpdate = async (id) => {
-    openModal();
-    setProductForUpdate(() => products.find((product) => product._id === id));
-  };
+  // const openModalOnUpdate = async (id) => {
+  //   openModal();
+  //   setProductForUpdate(() => products.find((product) => product._id === id));
+  // };
 
-  const updateProduct = async ({
-    name,
-    number,
-    weight,
-    quantity,
-    workshop,
-    thickness,
-    sheet,
-  }) => {
-    const updateData = {
-      name,
-      number,
-      weight,
-      quantity,
-      workshop,
-      material: {
-        thickness,
-        sheet,
-      },
-    };
+  // const updateProduct = async ({
+  //   name,
+  //   number,
+  //   weight,
+  //   quantity,
+  //   workshop,
+  //   thickness,
+  //   sheet,
+  // }) => {
+  //   const updateData = {
+  //     name,
+  //     number,
+  //     weight,
+  //     quantity,
+  //     workshop,
+  //     material: {
+  //       thickness,
+  //       sheet,
+  //     },
+  //   };
 
-    try {
-      const response = await API.updateProductAPI(
-        productForUpdate._id,
-        updateData
-      );
-      // мені здається що можна змінити тут більш простим методом
+  //   try {
+  //     const response = await API.updateProductAPI(
+  //       productForUpdate._id,
+  //       updateData
+  //     );
+  //     // мені здається що можна змінити тут більш простим методом
 
-      setProducts((prevProducts) => {
-        const indexUpdatedProduct = prevProducts.findIndex(
-          (product) => product._id === productForUpdate._id
-        );
+  //     setProducts((prevProducts) => {
+  //       const indexUpdatedProduct = prevProducts.findIndex(
+  //         (product) => product._id === productForUpdate._id
+  //       );
 
-        if (indexUpdatedProduct !== -1) {
-          prevProducts[indexUpdatedProduct] = {
-            ...prevProducts[indexUpdatedProduct],
-            ...response.data,
-          };
-        }
+  //       if (indexUpdatedProduct !== -1) {
+  //         prevProducts[indexUpdatedProduct] = {
+  //           ...prevProducts[indexUpdatedProduct],
+  //           ...response.data,
+  //         };
+  //       }
 
-        const updatetedProducts = [...prevProducts];
-        return updatetedProducts;
-      });
-    } catch (error) {}
-  };
+  //       const updatetedProducts = [...prevProducts];
+  //       return updatetedProducts;
+  //     });
+  //   } catch (error) {}
+  // };
 
   const handleChangeFilter = (evt) => {
     const { value } = evt.currentTarget;
@@ -216,12 +216,12 @@ const Products = () => {
   return (
     <>
       <Container
-        maxWidth="lg"
+        maxWidth="xl"
         sx={{ display: "flex", height: "100vh", gap: 2 }}
       >
         <Box
           sx={{
-            maxWidth: "380px",
+            width: "380px",
             borderRadius: 4,
             display: "flex",
             flexDirection: "column",
@@ -269,8 +269,8 @@ const Products = () => {
           {products && (
             <ProductsList
               products={visibleProducts}
-              onDeleteProduct={deleteProduct}
-              onOpenModalOnUpdate={openModalOnUpdate}
+              // onDeleteProduct={deleteProduct}
+              // onOpenModalOnUpdate={openModalOnUpdate}
               onSelectProduct={selectProduct}
               location={location}
             />
@@ -307,13 +307,10 @@ const Products = () => {
 
       {showModal && (
         <Modal onClose={closeModal}>
-          <AddForm
-            onSubmit={!productForUpdate ? addProduct : updateProduct}
-            onClose={closeModal}
-            productForUpdate={productForUpdate}
-          />
+          <AddForm onSubmit={addProduct} onClose={closeModal} />
         </Modal>
       )}
+
       {showModalFormQuantity && (
         <Modal onClose={closeModalFormQuantity}>
           <FormQuantityProduct
