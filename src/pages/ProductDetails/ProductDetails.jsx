@@ -7,24 +7,38 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+import ModalMaterial from "@mui/material/Modal";
+
 import * as API from "../../services/products-API";
 
 import { AddForm } from "../../components/AddForm";
 import { Modal } from "../../components/Modal";
+import { ModalToDelete } from "../../components/ModalToDelete";
 import { ProductDetailsDescription } from "../../components/ProductDetailsDescription";
+import { TechnologyDescription } from "../../components/TechnologyDescription";
 
 const ProductDetails = () => {
   const location = useLocation();
 
   const { productId } = useParams();
-  const [detailsProduct, setDetailsProduct] = useState(null);
-  const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
-    setShowModal(true);
+  const [detailsProduct, setDetailsProduct] = useState(null);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+
+  const openModalUpdate = () => {
+    setShowModalUpdate(true);
   };
-  const closeModal = () => {
-    setShowModal(false);
+  const closeModalUpdate = () => {
+    setShowModalUpdate(false);
+  };
+
+  const openModalDelete = () => {
+    setShowModalDelete(true);
+  };
+
+  const closeModalDelete = () => {
+    setShowModalDelete(false);
   };
 
   useEffect(() => {
@@ -72,14 +86,11 @@ const ProductDetails = () => {
 
     try {
       const { data } = await API.updateProductAPI(productId, updateData);
-      toast.success(`Деталь про деталь успішно оновлені`);
-      console.log("то оновлені чи ні");
-      console.log("data", data);
+      toast.success(`Дані про деталь успішно оновлені`);
+
       setDetailsProduct(data);
     } catch (error) {
-      console.log(error);
       toast.error(`Щось пішло не так. Спробуй знову... на оновленні`);
-      console.log("що за помилка");
     }
   };
 
@@ -87,14 +98,17 @@ const ProductDetails = () => {
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ display: "flex", height: "100vh" }}>
+      <Container
+        maxWidth="xl"
+        sx={{ display: "flex", height: "100vh", gap: 2 }}
+      >
         <Box
           sx={{
+            width: "600px",
             borderRadius: 4,
             mt: 10,
             mb: 2,
             p: 2,
-            flexGrow: 1,
             backgroundColor: "#f5f5f5",
             boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
           }}
@@ -105,41 +119,49 @@ const ProductDetails = () => {
             variant="contained"
             sazi="large"
             startIcon={<ArrowBackIcon />}
-            sx={{ mb: 1 }}
+            sx={{ mb: 4 }}
           >
             Назад
           </Button>
-          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+          <Typography variant="h4" align={"center"} sx={{ fontWeight: 700 }}>
             Технічний опис деталі
           </Typography>
 
           {detailsProduct ? (
             <>
               <ProductDetailsDescription detailsProduct={detailsProduct} />
-
-              <Button
-                variant="contained"
-                sazi="large"
-                onClick={() => deleteProduct(productId)}
-                startIcon={<DeleteForeverIcon />}
+              <Box
                 sx={{
-                  width: "150px",
-                  mr: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 4,
+                  mt: 4,
                 }}
               >
-                Bидалити
-              </Button>
-              <Button
-                variant="contained"
-                sazi="large"
-                onClick={() => openModal()}
-                startIcon={<EditIcon />}
-                sx={{
-                  width: "150px",
-                }}
-              >
-                Редагувати
-              </Button>
+                <Button
+                  variant="contained"
+                  sazi="large"
+                  // onClick={() => deleteProduct(productId)}
+                  onClick={openModalDelete}
+                  startIcon={<DeleteForeverIcon />}
+                  sx={{
+                    width: "150px",
+                  }}
+                >
+                  Bидалити
+                </Button>
+                <Button
+                  variant="contained"
+                  sazi="large"
+                  onClick={openModalUpdate}
+                  startIcon={<EditIcon />}
+                  sx={{
+                    width: "150px",
+                  }}
+                >
+                  Редагувати
+                </Button>
+              </Box>
             </>
           ) : (
             <Typography variant="h5" component="p" sx={{ fontWeight: 700 }}>
@@ -147,17 +169,52 @@ const ProductDetails = () => {
             </Typography>
           )}
         </Box>
+
+        <TechnologyDescription />
       </Container>
 
-      {showModal && (
-        <Modal onClose={closeModal}>
+      {showModalUpdate && (
+        <Modal onClose={closeModalUpdate}>
           <AddForm
             onSubmit={updateProduct}
-            onClose={closeModal}
+            onClose={closeModalUpdate}
             productForUpdate={detailsProduct}
           />
         </Modal>
       )}
+      {/* зробити цю модалку окремим компонентом */}
+
+      {/* <ModalToDelete open={showModalDelete} /> */}
+
+      {/* поставити фокус на кнопку ні */}
+      <ModalMaterial open={showModalDelete} onClose={closeModalDelete}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography variant="h6" component="h2">
+            Ви бажаєте видалити дану деталь
+          </Typography>
+          <Button
+            onClick={() => {
+              deleteProduct(productId);
+              closeModalDelete();
+            }}
+          >
+            Так
+          </Button>
+          <Button onClick={closeModalDelete}>Hi</Button>
+        </Box>
+      </ModalMaterial>
     </>
   );
 };
