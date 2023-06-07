@@ -7,8 +7,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import ModalMaterial from "@mui/material/Modal";
-
 import * as API from "../../services/products-API";
 
 import { AddForm } from "../../components/AddForm";
@@ -61,6 +59,11 @@ const ProductDetails = () => {
     } catch (error) {
       toast.error(`Щось пішло не так. Спробуй знову...`);
     }
+  };
+
+  const hendelDelete = async () => {
+    await deleteProduct(productId);
+    closeModalDelete();
   };
 
   const updateProduct = async ({
@@ -141,7 +144,6 @@ const ProductDetails = () => {
                 <Button
                   variant="contained"
                   sazi="large"
-                  // onClick={() => deleteProduct(productId)}
                   onClick={openModalDelete}
                   startIcon={<DeleteForeverIcon />}
                   sx={{
@@ -182,39 +184,12 @@ const ProductDetails = () => {
           />
         </Modal>
       )}
-      {/* зробити цю модалку окремим компонентом */}
 
-      {/* <ModalToDelete open={showModalDelete} /> */}
-
-      {/* поставити фокус на кнопку ні */}
-      <ModalMaterial open={showModalDelete} onClose={closeModalDelete}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography variant="h6" component="h2">
-            Ви бажаєте видалити дану деталь
-          </Typography>
-          <Button
-            onClick={() => {
-              deleteProduct(productId);
-              closeModalDelete();
-            }}
-          >
-            Так
-          </Button>
-          <Button onClick={closeModalDelete}>Hi</Button>
-        </Box>
-      </ModalMaterial>
+      <ModalToDelete
+        open={showModalDelete}
+        onClose={closeModalDelete}
+        onDelete={hendelDelete}
+      />
     </>
   );
 };
