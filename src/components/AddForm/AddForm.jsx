@@ -3,8 +3,8 @@ import { nanoid } from "nanoid";
 import { getMaterials } from "../../data/fakeAPI";
 
 const Workshop = {
-  CNC: "Дільниця з ЧПУ",
-  PRESSING: "Штамповочна дільниця",
+  CNC: "дільниця з ЧПУ",
+  PRESSING: "штампувальна дільниця",
 };
 
 export const AddForm = ({ onSubmit, onClose, productForUpdate }) => {
@@ -27,8 +27,6 @@ export const AddForm = ({ onSubmit, onClose, productForUpdate }) => {
     .filter(
       (thicknessSheet, index, array) => array.indexOf(thicknessSheet) === index
     );
-
-  console.log("productForUpdate в  формі", productForUpdate);
 
   const initialValues = {};
 
@@ -143,16 +141,7 @@ export const AddForm = ({ onSubmit, onClose, productForUpdate }) => {
           ))}
         </select>
       </label>
-      {/* {розглянути можливість формування опцій з файлу даних} */}
-      {/* <label>
-        Всі дані введені вірно
-        <input
-          type="checkbox"
-          checked={agreed}
-          onChange={handleChangeChecked}
-        />
-      </label> */}
-      {/* групування полів */}
+
       <button type="submit">
         {!productForUpdate ? (
           <span>Додати деталь до списку</span>

@@ -3,14 +3,11 @@ import { Link } from "react-router-dom";
 import { IconButton, Typography, Box, ListItem } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
-// import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-// import EditIcon from "@mui/icons-material/Edit";
 
 export const ProductItem = ({
   product,
   index,
-  onDeleteProduct,
-  onOpenModalOnUpdate,
+
   onSelectProduct,
   location,
 }) => {

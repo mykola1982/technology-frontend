@@ -16,8 +16,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { getMetalConsumption } from "../../utils/getMetalConsumption";
 
 export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
-  console.log("вибрані продукти", products);
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small">

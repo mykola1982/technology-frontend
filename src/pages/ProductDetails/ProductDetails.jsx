@@ -1,22 +1,23 @@
-import { getMetalConsumption } from "../../utils/getMetalConsumption";
-
 import { useParams, useLocation, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-import { Container, Box, Button } from "@mui/material";
+import { Container, Box, Typography, Button } from "@mui/material";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import * as API from "../../services/products-API";
 
 import { AddForm } from "../../components/AddForm";
 import { Modal } from "../../components/Modal";
+import { ProductDetailsDescription } from "../../components/ProductDetailsDescription";
 
 const ProductDetails = () => {
   const location = useLocation();
+
   const { productId } = useParams();
-
   const [detailsProduct, setDetailsProduct] = useState(null);
-
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -31,10 +32,12 @@ const ProductDetails = () => {
       try {
         const response = await API.fetchProductAPI(productId);
         setDetailsProduct(response.data);
-      } catch (error) {}
+      } catch (error) {
+        toast.error(`Щось пішло не так. Спробуй знову...`);
+      }
     }
     getProduct();
-  }, [productId, detailsProduct]);
+  }, [productId]);
 
   const deleteProduct = async (id) => {
     try {
@@ -68,9 +71,16 @@ const ProductDetails = () => {
     };
 
     try {
-      const response = await API.updateProductAPI(productId, updateData);
-      setDetailsProduct(...response);
-    } catch (error) {}
+      const { data } = await API.updateProductAPI(productId, updateData);
+      toast.success(`Деталь про деталь успішно оновлені`);
+      console.log("то оновлені чи ні");
+      console.log("data", data);
+      setDetailsProduct(data);
+    } catch (error) {
+      console.log(error);
+      toast.error(`Щось пішло не так. Спробуй знову... на оновленні`);
+      console.log("що за помилка");
+    }
   };
 
   const backLinkHref = location.state?.from ?? "/";
@@ -94,53 +104,47 @@ const ProductDetails = () => {
             to={backLinkHref}
             variant="contained"
             sazi="large"
+            startIcon={<ArrowBackIcon />}
+            sx={{ mb: 1 }}
           >
             Назад
           </Button>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+            Технічний опис деталі
+          </Typography>
 
           {detailsProduct ? (
             <>
-              <div>
-                Тут буде дельний опис про деталь
-                <h2>
-                  Опис деталі - {detailsProduct.name} {detailsProduct.number}
-                </h2>
-                <p>Найменування - {detailsProduct.name}</p>
-                <p>Децимальний номер - {detailsProduct.number}</p>
-                <p>Дільниця виготовлення -{detailsProduct.workshop}</p>
-                <p>Матеріал -{detailsProduct.material.sheet} </p>
-                <p>
-                  Норма витрати-{" "}
-                  {getMetalConsumption(
-                    detailsProduct.quantity,
-                    detailsProduct.material.sheet,
-                    detailsProduct.material.thickness
-                  )}
-                </p>
-                <p>Товщина металу-{detailsProduct.material.thickness} мм.</p>
-                <p>Кількість деталей листа-{detailsProduct.quantity} шт.</p>
-                <p> Вага деталі-{detailsProduct.weight}кг.</p>
-              </div>
+              <ProductDetailsDescription detailsProduct={detailsProduct} />
+
               <Button
-                component={Link}
                 variant="contained"
                 sazi="large"
                 onClick={() => deleteProduct(productId)}
+                startIcon={<DeleteForeverIcon />}
+                sx={{
+                  width: "150px",
+                  mr: 2,
+                }}
               >
                 Bидалити
               </Button>
-
               <Button
-                component={Link}
                 variant="contained"
                 sazi="large"
-                onClick={openModal}
+                onClick={() => openModal()}
+                startIcon={<EditIcon />}
+                sx={{
+                  width: "150px",
+                }}
               >
                 Редагувати
               </Button>
             </>
           ) : (
-            <p>Дані про деталь відсутні...</p>
+            <Typography variant="h5" component="p" sx={{ fontWeight: 700 }}>
+              Дані про деталь не знайдено...
+            </Typography>
           )}
         </Box>
       </Container>
