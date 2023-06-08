@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/technology-frontend/static/css/main.bc1dca3e.css",
-    "main.js": "/technology-frontend/static/js/main.b503d841.js",
+    "main.js": "/technology-frontend/static/js/main.2bbb8500.js",
     "static/js/859.8e7f0614.chunk.js": "/technology-frontend/static/js/859.8e7f0614.chunk.js",
-    "static/js/50.a0d88ebf.chunk.js": "/technology-frontend/static/js/50.a0d88ebf.chunk.js",
+    "static/js/50.832d3942.chunk.js": "/technology-frontend/static/js/50.832d3942.chunk.js",
     "static/js/473.131a220d.chunk.js": "/technology-frontend/static/js/473.131a220d.chunk.js",
-    "static/js/682.a69ef29d.chunk.js": "/technology-frontend/static/js/682.a69ef29d.chunk.js",
+    "static/js/682.d59a562a.chunk.js": "/technology-frontend/static/js/682.d59a562a.chunk.js",
     "static/js/273.6c209e32.chunk.js": "/technology-frontend/static/js/273.6c209e32.chunk.js",
     "static/js/787.fabe9476.chunk.js": "/technology-frontend/static/js/787.fabe9476.chunk.js",
     "static/js/789.3fd25608.chunk.js": "/technology-frontend/static/js/789.3fd25608.chunk.js",
     "static/js/752.3b18de4e.chunk.js": "/technology-frontend/static/js/752.3b18de4e.chunk.js",
     "index.html": "/technology-frontend/index.html",
     "main.bc1dca3e.css.map": "/technology-frontend/static/css/main.bc1dca3e.css.map",
-    "main.b503d841.js.map": "/technology-frontend/static/js/main.b503d841.js.map",
+    "main.2bbb8500.js.map": "/technology-frontend/static/js/main.2bbb8500.js.map",
     "859.8e7f0614.chunk.js.map": "/technology-frontend/static/js/859.8e7f0614.chunk.js.map",
-    "50.a0d88ebf.chunk.js.map": "/technology-frontend/static/js/50.a0d88ebf.chunk.js.map",
+    "50.832d3942.chunk.js.map": "/technology-frontend/static/js/50.832d3942.chunk.js.map",
     "473.131a220d.chunk.js.map": "/technology-frontend/static/js/473.131a220d.chunk.js.map",
-    "682.a69ef29d.chunk.js.map": "/technology-frontend/static/js/682.a69ef29d.chunk.js.map",
+    "682.d59a562a.chunk.js.map": "/technology-frontend/static/js/682.d59a562a.chunk.js.map",
     "273.6c209e32.chunk.js.map": "/technology-frontend/static/js/273.6c209e32.chunk.js.map",
     "787.fabe9476.chunk.js.map": "/technology-frontend/static/js/787.fabe9476.chunk.js.map",
     "789.3fd25608.chunk.js.map": "/technology-frontend/static/js/789.3fd25608.chunk.js.map",
@@ -24,6 +24,6 @@
   },
   "entrypoints": [
     "static/css/main.bc1dca3e.css",
-    "static/js/main.b503d841.js"
+    "static/js/main.2bbb8500.js"
   ]
 }
