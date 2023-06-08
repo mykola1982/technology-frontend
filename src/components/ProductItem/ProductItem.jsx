@@ -15,7 +15,11 @@ export const ProductItem = ({
 
   return (
     <ListItem
-      sx={{ justifyContent: "space-between", borderBottom: "1px solid" }}
+      sx={{
+        justifyContent: "space-between",
+        borderBottom: "1px solid",
+        gap: 8,
+      }}
     >
       <Box
         to={`/products/${_id}`}
@@ -27,6 +31,7 @@ export const ProductItem = ({
           textDecoration: "none",
           color: "inherit",
           maxWidth: "260px",
+          flexGrow: "1",
         }}
       >
         <Typography variant="body1" mr={1}>

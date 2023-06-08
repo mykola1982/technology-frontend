@@ -9,7 +9,7 @@ export const ModalToDelete = ({ open, onClose, onDelete }) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 360,
+          width: "360px",
           bgcolor: "#fff",
           borderRadius: 2,
           boxShadow:
@@ -17,7 +17,7 @@ export const ModalToDelete = ({ open, onClose, onDelete }) => {
           p: 4,
         }}
       >
-        <Typography variant="h6" component="P" align="center" sx={{ mb: 2 }}>
+        <Typography variant="h6" component="p" align="center" sx={{ mb: 2 }}>
           Ви бажаєте видалити дану деталь
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>

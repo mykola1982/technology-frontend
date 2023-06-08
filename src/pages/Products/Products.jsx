@@ -15,10 +15,11 @@ import { AddForm } from "../../components/AddForm";
 import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
 import { SelectedProductList } from "../../components/SelectedProductList";
-import { Modal } from "../../components/Modal";
+import { ModalBig } from "../../components/ModalBig";
 import { FormQuantityProduct } from "../../components/FormQuantityProduct";
 
 import * as API from "../../services/products-API";
+import { ModalSmall } from "../../components/ModalSmall";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -192,11 +193,19 @@ const Products = () => {
           >
             Список деталей
           </Typography>
-          {products.length > 0 && (
-            <Typography variant="body1">
-              Всього в базі - {products.length} дет.
-            </Typography>
-          )}
+
+          <Box>
+            {products.length > 0 && (
+              <Typography variant="body1" align="center">
+                Всього в базі - {products.length} дет.
+              </Typography>
+            )}
+            {filter && (
+              <Typography variant="body1" align="center">
+                Знайдено збігів - {visibleProducts.length}
+              </Typography>
+            )}
+          </Box>
 
           {isLoading && (
             <CircularProgress size={80} sx={{ mt: "auto", mb: "auto" }} />
@@ -239,21 +248,17 @@ const Products = () => {
         </Box>
       </Container>
 
-      {showModal && (
-        <Modal onClose={closeModal}>
-          <AddForm onSubmit={addProduct} onClose={closeModal} />
-        </Modal>
-      )}
+      <ModalBig open={showModal} onClose={closeModal}>
+        <AddForm onSubmit={addProduct} onClose={closeModal} />
+      </ModalBig>
 
-      {showModalFormQuantity && (
-        <Modal onClose={closeModalFormQuantity}>
-          <FormQuantityProduct
-            onClose={closeModalFormQuantity}
-            onSubmit={addProductToOrder}
-            product={selectedOneProduct}
-          />
-        </Modal>
-      )}
+      <ModalSmall open={showModalFormQuantity} onClose={closeModalFormQuantity}>
+        <FormQuantityProduct
+          onClose={closeModalFormQuantity}
+          onSubmit={addProductToOrder}
+          product={selectedOneProduct}
+        />
+      </ModalSmall>
     </>
   );
 };

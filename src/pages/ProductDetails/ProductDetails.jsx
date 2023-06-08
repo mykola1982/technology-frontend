@@ -11,11 +11,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import * as API from "../../services/products-API";
 
 import { AddForm } from "../../components/AddForm";
-import { Modal } from "../../components/Modal";
-import { ModalToDelete } from "../../components/ModalToDelete";
+import { ModalBig } from "../../components/ModalBig";
+import { ModalSmall } from "../../components/ModalSmall";
 import { ProductDetailsDescription } from "../../components/ProductDetailsDescription";
 import { TechnologyDescription } from "../../components/TechnologyDescription";
-
+import { ContentModalDelete } from "../../components/ContentModalDelete";
 const ProductDetails = () => {
   const location = useLocation();
 
@@ -94,7 +94,11 @@ const ProductDetails = () => {
 
       setDetailsProduct(data);
     } catch (error) {
-      toast.error(`Щось пішло не так. Спробуй знову... на оновленні`);
+      if (error.response.status === 409) {
+        toast.error(`Деталь з децимальним номером  ${number} вже є в списку`);
+      } else {
+        toast.error(`Щось пішло не так. Спробуй знову...`);
+      }
     }
   };
 
@@ -121,7 +125,7 @@ const ProductDetails = () => {
             component={Link}
             to={backLinkHref}
             variant="contained"
-            sazi="large"
+            size="small"
             startIcon={<ArrowBackIcon />}
             sx={{ mb: 4 }}
           >
@@ -137,14 +141,13 @@ const ProductDetails = () => {
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
-                  gap: 4,
+                  justifyContent: "space-evenly",
                   mt: 4,
                 }}
               >
                 <Button
                   variant="contained"
-                  sazi="large"
+                  size="large"
                   onClick={openModalDelete}
                   startIcon={<DeleteForeverIcon />}
                   sx={{
@@ -155,7 +158,7 @@ const ProductDetails = () => {
                 </Button>
                 <Button
                   variant="contained"
-                  sazi="large"
+                  size="large"
                   onClick={openModalUpdate}
                   startIcon={<EditIcon />}
                   sx={{
@@ -176,21 +179,20 @@ const ProductDetails = () => {
         <TechnologyDescription />
       </Container>
 
-      {showModalUpdate && (
-        <Modal onClose={closeModalUpdate}>
-          <AddForm
-            onSubmit={updateProduct}
-            onClose={closeModalUpdate}
-            productForUpdate={detailsProduct}
-          />
-        </Modal>
-      )}
+      <ModalBig open={showModalUpdate} onClose={closeModalUpdate}>
+        <AddForm
+          onSubmit={updateProduct}
+          onClose={closeModalUpdate}
+          productForUpdate={detailsProduct}
+        />
+      </ModalBig>
 
-      <ModalToDelete
-        open={showModalDelete}
-        onClose={closeModalDelete}
-        onDelete={hendelDelete}
-      />
+      <ModalSmall open={showModalDelete} onClose={closeModalDelete}>
+        <ContentModalDelete
+          onDelete={hendelDelete}
+          onClose={closeModalDelete}
+        />
+      </ModalSmall>
     </>
   );
 };
