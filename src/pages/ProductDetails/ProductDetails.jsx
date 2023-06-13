@@ -8,7 +8,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import * as API from "../../services/products-API";
+import * as productAPI from "../../services/products-API";
 
 import { AddForm } from "../../components/AddForm";
 import { ModalBig } from "../../components/ModalBig";
@@ -43,7 +43,7 @@ const ProductDetails = () => {
   useEffect(() => {
     async function getProduct() {
       try {
-        const response = await API.fetchProductAPI(productId);
+        const response = await productAPI.fetchProductAPI(productId);
         setDetailsProduct(response.data);
       } catch (error) {
         toast.error(`Щось пішло не так. Спробуй знову...`);
@@ -54,7 +54,7 @@ const ProductDetails = () => {
 
   const deleteProduct = async (id) => {
     try {
-      await API.removeProductAPI(id);
+      await productAPI.removeProductAPI(id);
       setDetailsProduct(null);
       toast.success(`Деталь успішно видалена iз списку`);
     } catch (error) {
@@ -89,7 +89,7 @@ const ProductDetails = () => {
     };
 
     try {
-      const { data } = await API.updateProductAPI(productId, updateData);
+      const { data } = await productAPI.updateProductAPI(productId, updateData);
       toast.success(`Дані про деталь успішно оновлені`);
 
       setDetailsProduct(data);

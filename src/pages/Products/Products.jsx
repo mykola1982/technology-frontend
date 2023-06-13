@@ -18,7 +18,8 @@ import { SelectedProductList } from "../../components/SelectedProductList";
 import { ModalBig } from "../../components/ModalBig";
 import { FormQuantityProduct } from "../../components/FormQuantityProduct";
 
-import * as API from "../../services/products-API";
+import * as productAPI from "../../services/products-API";
+import * as orderAPI from "../../services/orders-API";
 import { ModalSmall } from "../../components/ModalSmall";
 
 const Products = () => {
@@ -58,7 +59,7 @@ const Products = () => {
     async function getAllProducts() {
       try {
         setIsLoading(true);
-        const { data } = await API.fetchAllProductAPI();
+        const { data } = await productAPI.fetchAllProductAPI();
         setProducts(data.products);
       } catch (error) {
         toast.error(`Щось пішло не так. Спробуй знову...`);
@@ -91,7 +92,7 @@ const Products = () => {
     };
 
     try {
-      const { data } = await API.addProductAPI(newProduct);
+      const { data } = await productAPI.addProductAPI(newProduct);
       setProducts((prevProducts) => [data.product, ...prevProducts]);
       toast.success(`Деталь  ${name}-${number} успішно додана до списку`);
     } catch (error) {
@@ -149,6 +150,68 @@ const Products = () => {
       prevSelectedProducts.filter((product) => product._id !== id)
     );
   };
+
+  const addOrder = async (products) => {
+    const newOrder = {
+      products: products.map(
+        ({ name, number, weight, quantity, material, reserved }) => {
+          return { name, number, weight, quantity, material, reserved };
+        }
+      ),
+    };
+
+    try {
+      await orderAPI.addOrderAPI(newOrder);
+
+      setSelectedProducts([]);
+      toast.success(
+        "Деталі успішно додані в замовлення на розрахунок матеріалу."
+      );
+    } catch (error) {
+      toast.error("Щось пішло не так. Спробуй знову...");
+    }
+  };
+
+  // _________________
+  // шукаю унікальні значення  сортаменту в замовленні
+  const getAssortmentUnique = (products) => {
+    return products
+      .map((product) => product.material)
+      .reduce((acc, product, index, products) => {
+        const isUnique = acc.some(
+          (element) =>
+            element.thickness === product.thickness &&
+            element.sheet === product.sheet
+        );
+
+        if (!isUnique) {
+          acc.push({ ...product });
+        }
+        console.log(`isUniqu на ${index + 1} ітерації `, isUnique);
+        console.log(`acc на ${index + 1} ітерації `, acc);
+        return acc;
+      }, []);
+  };
+
+  const materials = getAssortmentUnique(selectedProducts);
+  console.log("унікальний матеріал на замовлення", materials);
+
+  const materialsWithWaigth = materials.map((material) => {
+    const totalWeight = selectedProducts.reduce((acc, product) => {
+      if (
+        material.thickness === product.material.thickness &&
+        material.sheet === product.material.sheet
+      ) {
+        acc = acc + product.weight * product.reserved;
+      }
+      return acc;
+    }, 0);
+    return { ...material, totalWeight };
+  });
+
+  console.log(materialsWithWaigth);
+
+  // ----------------
 
   return (
     <>
@@ -242,7 +305,7 @@ const Products = () => {
             variant="contained"
             size="large"
             disabled={selectedProducts.length <= 0}
-            onClick={() => console.log(selectedProducts)}
+            onClick={() => addOrder(selectedProducts)}
           >
             Сформувати замовлення
           </Button>

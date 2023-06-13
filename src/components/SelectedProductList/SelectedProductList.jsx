@@ -27,6 +27,7 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
             <TableCell align="center">Матеріал</TableCell>
             <TableCell align="center">Вага(кг.)</TableCell>
             <TableCell align="center">Норма(кг.)</TableCell>
+            <TableCell align="center">Hoрма(в част. листа) </TableCell>
             <TableCell align="center">Видалити</TableCell>
           </TableRow>
         </TableHead>
@@ -70,6 +71,9 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
                 <TableCell align="center">{weight}</TableCell>
                 <TableCell align="center">
                   {getMetalConsumption(quantity, sheet, thickness)}
+                </TableCell>
+                <TableCell align="center">
+                  {(1 / product.quantity).toFixed(5)}
                 </TableCell>
                 <TableCell align="center">
                   <IconButton
