@@ -113,7 +113,7 @@ const Products = () => {
     return products.filter(
       (product) =>
         product.name.toLowerCase().includes(normalizedFilter) ||
-        product.number?.startsWith(normalizedFilter)
+        product.number?.toLowerCase().startsWith(normalizedFilter)
     );
   };
 
@@ -242,6 +242,7 @@ const Products = () => {
             variant="contained"
             size="large"
             disabled={selectedProducts.length <= 0}
+            onClick={() => console.log(selectedProducts)}
           >
             Сформувати замовлення
           </Button>
