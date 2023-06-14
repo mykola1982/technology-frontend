@@ -30,7 +30,7 @@ export function getMaterialsForOneOrder(products) {
       }
       return acc;
     }, 0);
-    return { ...material, amount: amountOfMaterial.toFixed(1) };
+    return { ...material, amount: amountOfMaterial.toFixed(3) };
   });
 
   return materialsForOneOrder;
