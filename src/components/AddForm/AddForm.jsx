@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 
 import { getMaterials } from "../../data/fakeAPI";
+import { getUniqueValues } from "../../utils";
 
 const Workshop = {
   CNC: "дільниця з ЧПУ",
@@ -13,20 +14,11 @@ export const AddForm = ({ onSubmit, onClose, productForUpdate }) => {
   const quantityInputId = nanoid();
   const weightInputId = nanoid();
 
-  //  визначаємо унікальни розміри листів та товщини листів
-  // треба прописати через функцію яка буде фільтрувати унікальні елементи в масивіЙЙ
-
   const materials = getMaterials();
 
-  const valuesSheet = materials
-    .map(({ sizeSheet }) => sizeSheet)
-    .filter((sizeSheet, index, array) => array.indexOf(sizeSheet) === index);
+  const valuesSheet = getUniqueValues(materials, "sizeSheet");
 
-  const valuesThikness = materials
-    .map(({ thicknessSheet }) => thicknessSheet)
-    .filter(
-      (thicknessSheet, index, array) => array.indexOf(thicknessSheet) === index
-    );
+  const valuesThikness = getUniqueValues(materials, "thicknessSheet");
 
   const initialValues = {};
 

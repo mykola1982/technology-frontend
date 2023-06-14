@@ -11,15 +11,16 @@ import {
 } from "@mui/material";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
+import * as productAPI from "../../services/products-API";
+import * as orderAPI from "../../services/orders-API";
+import { getMaterialsForOneOrder } from "../../utils";
+
 import { AddForm } from "../../components/AddForm";
 import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
 import { SelectedProductList } from "../../components/SelectedProductList";
 import { ModalBig } from "../../components/ModalBig";
 import { FormQuantityProduct } from "../../components/FormQuantityProduct";
-
-import * as productAPI from "../../services/products-API";
-import * as orderAPI from "../../services/orders-API";
 import { ModalSmall } from "../../components/ModalSmall";
 
 const Products = () => {
@@ -158,8 +159,10 @@ const Products = () => {
           return { name, number, weight, quantity, material, reserved };
         }
       ),
+      materials: getMaterialsForOneOrder(products),
     };
 
+    console.log("newOrder", newOrder);
     try {
       await orderAPI.addOrderAPI(newOrder);
 
@@ -171,47 +174,6 @@ const Products = () => {
       toast.error("Щось пішло не так. Спробуй знову...");
     }
   };
-
-  // _________________
-  // шукаю унікальні значення  сортаменту в замовленні
-  const getAssortmentUnique = (products) => {
-    return products
-      .map((product) => product.material)
-      .reduce((acc, product, index, products) => {
-        const isUnique = acc.some(
-          (element) =>
-            element.thickness === product.thickness &&
-            element.sheet === product.sheet
-        );
-
-        if (!isUnique) {
-          acc.push({ ...product });
-        }
-        console.log(`isUniqu на ${index + 1} ітерації `, isUnique);
-        console.log(`acc на ${index + 1} ітерації `, acc);
-        return acc;
-      }, []);
-  };
-
-  const materials = getAssortmentUnique(selectedProducts);
-  console.log("унікальний матеріал на замовлення", materials);
-
-  const materialsWithWaigth = materials.map((material) => {
-    const totalWeight = selectedProducts.reduce((acc, product) => {
-      if (
-        material.thickness === product.material.thickness &&
-        material.sheet === product.material.sheet
-      ) {
-        acc = acc + product.weight * product.reserved;
-      }
-      return acc;
-    }, 0);
-    return { ...material, totalWeight };
-  });
-
-  console.log(materialsWithWaigth);
-
-  // ----------------
 
   return (
     <>
