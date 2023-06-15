@@ -11,13 +11,11 @@ import {
 import { nanoid } from "nanoid";
 
 export const OrderList = ({ orders }) => {
-  // тут щось треба розыбратись
-  // const reverseOrders = orders.reverse();
-  // console.log("orders", orders);
-  // console.log(orders[0]);
-  // orders.reverse();
-  // console.log(orders[0]);
-  // console.log("revers orders", orders);
+  // винести в окрему функцію
+  const reverseOrders = orders.reduce((acc, element) => {
+    return (acc = [element, ...acc]);
+  }, []);
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -34,7 +32,7 @@ export const OrderList = ({ orders }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders.map((order, index) => {
+          {reverseOrders.map((order, index) => {
             const { _id, createdAt, products, materials } = order;
 
             //  винести в окрему функцію
@@ -60,7 +58,7 @@ export const OrderList = ({ orders }) => {
                     return (
                       <p key={nanoid()}>
                         {" "}
-                        {index + 1}.{name}
+                        {index + 1}. {name}
                         {"  "}
                         {number} - {reserved} шт.
                       </p>
@@ -71,7 +69,7 @@ export const OrderList = ({ orders }) => {
                   {materials.map(({ sheet, thickness, amount }, index) => {
                     return (
                       <p key={nanoid()}>
-                        {index + 1}.{thickness}x{sheet} - {amount.toFixed(3)}{" "}
+                        {index + 1}. {thickness}x{sheet} - {amount.toFixed(3)}{" "}
                         листів.
                       </p>
                     );
