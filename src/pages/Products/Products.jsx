@@ -2,19 +2,14 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import {
-  Container,
-  Box,
-  Button,
-  Typography,
-  CircularProgress,
-} from "@mui/material";
+import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import * as productAPI from "../../services/products-API";
 import * as orderAPI from "../../services/orders-API";
 import { getMaterialsForOneOrder } from "../../utils";
 
+import { MyContainer } from "../../components/MyContainer";
 import { AddForm } from "../../components/AddForm";
 import { Filter } from "../../components/Filter";
 import { ProductsList } from "../../components/ProductsList";
@@ -28,6 +23,7 @@ const Products = () => {
   const [filter, setFilter] = useState("");
 
   const [isLoading, setIsLoading] = useState(true);
+  // const [isLoadingAddOrder, setIsLoadingAddOrder] = useState(true);
 
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedOneProduct, setSelectedOneProduct] = useState(null);
@@ -39,7 +35,6 @@ const Products = () => {
 
   const openModal = () => {
     setShowModal(true);
-    // setProductForUpdate(null);
   };
 
   const closeModal = () => {
@@ -60,7 +55,7 @@ const Products = () => {
     async function getAllProducts() {
       try {
         setIsLoading(true);
-        const { data } = await productAPI.fetchAllProductAPI();
+        const { data } = await productAPI.fetchAllProductsAPI();
         setProducts(data.products);
       } catch (error) {
         toast.error(`Щось пішло не так. Спробуй знову...`);
@@ -165,7 +160,6 @@ const Products = () => {
     console.log("newOrder", newOrder);
     try {
       await orderAPI.addOrderAPI(newOrder);
-
       setSelectedProducts([]);
       toast.success(
         "Деталі успішно додані в замовлення на розрахунок матеріалу."
@@ -177,10 +171,7 @@ const Products = () => {
 
   return (
     <>
-      <Container
-        maxWidth="xl"
-        sx={{ display: "flex", height: "100vh", gap: 2 }}
-      >
+      <MyContainer>
         <Box
           sx={{
             width: "380px",
@@ -259,6 +250,10 @@ const Products = () => {
             boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
           }}
         >
+          {/* {isLoading && (
+            <CircularProgress size={80} sx={{ mt: "auto", mb: "auto" }} />
+          )} */}
+
           <SelectedProductList
             products={selectedProducts}
             onDeleteProductFromOrder={deleteProductFromOrder}
@@ -272,7 +267,7 @@ const Products = () => {
             Сформувати замовлення
           </Button>
         </Box>
-      </Container>
+      </MyContainer>
 
       <ModalBig open={showModal} onClose={closeModal}>
         <AddForm onSubmit={addProduct} onClose={closeModal} />

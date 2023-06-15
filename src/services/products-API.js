@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = "https://technology-backend.onrender.com/api";
 
-export const fetchAllProductAPI = async () => {
+export const fetchAllProductsAPI = async () => {
   const { data } = await axios.get("/products");
   return data;
 };

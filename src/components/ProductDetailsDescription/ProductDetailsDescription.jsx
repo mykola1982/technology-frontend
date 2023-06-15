@@ -32,7 +32,7 @@ export const ProductDetailsDescription = ({ detailsProduct }) => {
         <Typography component="span">{detailsProduct.weight} кг.</Typography>
       </Typography>
       <Typography variant="body1" sx={{ fontWeight: 700 }}>
-        Кількість деталей листа:{" "}
+        Кількість деталей з листа:{" "}
         <Typography component="span">
           {detailsProduct.quantity} шт.(
           {detailsProduct.material.sheet})

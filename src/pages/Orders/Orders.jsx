@@ -1,5 +1,55 @@
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
+import { Box } from "@mui/material";
+
+import { MyContainer } from "../../components/MyContainer";
+
+import * as orderAPI from "../../services/orders-API";
+import { OrderList } from "../../components/OrderList";
+
 const Orders = () => {
-  return <p>тут буде лист з замовленнями</p>;
+  const [orders, setOrders] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function getAllOrders() {
+      try {
+        setIsLoading(true);
+        const { data } = await orderAPI.fetchAllOrdersAPI();
+        setOrders(data.orders);
+      } catch (error) {
+        toast.error(`Щось пішло не так. Спробуй знову...`);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getAllOrders();
+  }, []);
+
+  return (
+    <MyContainer>
+      <Box
+        sx={{
+          width: "100%",
+          borderRadius: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "12px",
+          mt: 10,
+          mb: 2,
+          p: 1,
+          backgroundColor: "#f5f5f5",
+          boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
+        }}
+      >
+        <OrderList orders={orders} />
+      </Box>
+    </MyContainer>
+  );
 };
 
 export default Orders;
