@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/473.131a220d.chunk.js","mappings":"uKAIA,EAJe,WACb,OAAO,uBAAG,wJACZ,C","sources":["pages/Orders/Orders.jsx"],"sourcesContent":["const Orders = () => {\r\n  return <p>тут буде лист з замовленнями</p>;\r\n};\r\n\r\nexport default Orders;\r\n"],"names":[],"sourceRoot":""}
