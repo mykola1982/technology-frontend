@@ -1,6 +1,14 @@
+import { useEffect, useRef } from "react";
+
 import { Box, Button, Typography } from "@mui/material";
 
 export const ContentModalDelete = ({ onDelete, onClose }) => {
+  const btnRef = useRef();
+
+  useEffect(() => {
+    btnRef.current.focus({ focusVisible: true });
+  }, []);
+
   return (
     <>
       <Typography variant="h6" component="p" align="center" sx={{ mb: 2 }}>
@@ -10,7 +18,12 @@ export const ContentModalDelete = ({ onDelete, onClose }) => {
         <Button variant="contained" size="small" onClick={() => onDelete()}>
           Так
         </Button>
-        <Button variant="contained" size="small" onClick={() => onClose()}>
+        <Button
+          ref={btnRef}
+          variant="contained"
+          size="small"
+          onClick={() => onClose()}
+        >
           Hi
         </Button>
       </Box>

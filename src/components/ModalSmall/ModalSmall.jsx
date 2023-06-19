@@ -2,7 +2,7 @@ import { Modal, Box } from "@mui/material";
 
 export const ModalSmall = ({ open, onClose, children }) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} disableRestoreFocus>
       <Box
         sx={{
           position: "absolute",

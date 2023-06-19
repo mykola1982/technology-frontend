@@ -14,7 +14,13 @@ export const FormQuantityProduct = ({ onSubmit, onClose, product }) => {
       <Typography variant="h6" component="p" align="center" sx={{ mb: 2 }}>
         Введіть кількість деталей
       </Typography>
-      <TextField type="number" name="reserved" min="1" defaultValue={"1"} />
+      <TextField
+        autoFocus
+        type="number"
+        name="reserved"
+        min="1"
+        // defaultValue={"1"}
+      />
       <Button type="submit" variant="contained" size="small">
         OK
       </Button>
