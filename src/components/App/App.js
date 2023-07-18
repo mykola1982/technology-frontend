@@ -1,5 +1,6 @@
 // import logo from "./logo.svg";
 import { Routes, Route } from "react-router-dom";
+
 import { lazy } from "react";
 
 import { ToastContainer } from "react-toastify";
@@ -11,6 +12,7 @@ const Home = lazy(() => import("../../pages/Home"));
 const Products = lazy(() => import("../../pages/Products"));
 // const Materials = lazy(() => import("../../pages/Materials"));
 const Orders = lazy(() => import("../../pages/Orders"));
+const Users = lazy(() => import("../../pages/Users"));
 const ProductDetails = lazy(() => import("../../pages/ProductDetails"));
 
 const NotFound = lazy(() => import("../../pages/NotFound"));
@@ -26,7 +28,7 @@ function App() {
 
           {/* <Route path="/materials" element={<Materials />} /> */}
           <Route path="/orders" element={<Orders />} />
-
+          <Route path="/users" element={<Users />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

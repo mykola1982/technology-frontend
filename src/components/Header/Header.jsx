@@ -20,6 +20,7 @@ const pages = [
   { name: "Продукція", to: "/products" },
   { name: "Замовлення", to: "/orders" },
   { name: "Матеріали", to: "/materials" },
+  { name: "Користувачі", to: "/users" },
 ];
 
 export const Header = () => {
