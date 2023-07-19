@@ -1,3 +1,5 @@
+import { LoginForm } from "../../components/LoginForm";
+
 const Home = () => {
   return (
     <main>
@@ -5,6 +7,7 @@ const Home = () => {
         Ласкаво промимо в додаток для підрахунку норм витрат металу виготовлення
         продукції
       </h1>
+      <LoginForm></LoginForm>
     </main>
   );
 };

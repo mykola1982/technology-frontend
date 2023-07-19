@@ -4,39 +4,30 @@ import * as yup from "yup";
 import { nanoid } from "nanoid";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
-import { register } from "../../redux/auth/authOperation";
+import { logIn } from "../../redux/auth/authOperation";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("This field is required"),
-  password: yup
-    .string()
-    .min(8, "Пароль повинен мати не менше 8 символів")
-    .required("This field is required"),
-  role: yup
-    .string()
-    .oneOf(["ADMIN", "USER"])
-    .required("This field is required"),
+  password: yup.string().required("This field is required"),
 });
 
-const idInputName = nanoid();
+const idInputLogin = nanoid();
 const idInputPassword = nanoid();
-const idInputRole = nanoid();
 
 const initialValues = {
   name: "",
   password: "",
-  role: "USER",
 };
 
-export const AddUserForm = () => {
+export const LoginForm = () => {
   const [typeInputPassword, setTypeInputPassword] = useState("password");
+
   const dispatch = useDispatch();
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      await dispatch(register(values));
+      await dispatch(logIn(values));
     } catch (error) {}
-
     resetForm();
   };
 
@@ -47,7 +38,6 @@ export const AddUserForm = () => {
       setTypeInputPassword("password");
     }
   };
-
   return (
     <>
       <Formik
@@ -56,13 +46,14 @@ export const AddUserForm = () => {
         onSubmit={handleSubmit}
       >
         <Form>
-          <label htmlFor={idInputName}>Логін</label>
+          <label htmlFor={idInputLogin}> Логін</label>
           <Field
-            id={idInputName}
+            id={idInputLogin}
             type="text"
             name="name"
-            placeholder="Введіть ім'я"
+            placeholder="Веддіть логін"
           />
+
           <ErrorMessage name="name" component="p" />
           <label htmlFor={idInputPassword}>Пароль</label>
           <Field
@@ -77,19 +68,8 @@ export const AddUserForm = () => {
               : "Приховати пароль"}
           </button>
           <ErrorMessage name="password" component="p" />
-          <div id={idInputRole}> Права користувача</div>
-          <div role="group" aria-labelledby={idInputRole}>
-            <label>
-              <Field type="radio" name="role" value="ADMIN" />
-              Адміністратор
-            </label>
-            <label>
-              <Field type="radio" name="role" value="USER" />
-              Користувач
-            </label>
-            <ErrorMessage name="role" component="p" />
-          </div>
-          <button type="submit"> Створити користувача</button>
+
+          <button type="submit"> Увійти </button>
         </Form>
       </Formik>
     </>

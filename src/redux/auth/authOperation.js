@@ -8,9 +8,6 @@ export const register = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const response = await authAPI.createUser(credentials);
-
-      console.log(response);
-
       toast.success(`Користувача ${credentials.name} успішно додано`);
       return response;
     } catch (error) {
@@ -30,3 +27,28 @@ export const register = createAsyncThunk(
     }
   }
 );
+
+export const logIn = createAsyncThunk(
+  "auth/login",
+  async (credentials, thunkAPI) => {
+    try {
+      const response = await authAPI.loginUser(credentials);
+      authAPI.setAuthHeader(response.data.token);
+      return response.data;
+    } catch (error) {
+      toast.error(`Логін чи пароль не є валідними. Спробуйте ще раз.`);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    await authAPI.logoutUser();
+    authAPI.clearAuthHeader();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+//  ще рефреш юзер
