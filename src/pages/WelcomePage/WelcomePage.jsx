@@ -17,14 +17,15 @@ const WelcomePage = () => {
         backgroundColor: "#f5f5f5",
       }}
     >
-      <PrecisionManufacturingIcon
-        sx={{ fontSize: 150, color: "rgb(25, 118, 210)" }}
-      />
+      <PrecisionManufacturingIcon sx={{ fontSize: 150, color: "#1976d2" }} />
       <Typography
         variant="h3"
         align="center"
         width="75%"
-        sx={{ fontWeight: 700 }}
+        sx={{
+          fontWeight: 700,
+          fontSize: { xs: "28px", md: "44px" },
+        }}
       >
         Ласкаво проcимо в додаток для підрахунку норми витрати метеріалу
         продукції
