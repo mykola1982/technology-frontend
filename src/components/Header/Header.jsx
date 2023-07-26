@@ -16,7 +16,7 @@ import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturi
 import MenuIcon from "@mui/icons-material/Menu";
 
 const pages = [
-  { name: "Домашня сторінка", to: "/" },
+  // { name: "Домашня сторінка", to: "/" },
   { name: "Продукція", to: "/products" },
   { name: "Замовлення", to: "/orders" },
   { name: "Матеріали", to: "/materials" },

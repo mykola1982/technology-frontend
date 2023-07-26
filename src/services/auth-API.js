@@ -24,3 +24,8 @@ export const logoutUser = async () => {
   const { data } = await axios.get("./auth/logout");
   return data;
 };
+
+export const refreshUser = async () => {
+  const { data } = await axios.get("./auth/current");
+  return data;
+};
