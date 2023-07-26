@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import {
   AppBar,
@@ -15,6 +16,8 @@ import {
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import { logOut } from "../../redux/auth/authOperation";
+
 const pages = [
   // { name: "Домашня сторінка", to: "/" },
   { name: "Продукція", to: "/products" },
@@ -25,6 +28,12 @@ const pages = [
 
 export const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -145,6 +154,11 @@ export const Header = () => {
               </Button>
             ))}
           </Box>
+
+          <Button sx={{ color: "white" }} onClick={handleLogOut}>
+            {" "}
+            вийти{" "}
+          </Button>
         </Toolbar>
       </Container>
     </AppBar>
