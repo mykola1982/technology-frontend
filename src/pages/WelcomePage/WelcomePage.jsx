@@ -1,7 +1,7 @@
 import { Box, Typography, SvgIcon } from "@mui/material";
 
-import { LoginForm } from "../../components/LoginForm";
-import { ReactComponent as PressIcon } from "../../icons/press-svgrepo-com.svg";
+import { LoginForm } from "components/LoginForm";
+import { ReactComponent as PressIcon } from "icons/press-svgrepo-com.svg";
 
 const WelcomePage = () => {
   return (

@@ -2,12 +2,19 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { Box, TextField, Button, IconButton } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  IconButton,
+  LinearProgress,
+} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 
-import { logIn } from "../../redux/auth/authOperation";
+import { logIn } from "redux/auth/authOperation";
+import { useAuth } from "hooks/useAuth";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("This field is required"),
@@ -21,7 +28,7 @@ const initialValues = {
 
 export const LoginForm = () => {
   const [typeInputPassword, setTypeInputPassword] = useState("password");
-
+  const { isLoading } = useAuth();
   const dispatch = useDispatch();
 
   const handleSubmit = async (values) => {
@@ -52,7 +59,6 @@ export const LoginForm = () => {
         display: "flex",
         gap: "12px",
         flexDirection: "column",
-
         justifyContent: "center",
       }}
     >
@@ -86,15 +92,16 @@ export const LoginForm = () => {
           )}
         </IconButton>
       </Box>
-
       <Button
         type="submit"
         variant="contained"
         size="large"
         endIcon={<ExitToAppTwoToneIcon />}
+        disabled={isLoading}
       >
         Увійти
       </Button>
+      <LinearProgress variant={isLoading ? "indeterminate" : "determinate"} />
     </Box>
   );
 };

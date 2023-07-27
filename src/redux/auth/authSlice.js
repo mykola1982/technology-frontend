@@ -38,6 +38,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+    // [logIn.rejected]: handleRejected,
     [logIn.rejected]: handleRejected,
 
     [logOut.pending]: handlePending,

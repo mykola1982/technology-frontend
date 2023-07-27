@@ -1,4 +1,3 @@
-import { Translate } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 
 import { Box } from "@mui/material";
