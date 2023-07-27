@@ -13,8 +13,9 @@ import { PrivateRoute } from "../../utils/Routes/PrivateRoute";
 import { useAuth } from "../../hooks";
 import { refreshUser } from "../../redux/auth/authOperation";
 
+import { Loader } from "../Loader/Loader";
+
 const WelcomePage = lazy(() => import("../../pages/WelcomePage"));
-const LoginPage = lazy(() => import("../../pages/LoginPage"));
 const Products = lazy(() => import("../../pages/Products"));
 const Materials = lazy(() => import("../../pages/Materials"));
 const Orders = lazy(() => import("../../pages/Orders"));
@@ -34,27 +35,15 @@ function App() {
     dispatch(refreshUser());
   }, [dispatch, token]);
   return isRefreshing ? (
-    <b>Refreshing user...</b>
+    <Loader />
   ) : (
-    // тут ставимо лоадер
     <>
-      <Suspense
-        fallback={
-          <div>Зачекайте поки завантажаться дані...</div>
-          //  тут також лоадер
-        }
-      >
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route
             path="/"
             element={
               <PablicRoute redirectTo="/products" component={<WelcomePage />} />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <PablicRoute redirecTo="/products" component={<LoginPage />} />
             }
           />
 

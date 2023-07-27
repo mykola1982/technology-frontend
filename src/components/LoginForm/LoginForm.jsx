@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { nanoid } from "nanoid";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useFormik } from "formik";
+import { Box, TextField, Button, IconButton } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 
 import { logIn } from "../../redux/auth/authOperation";
 
@@ -10,9 +13,6 @@ const validationSchema = yup.object().shape({
   name: yup.string().required("This field is required"),
   password: yup.string().required("This field is required"),
 });
-
-const idInputLogin = nanoid();
-const idInputPassword = nanoid();
 
 const initialValues = {
   name: "",
@@ -24,11 +24,10 @@ export const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = async (values, { resetForm }) => {
+  const handleSubmit = async (values) => {
     try {
       await dispatch(logIn(values));
     } catch (error) {}
-    resetForm();
   };
 
   const showPassword = () => {
@@ -38,40 +37,64 @@ export const LoginForm = () => {
       setTypeInputPassword("password");
     }
   };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
+
   return (
-    <>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+    <Box
+      component="form"
+      onSubmit={formik.handleSubmit}
+      sx={{
+        display: "flex",
+        gap: "12px",
+        flexDirection: "column",
+
+        justifyContent: "center",
+      }}
+    >
+      <TextField
+        id="name"
+        name="name"
+        label="Логін"
+        value={formik.values.name}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.name && Boolean(formik.errors.name)}
+        helperText={formik.touched.name && formik.errors.name}
+      />
+      <Box sx={{ display: "flex", gap: "4px" }}>
+        <TextField
+          id="password"
+          name="password"
+          label="Пароль"
+          type={typeInputPassword}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <IconButton type="button" onClick={showPassword} siz>
+          {typeInputPassword === "password" ? (
+            <VisibilityOffIcon />
+          ) : (
+            <VisibilityIcon />
+          )}
+        </IconButton>
+      </Box>
+
+      <Button
+        type="submit"
+        variant="contained"
+        size="large"
+        endIcon={<ExitToAppTwoToneIcon />}
       >
-        <Form>
-          <label htmlFor={idInputLogin}> Логін</label>
-          <Field
-            id={idInputLogin}
-            type="text"
-            name="name"
-            placeholder="Веддіть логін"
-          />
-
-          <ErrorMessage name="name" component="p" />
-          <label htmlFor={idInputPassword}>Пароль</label>
-          <Field
-            id={idInputPassword}
-            type={typeInputPassword}
-            name="password"
-            placeholder="Введіть пароль"
-          />
-          <button type="button" onClick={showPassword}>
-            {typeInputPassword === "password"
-              ? "Показати пароль"
-              : "Приховати пароль"}
-          </button>
-          <ErrorMessage name="password" component="p" />
-
-          <button type="submit"> Увійти </button>
-        </Form>
-      </Formik>
-    </>
+        Увійти
+      </Button>
+    </Box>
   );
 };
