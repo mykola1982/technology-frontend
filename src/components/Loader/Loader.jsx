@@ -1,6 +1,6 @@
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress, SvgIcon } from "@mui/material";
 
-import { Box } from "@mui/material";
+import { ReactComponent as PressIcon } from "icons/press-svgrepo-com.svg";
 
 export const Loader = () => {
   return (
@@ -24,6 +24,19 @@ export const Loader = () => {
       >
         <CircularProgress size={80} />
       </Box>
+
+      <SvgIcon
+        sx={{
+          fontSize: 40,
+          color: "#1976d2",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <PressIcon />
+      </SvgIcon>
     </Box>
   );
 };

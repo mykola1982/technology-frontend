@@ -2,13 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import {
-  Box,
-  TextField,
-  Button,
-  IconButton,
-  LinearProgress,
-} from "@mui/material";
+import { FormControl, Box, TextField, IconButton } from "@mui/material";
+
+import LoadingButton from "@mui/lab/LoadingButton";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
@@ -17,8 +14,8 @@ import { logIn } from "redux/auth/authOperation";
 import { useAuth } from "hooks/useAuth";
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("This field is required"),
-  password: yup.string().required("This field is required"),
+  name: yup.string().required("Це поле є обовязкове"),
+  password: yup.string().required("Це поле є обовязкове"),
 });
 
 const initialValues = {
@@ -52,7 +49,7 @@ export const LoginForm = () => {
   });
 
   return (
-    <Box
+    <FormControl
       component="form"
       onSubmit={formik.handleSubmit}
       sx={{
@@ -66,6 +63,7 @@ export const LoginForm = () => {
         id="name"
         name="name"
         label="Логін"
+        placeholder="Введіть ім'я користувача"
         value={formik.values.name}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
@@ -77,6 +75,7 @@ export const LoginForm = () => {
           id="password"
           name="password"
           label="Пароль"
+          placeholder="Введіть пароль"
           type={typeInputPassword}
           value={formik.values.password}
           onChange={formik.handleChange}
@@ -84,7 +83,7 @@ export const LoginForm = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <IconButton type="button" onClick={showPassword} siz>
+        <IconButton type="button" onClick={showPassword}>
           {typeInputPassword === "password" ? (
             <VisibilityOffIcon />
           ) : (
@@ -92,16 +91,17 @@ export const LoginForm = () => {
           )}
         </IconButton>
       </Box>
-      <Button
+
+      <LoadingButton
         type="submit"
         variant="contained"
         size="large"
         endIcon={<ExitToAppTwoToneIcon />}
-        disabled={isLoading}
+        loading={isLoading}
+        loadingPosition="center"
       >
         Увійти
-      </Button>
-      <LinearProgress variant={isLoading ? "indeterminate" : "determinate"} />
-    </Box>
+      </LoadingButton>
+    </FormControl>
   );
 };

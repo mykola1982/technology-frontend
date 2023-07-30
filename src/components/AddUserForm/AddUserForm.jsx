@@ -1,26 +1,28 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { nanoid } from "nanoid";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useFormik } from "formik";
+import {
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+  TextField,
+} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-import { register } from "../../redux/auth/authOperation";
+import { register } from "redux/auth/authOperation";
+import { useAuth } from "hooks";
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("This field is required"),
+  name: yup.string().required("Це поле є обовязкове"),
   password: yup
     .string()
     .min(8, "Пароль повинен мати не менше 8 символів")
     .required("This field is required"),
-  role: yup
-    .string()
-    .oneOf(["ADMIN", "USER"])
-    .required("This field is required"),
+  role: yup.string().oneOf(["ADMIN", "USER"]).required("Це поле є обовязкове"),
 });
-
-const idInputName = nanoid();
-const idInputPassword = nanoid();
-const idInputRole = nanoid();
 
 const initialValues = {
   name: "",
@@ -29,10 +31,15 @@ const initialValues = {
 };
 
 export const AddUserForm = () => {
-  const [typeInputPassword, setTypeInputPassword] = useState("password");
+  const { isLoading, user } = useAuth();
+
+  const isAdmin = user.role === "ADMIN";
+
   const dispatch = useDispatch();
 
   const handleSubmit = async (values, { resetForm }) => {
+    console.log("мив формі");
+    console.log(values);
     try {
       await dispatch(register(values));
     } catch (error) {}
@@ -40,58 +47,73 @@ export const AddUserForm = () => {
     resetForm();
   };
 
-  const showPassword = () => {
-    if (typeInputPassword === "password") {
-      setTypeInputPassword("text");
-    } else if (typeInputPassword === "text") {
-      setTypeInputPassword("password");
-    }
-  };
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
 
   return (
-    <>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+    <FormControl
+      variant="standard"
+      component="form"
+      onSubmit={formik.handleSubmit}
+      sx={{
+        display: "flex",
+        gap: "12px",
+        flexDirection: "column",
+        // justifyContent: "center",
+      }}
+    >
+      <TextField
+        id="name"
+        name="name"
+        label="Логін"
+        placeholder="Введіть ім'я користувача"
+        value={formik.values.name}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.name && Boolean(formik.errors.name)}
+        helperText={formik.touched.name && formik.errors.name}
+      />
+      <TextField
+        id="password"
+        name="password"
+        label="Пароль"
+        placeholder="Введіть пароль"
+        type="text"
+        value={formik.values.password}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.password && Boolean(formik.errors.password)}
+        helperText={formik.touched.password && formik.errors.password}
+      />
+      <FormLabel id="radio-buttons-group-label">Права:</FormLabel>
+      <RadioGroup
+        aria-labelledby="radio-buttons-group-label"
+        value={formik.values.role}
+        onChange={formik.handleChange}
+        name="role"
       >
-        <Form>
-          <label htmlFor={idInputName}>Логін</label>
-          <Field
-            id={idInputName}
-            type="text"
-            name="name"
-            placeholder="Введіть ім'я"
-          />
-          <ErrorMessage name="name" component="p" />
-          <label htmlFor={idInputPassword}>Пароль</label>
-          <Field
-            id={idInputPassword}
-            type={typeInputPassword}
-            name="password"
-            placeholder="Введіть пароль"
-          />
-          <button type="button" onClick={showPassword}>
-            {typeInputPassword === "password"
-              ? "Показати пароль"
-              : "Приховати пароль"}
-          </button>
-          <ErrorMessage name="password" component="p" />
-          <div id={idInputRole}> Права користувача</div>
-          <div role="group" aria-labelledby={idInputRole}>
-            <label>
-              <Field type="radio" name="role" value="ADMIN" />
-              Адміністратор
-            </label>
-            <label>
-              <Field type="radio" name="role" value="USER" />
-              Користувач
-            </label>
-            <ErrorMessage name="role" component="p" />
-          </div>
-          <button type="submit"> Створити користувача</button>
-        </Form>
-      </Formik>
-    </>
+        <FormControlLabel
+          value="ADMIN"
+          control={<Radio />}
+          label="Адміністратор"
+        />
+        <FormControlLabel value="USER" control={<Radio />} label="Користувач" />
+      </RadioGroup>
+
+      <LoadingButton
+        type="submit"
+        variant="contained"
+        size="large"
+        startIcon={<PersonAddIcon />}
+        loading={isLoading}
+        loadingPosition="center"
+        disabled={!isAdmin}
+      >
+        Створити користувача
+      </LoadingButton>
+    </FormControl>
   );
 };

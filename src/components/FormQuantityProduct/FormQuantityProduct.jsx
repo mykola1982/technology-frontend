@@ -5,6 +5,7 @@ export const FormQuantityProduct = ({ onSubmit, onClose, product }) => {
     evt.preventDefault();
     const form = evt.currentTarget;
     const reserved = form.elements.reserved.value;
+
     onSubmit(reserved, product);
     onClose();
     form.reset();
@@ -18,8 +19,8 @@ export const FormQuantityProduct = ({ onSubmit, onClose, product }) => {
         autoFocus
         type="number"
         name="reserved"
-        min="1"
-        // defaultValue={"1"}
+        inputProps={{ min: "1" }}
+        defaultValue={"1"}
       />
       <Button type="submit" variant="contained" size="small">
         OK

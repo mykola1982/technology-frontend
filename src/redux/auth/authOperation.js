@@ -34,6 +34,7 @@ export const logIn = createAsyncThunk(
     try {
       const response = await authAPI.loginUser(credentials);
       authAPI.setAuthHeader(response.data.token);
+
       return response.data;
     } catch (error) {
       if (error.code === "ERR_NETWORK") {

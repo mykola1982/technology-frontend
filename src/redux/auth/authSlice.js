@@ -11,7 +11,7 @@ const handleRejected = (state, action) => {
 };
 
 const initialState = {
-  user: { name: null, userId: null },
+  user: { name: null, userId: null, role: null },
   token: null,
   isRefreshing: false,
   isLoading: false,
@@ -23,8 +23,7 @@ const authSlice = createSlice({
   initialState,
   extraReducers: {
     [register.pending]: handlePending,
-    [register.fulfilled](state, action) {
-      state.user = action.payload.user;
+    [register.fulfilled](state) {
       state.isLoading = false;
       state.error = null;
     },
@@ -38,12 +37,11 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
-    // [logIn.rejected]: handleRejected,
     [logIn.rejected]: handleRejected,
 
     [logOut.pending]: handlePending,
     [logOut.fulfilled](state) {
-      state.user = { name: null, userId: null };
+      state.user = { name: null, userId: null, role: null };
       state.token = null;
       state.isLoggedIn = false;
       state.isLoading = false;
