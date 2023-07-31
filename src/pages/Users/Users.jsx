@@ -15,7 +15,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
-  const [idDeleteUser, setIdDeleteUser] = useState(null);
+  const [idUserToDeleteUser, setIdUserToDeleteUser] = useState(null);
   // якусь діч придумав ТРеба згадати як підняти стан. через location в модал контент змінити тест
 
   useEffect(() => {
@@ -32,11 +32,11 @@ const Users = () => {
       }
     }
     getAllUsers();
-  }, [users]);
+  }, []);
 
   const openModalDelete = (id) => {
     setShowModalDelete(true);
-    setIdDeleteUser(id);
+    setIdUserToDeleteUser(id);
   };
   const closeModalDelete = () => {
     setShowModalDelete(false);
@@ -62,9 +62,9 @@ const Users = () => {
   const deleteUser = async (id) => {
     try {
       await usersAPI.removeUserAPI(id);
-      setUsers((prevUsers) => {
-        prevUsers.filter((user) => user._id !== id);
-      });
+
+      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+
       toast.success(`Користувач успішно видалений`);
     } catch (error) {
       toast.error(`Щось пішло не так. Спробуй знову...`);
@@ -72,8 +72,8 @@ const Users = () => {
   };
 
   const handleDelete = async () => {
-    await deleteUser(idDeleteUser);
-    setIdDeleteUser(null);
+    await deleteUser(idUserToDeleteUser);
+    setIdUserToDeleteUser(null);
     closeModalDelete();
   };
 
@@ -112,7 +112,7 @@ const Users = () => {
             boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
           }}
         >
-          <UserList users={users} onDelete={openModalDelete} />
+          <UserList users={users} openModal={openModalDelete} />
         </Box>
       </MyContainer>
       <ModalSmall open={showModalDelete} onClose={closeModalDelete}>

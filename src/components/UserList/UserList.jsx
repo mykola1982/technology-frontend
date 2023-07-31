@@ -11,7 +11,7 @@ import {
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-export const UserList = ({ users, onDelete }) => {
+export const UserList = ({ users, openModal }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -44,7 +44,7 @@ export const UserList = ({ users, onDelete }) => {
                     aria-label="delete"
                     size="small"
                     disabled={isAdmin}
-                    onClick={() => onDelete(_id)}
+                    onClick={() => openModal(_id)}
                   >
                     <DeleteForeverIcon fontSize="small" />
                   </IconButton>
