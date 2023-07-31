@@ -22,12 +22,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   extraReducers: {
-    [register.pending]: handlePending,
-    [register.fulfilled](state) {
-      state.isLoading = false;
-      state.error = null;
-    },
-    [register.rejected]: handleRejected,
+    // [register.pending]: handlePending,
+    // [register.fulfilled](state) {
+    //   state.isLoading = false;
+    //   state.error = null;
+    // },
+    // [register.rejected]: handleRejected,
 
     [logIn.pending]: handlePending,
     [logIn.fulfilled](state, action) {

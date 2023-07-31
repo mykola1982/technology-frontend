@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useFormik } from "formik";
@@ -14,8 +14,8 @@ import { logIn } from "redux/auth/authOperation";
 import { useAuth } from "hooks/useAuth";
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Це поле є обовязкове"),
-  password: yup.string().required("Це поле є обовязкове"),
+  name: yup.string().required("Це поле є обов'язковим"),
+  password: yup.string().required("Це поле є обов'язковим"),
 });
 
 const initialValues = {
@@ -28,12 +28,6 @@ export const LoginForm = () => {
   const { isLoading } = useAuth();
   const dispatch = useDispatch();
 
-  const handleSubmit = async (values) => {
-    try {
-      await dispatch(logIn(values));
-    } catch (error) {}
-  };
-
   const showPassword = () => {
     if (typeInputPassword === "password") {
       setTypeInputPassword("text");
@@ -42,14 +36,38 @@ export const LoginForm = () => {
     }
   };
 
+  const handleSubmit = async (values) => {
+    try {
+      await dispatch(logIn(values));
+    } catch (error) {}
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
   });
 
+  const handleDocumentClick = useCallback(
+    (event) => {
+      if (!event.target.closest("#loginForm")) {
+        formik.setTouched({});
+      }
+    },
+    [formik]
+  );
+
+  useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [handleDocumentClick]);
+
   return (
     <FormControl
+      id="loginForm"
       component="form"
       onSubmit={formik.handleSubmit}
       sx={{

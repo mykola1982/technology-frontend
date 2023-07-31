@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
-import * as productAPI from "../../services/products-API";
-import * as orderAPI from "../../services/orders-API";
+import * as productsAPI from "../../services/products-API";
+import * as ordersAPI from "../../services/orders-API";
 import { getMaterialsForOneOrder } from "../../utils";
 
 import { MyContainer } from "../../components/MyContainer";
@@ -22,7 +22,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   // const [isLoadingAddOrder, setIsLoadingAddOrder] = useState(true);
 
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -55,8 +55,9 @@ const Products = () => {
     async function getAllProducts() {
       try {
         setIsLoading(true);
-        const { data } = await productAPI.fetchAllProductsAPI();
-        setProducts(data.products);
+        const { data } = await productsAPI.fetchAllProductsAPI();
+
+        setProducts(data);
       } catch (error) {
         toast.error(`Щось пішло не так. Спробуй знову...`);
       } finally {
@@ -88,7 +89,7 @@ const Products = () => {
     };
 
     try {
-      const { data } = await productAPI.addProductAPI(newProduct);
+      const { data } = await productsAPI.addProductAPI(newProduct);
       setProducts((prevProducts) => [data.product, ...prevProducts]);
       toast.success(`Деталь  ${name}-${number} успішно додана до списку`);
     } catch (error) {
@@ -159,7 +160,7 @@ const Products = () => {
 
     console.log("newOrder", newOrder);
     try {
-      await orderAPI.addOrderAPI(newOrder);
+      await ordersAPI.addOrderAPI(newOrder);
       setSelectedProducts([]);
       toast.success(
         "Деталі успішно додані в замовлення на розрахунок матеріалу."
@@ -183,6 +184,7 @@ const Products = () => {
             mt: 10,
             mb: 2,
             p: 1,
+            pt: 3,
             backgroundColor: "#f5f5f5",
             boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
           }}
@@ -193,7 +195,6 @@ const Products = () => {
             startIcon={<PostAddIcon />}
             onClick={openModal}
             sx={{
-              mt: 2,
               width: "300px",
             }}
           >

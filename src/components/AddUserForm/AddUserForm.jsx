@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useEffect, useCallback } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import {
@@ -12,7 +12,6 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-import { register } from "redux/auth/authOperation";
 import { useAuth } from "hooks";
 
 const validationSchema = yup.object().shape({
@@ -20,8 +19,11 @@ const validationSchema = yup.object().shape({
   password: yup
     .string()
     .min(8, "Пароль повинен мати не менше 8 символів")
-    .required("This field is required"),
-  role: yup.string().oneOf(["ADMIN", "USER"]).required("Це поле є обовязкове"),
+    .required("Це поле є обов'язковим"),
+  role: yup
+    .string()
+    .oneOf(["ADMIN", "USER"])
+    .required("Це поле є обов'язковим"),
 });
 
 const initialValues = {
@@ -30,18 +32,13 @@ const initialValues = {
   role: "USER",
 };
 
-export const AddUserForm = () => {
+export const AddUserForm = ({ addUser }) => {
   const { isLoading, user } = useAuth();
 
   const isAdmin = user.role === "ADMIN";
-
-  const dispatch = useDispatch();
-
   const handleSubmit = async (values, { resetForm }) => {
-    console.log("мив формі");
-    console.log(values);
     try {
-      await dispatch(register(values));
+      await addUser(values);
     } catch (error) {}
 
     resetForm();
@@ -53,8 +50,26 @@ export const AddUserForm = () => {
     onSubmit: handleSubmit,
   });
 
+  const handleDocumentClick = useCallback(
+    (event) => {
+      if (!event.target.closest("#addUserForm")) {
+        formik.setTouched({});
+      }
+    },
+    [formik]
+  );
+
+  useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [handleDocumentClick]);
+
   return (
     <FormControl
+      id="addUserForm"
       variant="standard"
       component="form"
       onSubmit={formik.handleSubmit}
@@ -62,7 +77,8 @@ export const AddUserForm = () => {
         display: "flex",
         gap: "12px",
         flexDirection: "column",
-        // justifyContent: "center",
+
+        width: "300px",
       }}
     >
       <TextField

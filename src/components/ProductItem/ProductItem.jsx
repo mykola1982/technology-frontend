@@ -4,13 +4,7 @@ import { IconButton, Typography, Box, ListItem } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
-export const ProductItem = ({
-  product,
-  index,
-
-  onSelectProduct,
-  location,
-}) => {
+export const ProductItem = ({ product, index, onSelectProduct, location }) => {
   const { _id, name, number } = product;
 
   return (

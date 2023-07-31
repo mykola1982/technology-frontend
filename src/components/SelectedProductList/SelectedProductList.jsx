@@ -79,12 +79,10 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
                   <IconButton
                     aria-label="delete"
                     size="small"
+                    sx={{ color: "#1976d2" }}
                     onClick={() => onDeleteProductFromOrder(_id)}
                   >
-                    <DeleteForeverIcon
-                      fontSize="small"
-                      sx={{ color: "#1976d2" }}
-                    />
+                    <DeleteForeverIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
               </TableRow>

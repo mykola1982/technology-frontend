@@ -18,7 +18,7 @@ const Orders = () => {
       try {
         setIsLoading(true);
         const { data } = await orderAPI.fetchAllOrdersAPI();
-        setOrders(data.orders);
+        setOrders(data);
       } catch (error) {
         toast.error(`Щось пішло не так. Спробуй знову...`);
       } finally {
