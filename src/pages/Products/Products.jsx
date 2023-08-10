@@ -8,6 +8,7 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import * as productsAPI from "../../services/products-API";
 import * as ordersAPI from "../../services/orders-API";
 import { getMaterialsForOneOrder } from "../../utils";
+import { useAuth } from "hooks";
 
 import { MyContainer } from "../../components/MyContainer";
 import { AddForm } from "../../components/AddForm";
@@ -25,7 +26,21 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   // const [isLoadingAddOrder, setIsLoadingAddOrder] = useState(true);
 
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const userName = useAuth().user.name;
+
+  console.log("юзер ", userName);
+
+  const [selectedProducts, setSelectedProducts] = useState(() => {
+    const sevedSelectedProducts = localStorage.getItem("selectedProducts");
+
+    if (sevedSelectedProducts !== null && sevedSelectedProducts !== "") {
+      const parsedSelecdedProducts = JSON.parse(sevedSelectedProducts);
+      return parsedSelecdedProducts;
+    }
+
+    return [];
+  });
+
   const [selectedOneProduct, setSelectedOneProduct] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
@@ -66,6 +81,10 @@ const Products = () => {
     }
     getAllProducts();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+  }, [selectedProducts]);
 
   const addProduct = async ({
     name,
