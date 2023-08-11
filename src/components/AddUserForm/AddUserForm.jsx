@@ -77,7 +77,6 @@ export const AddUserForm = ({ addUser }) => {
         display: "flex",
         gap: "12px",
         flexDirection: "column",
-
         width: "300px",
       }}
     >
