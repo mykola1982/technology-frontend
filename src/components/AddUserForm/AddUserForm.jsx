@@ -15,7 +15,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { useAuth } from "hooks";
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Це поле є обовязкове"),
+  name: yup.string().required("Це поле є обов'язковим"),
   password: yup
     .string()
     .min(8, "Пароль повинен мати не менше 8 символів")
@@ -36,6 +36,7 @@ export const AddUserForm = ({ addUser }) => {
   const { isLoading, user } = useAuth();
 
   const isAdmin = user.role === "ADMIN";
+
   const handleSubmit = async (values, { resetForm }) => {
     try {
       await addUser(values);
@@ -82,6 +83,7 @@ export const AddUserForm = ({ addUser }) => {
     >
       <TextField
         id="name"
+        type="text"
         name="name"
         label="Логін"
         placeholder="Введіть ім'я користувача"
@@ -93,10 +95,10 @@ export const AddUserForm = ({ addUser }) => {
       />
       <TextField
         id="password"
+        type="text"
         name="password"
         label="Пароль"
         placeholder="Введіть пароль"
-        type="text"
         value={formik.values.password}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}

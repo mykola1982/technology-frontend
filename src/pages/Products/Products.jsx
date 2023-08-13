@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
-import * as productsAPI from "../../services/products-API";
-import * as ordersAPI from "../../services/orders-API";
-import { getMaterialsForOneOrder } from "../../utils";
+import * as productsAPI from "services/products-API";
+import * as ordersAPI from "services/orders-API";
+import { getMaterialsForOneOrder } from "utils";
 
-import { MyContainer } from "../../components/MyContainer";
-import { AddForm } from "../../components/AddForm";
-import { Filter } from "../../components/Filter";
-import { ProductsList } from "../../components/ProductsList";
-import { SelectedProductList } from "../../components/SelectedProductList";
-import { ModalBig } from "../../components/ModalBig";
-import { FormQuantityProduct } from "../../components/FormQuantityProduct";
-import { ModalSmall } from "../../components/ModalSmall";
+import { MyContainer } from "components/MyContainer";
+import { AddForm } from "components/AddForm";
+import { Filter } from "components/Filter";
+import { ProductsList } from "components/ProductsList";
+import { SelectedProductList } from "components/SelectedProductList";
+import { ModalBig } from "components/ModalBig";
+import { FormQuantityProduct } from "components/FormQuantityProduct";
+import { ModalSmall } from "components/ModalSmall";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -42,6 +42,7 @@ const Products = () => {
   const [showModalFormQuantity, setShowModalFormQuantity] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const openModal = () => {
     setShowModal(true);
@@ -172,7 +173,6 @@ const Products = () => {
       materials: getMaterialsForOneOrder(products),
     };
 
-    console.log("newOrder", newOrder);
     try {
       await ordersAPI.addOrderAPI(newOrder);
       setSelectedProducts([]);
@@ -277,7 +277,10 @@ const Products = () => {
             variant="contained"
             size="large"
             disabled={selectedProducts.length <= 0}
-            onClick={() => addOrder(selectedProducts)}
+            onClick={() => {
+              addOrder(selectedProducts);
+              navigate("/orders");
+            }}
           >
             Сформувати замовлення
           </Button>

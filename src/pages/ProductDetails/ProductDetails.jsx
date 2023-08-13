@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
@@ -8,16 +8,18 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import * as productAPI from "../../services/products-API";
+import * as productAPI from "services/products-API";
 
-import { AddForm } from "../../components/AddForm";
-import { ModalBig } from "../../components/ModalBig";
-import { ModalSmall } from "../../components/ModalSmall";
-import { ProductDetailsDescription } from "../../components/ProductDetailsDescription";
-import { TechnologyDescription } from "../../components/TechnologyDescription";
-import { ContentModalDelete } from "../../components/ContentModalDelete";
+import { AddForm } from "components/AddForm";
+import { ModalBig } from "components/ModalBig";
+import { ModalSmall } from "components/ModalSmall";
+import { ProductDetailsDescription } from "components/ProductDetailsDescription";
+import { TechnologyDescription } from "components/TechnologyDescription";
+import { ContentModalDelete } from "components/ContentModalDelete";
+
 const ProductDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const { productId } = useParams();
 
@@ -57,6 +59,7 @@ const ProductDetails = () => {
       await productAPI.removeProductAPI(id);
       setDetailsProduct(null);
       toast.success(`Деталь успішно видалена iз списку`);
+      navigate("/products");
     } catch (error) {
       toast.error(`Щось пішло не так. Спробуй знову...`);
     }

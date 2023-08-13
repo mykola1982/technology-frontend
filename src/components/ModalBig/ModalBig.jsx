@@ -10,8 +10,8 @@ export const ModalBig = ({ open, children, onClose }) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          maxHeight: "450px",
-          maxWidth: "450px",
+          width: { xs: "100%", md: "500px" },
+          maxWidth: "500px",
           bgcolor: "#fff",
           borderRadius: 2,
           boxShadow:
