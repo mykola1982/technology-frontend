@@ -45,16 +45,23 @@ const initialValues = {
   sheet: "",
 };
 
-export const AddForm = ({ onSubmit, onClose, productForUpdate }) => {
+export const AddForm = ({ onSubmit, onClose, productForUpdate = null }) => {
   if (productForUpdate) {
     initialValues.name = productForUpdate.name;
     initialValues.number = productForUpdate.number;
     initialValues.weight = productForUpdate.weight;
-
     initialValues.quantity = productForUpdate.quantity;
     initialValues.workshop = productForUpdate.workshop;
     initialValues.thickness = productForUpdate.material.thickness;
     initialValues.sheet = productForUpdate.material.sheet;
+  } else {
+    initialValues.name = "";
+    initialValues.number = "";
+    initialValues.weight = "";
+    initialValues.quantity = "";
+    initialValues.workshop = "";
+    initialValues.thickness = "";
+    initialValues.sheet = "";
   }
 
   const materials = getMaterials();
@@ -66,6 +73,7 @@ export const AddForm = ({ onSubmit, onClose, productForUpdate }) => {
   const handleSubmit = (values, { resetForm }) => {
     onSubmit(values);
     onClose();
+
     resetForm();
   };
 
