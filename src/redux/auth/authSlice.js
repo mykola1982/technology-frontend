@@ -4,6 +4,7 @@ import {
   logIn,
   logOut,
   refreshUser,
+  clearToken,
 } from "./authOperation";
 
 const handlePending = (state) => {
@@ -70,6 +71,10 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.isRefreshing = false;
       state.isLoading = false;
+    },
+    [clearToken](state) {
+      state.token = null;
+      state.isLoggedIn = false;
     },
   },
 });

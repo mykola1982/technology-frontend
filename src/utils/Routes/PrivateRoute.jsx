@@ -7,12 +7,17 @@
 //   return !token ? <Navigate to={redirectTo} /> : Component;
 // };
 
+import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "hooks/useAuth";
 import jwt_decode from "jwt-decode";
 
+import { clearToken } from "redux/auth/authOperation";
+
 export const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
   const { token } = useAuth();
+
+  const dispatch = useDispatch();
 
   if (!token) {
     return <Navigate to={redirectTo} />;
@@ -22,11 +27,16 @@ export const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
     const decodedToken = jwt_decode(token);
     const currentTime = Date.now() / 1000;
 
+    console.log(decodedToken.exp);
+    console.log(currentTime);
+
     if (decodedToken.exp < currentTime) {
-      return <Navigate to={redirectTo} />;
+      console.log("token протух ми  очищаэм токен з глобального стану");
+      dispatch(clearToken());
     }
     return Component;
   } catch (error) {
-    return <Navigate to={redirectTo} />;
+    console.log("якщо помилка очищаэм токен з глобального стану");
+    dispatch(clearToken());
   }
 };
