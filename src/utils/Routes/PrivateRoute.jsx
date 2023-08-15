@@ -33,10 +33,12 @@ export const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
     if (decodedToken.exp < currentTime) {
       console.log("token протух ми  очищаэм токен з глобального стану");
       dispatch(clearToken());
+      return <Navigate to={redirectTo} />;
     }
     return Component;
   } catch (error) {
     console.log("якщо помилка очищаэм токен з глобального стану");
     dispatch(clearToken());
+    return <Navigate to={redirectTo} />;
   }
 };
