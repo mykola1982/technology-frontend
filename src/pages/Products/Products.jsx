@@ -175,7 +175,8 @@ const Products = () => {
 
     try {
       await ordersAPI.addOrderAPI(newOrder);
-      setSelectedProducts([]);
+      localStorage.removeItem("selectedProducts");
+
       toast.success(
         "Деталі успішно додані в замовлення на розрахунок матеріалу."
       );
