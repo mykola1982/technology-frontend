@@ -47,18 +47,49 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="/"
             element={
               <PrivateRoute redirectTo="/" component={<SharedLayot />} />
             }
           >
             <Route path="/products" element={<Products />} />
-            <Route path="/products/:productId" element={<ProductDetails />} />
-            <Route path="/materials" element={<Materials />} />
+              <Route path="/products/:productId" element={<ProductDetails />} /> */}
+          {/* <Route path="/materials" element={<Materials />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/users" element={<Users />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} /> */}
+
+          <Route path="/" element={<SharedLayot />}>
+            <Route
+              path="/products"
+              element={<PrivateRoute redirectTo="/" component={<Products />} />}
+            />
+            <Route
+              path="/products/:productId"
+              element={
+                <PrivateRoute redirectTo="/" component={<ProductDetails />} />
+              }
+            />
+
+            <Route
+              path="/materials"
+              element={
+                <PrivateRoute redirectTo="/" component={<Materials />} />
+              }
+            />
+            <Route
+              path="/orders"
+              element={<PrivateRoute redirectTo="/" component={<Orders />} />}
+            />
+            <Route
+              path="/users"
+              element={<PrivateRoute redirectTo="/" component={<Users />} />}
+            />
+            <Route
+              path="*"
+              element={<PrivateRoute redirectTo="/" component={<NotFound />} />}
+            />
           </Route>
         </Routes>
       </Suspense>
