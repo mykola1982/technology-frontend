@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/technology-frontend/static/css/main.0a6e57fa.css",
-    "main.js": "/technology-frontend/static/js/main.9f438758.js",
+    "main.js": "/technology-frontend/static/js/main.9958899f.js",
     "static/js/128.823c35ba.chunk.js": "/technology-frontend/static/js/128.823c35ba.chunk.js",
     "static/js/50.45c79ded.chunk.js": "/technology-frontend/static/js/50.45c79ded.chunk.js",
     "static/js/691.a4c1465b.chunk.js": "/technology-frontend/static/js/691.a4c1465b.chunk.js",
@@ -17,7 +17,7 @@
     "static/media/press-svgrepo-com.svg": "/technology-frontend/static/media/press-svgrepo-com.b03c9718f93ef0ee6035caa2c096d111.svg",
     "index.html": "/technology-frontend/index.html",
     "main.0a6e57fa.css.map": "/technology-frontend/static/css/main.0a6e57fa.css.map",
-    "main.9f438758.js.map": "/technology-frontend/static/js/main.9f438758.js.map",
+    "main.9958899f.js.map": "/technology-frontend/static/js/main.9958899f.js.map",
     "128.823c35ba.chunk.js.map": "/technology-frontend/static/js/128.823c35ba.chunk.js.map",
     "50.45c79ded.chunk.js.map": "/technology-frontend/static/js/50.45c79ded.chunk.js.map",
     "691.a4c1465b.chunk.js.map": "/technology-frontend/static/js/691.a4c1465b.chunk.js.map",
@@ -33,6 +33,6 @@
   },
   "entrypoints": [
     "static/css/main.0a6e57fa.css",
-    "static/js/main.9f438758.js"
+    "static/js/main.9958899f.js"
   ]
 }
