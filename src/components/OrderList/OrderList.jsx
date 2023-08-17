@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import {
   TableContainer,
   Table,
@@ -6,11 +8,15 @@ import {
   TableRow,
   TableBody,
   Paper,
+  IconButton,
 } from "@mui/material";
 
-import { nanoid } from "nanoid";
+import PrintIcon from "@mui/icons-material/Print";
 
-export const OrderList = ({ orders }) => {
+import { nanoid } from "nanoid";
+import { formatDate } from "utils/formatDate";
+
+export const OrderList = ({ orders, location }) => {
   // винести в окрему функцію
   const reverseOrders = orders.reduce((acc, element) => {
     return (acc = [element, ...acc]);
@@ -29,22 +35,14 @@ export const OrderList = ({ orders }) => {
             <TableCell align="center">
               Сортамент та кількість потрібного металу для виконання замовлення
             </TableCell>
+            <TableCell align="center">Дії</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {reverseOrders.map((order, index) => {
             const { _id, createdAt, products, materials } = order;
 
-            //  винести в окрему функцію
-            const dateTime = new Date(createdAt);
-
-            const formattedDate = dateTime.toLocaleDateString("uk-UA");
-            const formattedTime = dateTime.toLocaleTimeString("uk-UA", {
-              hour12: false,
-            });
-
-            const formattedDateTime = `${formattedDate} ${formattedTime}`;
-            //   _____________
+            const formattedDateTime = formatDate(createdAt);
 
             return (
               <TableRow
@@ -52,7 +50,9 @@ export const OrderList = ({ orders }) => {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="center">{index + 1}</TableCell>
-                <TableCell aling="center">{formattedDateTime}</TableCell>
+                <TableCell aling="center">
+                  {formattedDateTime} {order.user}
+                </TableCell>
                 <TableCell aling="center">
                   {products.map(({ name, number, reserved }, index) => {
                     return (
@@ -74,6 +74,18 @@ export const OrderList = ({ orders }) => {
                       </p>
                     );
                   })}
+                </TableCell>
+                <TableCell aling="center">
+                  <IconButton
+                    component={Link}
+                    to={`/orders/${_id}`}
+                    state={{ from: location }}
+                    sx={{ color: "#1976d2" }}
+                    aria-label="print order"
+                    size="medium"
+                  >
+                    <PrintIcon fontSize="medium" />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             );

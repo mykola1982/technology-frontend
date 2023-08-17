@@ -42,11 +42,11 @@ export const UserList = ({ users, openModal }) => {
                   <IconButton
                     sx={{ color: "#1976d2" }}
                     aria-label="delete"
-                    size="small"
+                    size="medium"
                     disabled={isAdmin}
                     onClick={() => openModal(_id)}
                   >
-                    <DeleteForeverIcon fontSize="small" />
+                    <DeleteForeverIcon fontSize="medium" />
                   </IconButton>
                 </TableCell>
               </TableRow>

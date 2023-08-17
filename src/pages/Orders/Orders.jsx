@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 import { Box } from "@mui/material";
 
@@ -7,9 +8,12 @@ import { MyContainer } from "../../components/MyContainer";
 
 import * as orderAPI from "../../services/orders-API";
 import { OrderList } from "../../components/OrderList";
+import { OrderPdfPrint } from "components/OrderPdfPrint";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+
+  const location = useLocation();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -46,7 +50,7 @@ const Orders = () => {
           boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
         }}
       >
-        <OrderList orders={orders} />
+        <OrderList orders={orders} location={location} />
       </Box>
     </MyContainer>
   );

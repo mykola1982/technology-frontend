@@ -15,14 +15,14 @@ import { refreshUser } from "../../redux/auth/authOperation";
 
 import { Loader } from "../Loader/Loader";
 
-const WelcomePage = lazy(() => import("../../pages/WelcomePage"));
-const Products = lazy(() => import("../../pages/Products"));
-const Materials = lazy(() => import("../../pages/Materials"));
-const Orders = lazy(() => import("../../pages/Orders"));
-const Users = lazy(() => import("../../pages/Users"));
-const ProductDetails = lazy(() => import("../../pages/ProductDetails"));
-
-const NotFound = lazy(() => import("../../pages/NotFound"));
+const WelcomePage = lazy(() => import("pages/WelcomePage"));
+const Products = lazy(() => import("pages/Products"));
+const Materials = lazy(() => import("pages/Materials"));
+const Orders = lazy(() => import("pages/Orders"));
+const OrderDetails = lazy(() => import("pages/OrderDetails"));
+const Users = lazy(() => import("pages/Users"));
+const ProductDetails = lazy(() => import("pages/ProductDetails"));
+const NotFound = lazy(() => import("pages/NotFound"));
 
 function App() {
   const dispatch = useDispatch();
@@ -82,9 +82,17 @@ function App() {
               path="/orders"
               element={<PrivateRoute redirectTo="/" component={<Orders />} />}
             />
+
+            <Route
+              path="/orders/:orderId"
+              element={
+                <PrivateRoute redirectTo="/" component={<OrderDetails />} />
+              }
+            />
             <Route
               path="/users"
               element={<PrivateRoute redirectTo="/" component={<Users />} />}
+              S
             />
             <Route
               path="*"

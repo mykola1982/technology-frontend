@@ -8,7 +8,7 @@ export const fetchAllOrdersAPI = async () => {
 };
 
 export const fetchOrderAPI = async (id) => {
-  const { data } = await axios.get(`/product/${id}`);
+  const { data } = await axios.get(`/orders/${id}`);
   return data;
 };
 

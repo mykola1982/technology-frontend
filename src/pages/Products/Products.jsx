@@ -18,6 +18,8 @@ import { ModalBig } from "components/ModalBig";
 import { FormQuantityProduct } from "components/FormQuantityProduct";
 import { ModalSmall } from "components/ModalSmall";
 
+import { useAuth } from "hooks";
+
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
@@ -43,6 +45,7 @@ const Products = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const openModal = () => {
     setShowModal(true);
@@ -165,6 +168,7 @@ const Products = () => {
 
   const addOrder = async (products) => {
     const newOrder = {
+      user: user.name,
       products: products.map(
         ({ name, number, weight, quantity, material, reserved }) => {
           return { name, number, weight, quantity, material, reserved };

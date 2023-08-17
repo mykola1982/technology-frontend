@@ -8,7 +8,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import * as productAPI from "services/products-API";
+import * as productsAPI from "services/products-API";
 
 import { AddForm } from "components/AddForm";
 import { ModalBig } from "components/ModalBig";
@@ -16,6 +16,7 @@ import { ModalSmall } from "components/ModalSmall";
 import { ProductDetailsDescription } from "components/ProductDetailsDescription";
 import { TechnologyDescription } from "components/TechnologyDescription";
 import { ContentModalDelete } from "components/ContentModalDelete";
+import { Loader } from "components/Loader";
 
 const ProductDetails = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const ProductDetails = () => {
   const { productId } = useParams();
 
   const [detailsProduct, setDetailsProduct] = useState(null);
+  const [isloading, setIsLoading] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
 
@@ -45,10 +47,14 @@ const ProductDetails = () => {
   useEffect(() => {
     async function getProduct() {
       try {
-        const response = await productAPI.fetchProductAPI(productId);
+        setIsLoading(true);
+        const response = await productsAPI.fetchProductAPI(productId);
         setDetailsProduct(response.data);
       } catch (error) {
         toast.error(`Щось пішло не так. Спробуй знову...`);
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
       }
     }
     getProduct();
@@ -56,12 +62,16 @@ const ProductDetails = () => {
 
   const deleteProduct = async (id) => {
     try {
-      await productAPI.removeProductAPI(id);
+      await productsAPI.removeProductAPI(id);
+      setIsLoading(true);
       setDetailsProduct(null);
       toast.success(`Деталь успішно видалена iз списку`);
       navigate("/products");
     } catch (error) {
       toast.error(`Щось пішло не так. Спробуй знову...`);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -92,9 +102,12 @@ const ProductDetails = () => {
     };
 
     try {
-      const { data } = await productAPI.updateProductAPI(productId, updateData);
+      setIsLoading(true);
+      const { data } = await productsAPI.updateProductAPI(
+        productId,
+        updateData
+      );
       toast.success(`Дані про деталь успішно оновлені`);
-
       setDetailsProduct(data);
     } catch (error) {
       if (error.response.status === 409) {
@@ -102,6 +115,9 @@ const ProductDetails = () => {
       } else {
         toast.error(`Щось пішло не так. Спробуй знову...`);
       }
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,6 +125,7 @@ const ProductDetails = () => {
 
   return (
     <>
+      {isloading && <Loader />}
       <Container
         maxWidth="xl"
         sx={{ display: "flex", height: "100vh", gap: 2 }}
