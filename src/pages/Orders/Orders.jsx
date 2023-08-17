@@ -8,7 +8,6 @@ import { MyContainer } from "../../components/MyContainer";
 
 import * as orderAPI from "../../services/orders-API";
 import { OrderList } from "../../components/OrderList";
-import { OrderPdfPrint } from "components/OrderPdfPrint";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
