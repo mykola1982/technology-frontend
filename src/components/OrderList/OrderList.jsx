@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import {
+  Box,
   TableContainer,
   Table,
   TableCell,
@@ -9,12 +10,14 @@ import {
   TableBody,
   Paper,
   IconButton,
+  Typography,
 } from "@mui/material";
 
 import PrintIcon from "@mui/icons-material/Print";
 
 import { nanoid } from "nanoid";
-import { formatDate } from "utils/formatDate";
+import { formatDate } from "utils";
+import { formatTime } from "utils";
 
 export const OrderList = ({ orders, location }) => {
   // винести в окрему функцію
@@ -28,7 +31,7 @@ export const OrderList = ({ orders, location }) => {
         <TableHead>
           <TableRow>
             <TableCell align="center"> № п.п </TableCell>
-            <TableCell align="center"> Дата створення </TableCell>
+            <TableCell align="center"> Користувач, дата та час </TableCell>
             <TableCell align="center">
               Найменування деталей та кількість деталей в замовленні
             </TableCell>
@@ -40,9 +43,7 @@ export const OrderList = ({ orders, location }) => {
         </TableHead>
         <TableBody>
           {reverseOrders.map((order, index) => {
-            const { _id, createdAt, products, materials } = order;
-
-            const formattedDateTime = formatDate(createdAt);
+            const { _id, user, createdAt, products, materials } = order;
 
             return (
               <TableRow
@@ -51,7 +52,21 @@ export const OrderList = ({ orders, location }) => {
               >
                 <TableCell align="center">{index + 1}</TableCell>
                 <TableCell aling="center">
-                  {formattedDateTime} {order.user}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+
+                      gap: "4px",
+                    }}
+                  >
+                    <Typography variant="p" sx={{ fontWeight: 700 }}>
+                      {user}
+                    </Typography>
+                    <Typography variant="p">{formatDate(createdAt)}</Typography>
+                    <Typography variant="p">{formatTime(createdAt)}</Typography>
+                  </Box>
                 </TableCell>
                 <TableCell aling="center">
                   {products.map(({ name, number, reserved }, index) => {

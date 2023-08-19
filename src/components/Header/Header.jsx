@@ -11,15 +11,18 @@ import {
   Menu,
   MenuItem,
   Button,
+  SvgIcon,
 } from "@mui/material";
 
-import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import MenuIcon from "@mui/icons-material/Menu";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { ReactComponent as PressIcon } from "icons/press-svgrepo-com.svg";
 
 import { logOut } from "../../redux/auth/authOperation";
+import { useAuth } from "hooks";
+import { AvatarCustom } from "components/AvatarCustom";
 
 const pages = [
-  // { name: "Домашня сторінка", to: "/" },
   { name: "Продукція", to: "/products" },
   { name: "Замовлення", to: "/orders" },
   { name: "Матеріали", to: "/materials" },
@@ -28,6 +31,8 @@ const pages = [
 
 export const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const { user } = useAuth();
 
   const dispatch = useDispatch();
 
@@ -46,9 +51,17 @@ export const Header = () => {
     <AppBar>
       <Container maxWidth="x1">
         <Toolbar disableGutters>
-          <PrecisionManufacturingIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+          <SvgIcon
+            size="medium"
+            sx={{
+              display: { xs: "none", md: "flex" },
+              mr: 1,
+              fontSize: 36,
+              color: "#fff",
+            }}
+          >
+            <PressIcon fontSize="medium" />
+          </SvgIcon>
 
           <Typography
             variant="h5"
@@ -115,9 +128,6 @@ export const Header = () => {
             </Menu>
           </Box>
 
-          <PrecisionManufacturingIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
           <Typography
             variant="h6"
             noWrap
@@ -132,6 +142,7 @@ export const Header = () => {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              fontSize: "1rem",
             }}
           >
             TECHNOLOGIST
@@ -155,9 +166,33 @@ export const Header = () => {
             ))}
           </Box>
 
-          <Button sx={{ color: "white" }} onClick={handleLogOut}>
-            {" "}
-            вийти{" "}
+          <AvatarCustom name={user.name} />
+
+          <Typography
+            variant="p"
+            sx={{
+              mr: 2,
+              ml: 2,
+              display: { xs: "none", md: "flex" },
+              fontSize: "1rem",
+              alignItems: "center",
+            }}
+          >
+            Користувач: {user.name}
+          </Typography>
+
+          <IconButton
+            sx={{ display: { xs: "flex", md: "none" }, color: "white" }}
+          >
+            <LogoutIcon />
+          </IconButton>
+
+          <Button
+            endIcon={<LogoutIcon />}
+            sx={{ display: { xs: "none", md: "flex" }, color: "white", mr: 2 }}
+            onClick={handleLogOut}
+          >
+            Вийти
           </Button>
         </Toolbar>
       </Container>

@@ -6,7 +6,7 @@ export const TechnologyDescription = () => {
       sx={{
         borderRadius: 4,
         mt: 10,
-        mb: 2,
+        mb: 6,
         p: 2,
         pt: 11,
         backgroundColor: "#f5f5f5",

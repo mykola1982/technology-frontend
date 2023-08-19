@@ -3,13 +3,14 @@ import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import { Container, Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import * as productsAPI from "services/products-API";
 
+import { MyContainer } from "components/MyContainer";
 import { AddForm } from "components/AddForm";
 import { ModalBig } from "components/ModalBig";
 import { ModalSmall } from "components/ModalSmall";
@@ -126,16 +127,13 @@ const ProductDetails = () => {
   return (
     <>
       {isloading && <Loader />}
-      <Container
-        maxWidth="xl"
-        sx={{ display: "flex", height: "100vh", gap: 2 }}
-      >
+      <MyContainer>
         <Box
           sx={{
             width: "600px",
             borderRadius: 4,
             mt: 10,
-            mb: 2,
+            mb: 6,
             p: 2,
             backgroundColor: "#f5f5f5",
             boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
@@ -197,7 +195,7 @@ const ProductDetails = () => {
         </Box>
 
         <TechnologyDescription />
-      </Container>
+      </MyContainer>
 
       <ModalBig open={showModalUpdate} onClose={closeModalUpdate}>
         <AddForm

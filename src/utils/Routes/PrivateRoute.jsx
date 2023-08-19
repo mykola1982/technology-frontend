@@ -27,17 +27,12 @@ export const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
     const decodedToken = jwt_decode(token);
     const currentTime = Date.now() / 1000;
 
-    console.log(decodedToken.exp);
-    console.log(currentTime);
-
     if (decodedToken.exp < currentTime) {
-      console.log("token протух ми  очищаэм токен з глобального стану");
       dispatch(clearToken());
       return <Navigate to={redirectTo} />;
     }
     return Component;
   } catch (error) {
-    console.log("якщо помилка очищаэм токен з глобального стану");
     dispatch(clearToken());
     return <Navigate to={redirectTo} />;
   }

@@ -79,6 +79,8 @@ export const AddUserForm = ({ addUser }) => {
         gap: "12px",
         flexDirection: "column",
         width: "300px",
+        overflowX: "auto",
+        p: 1,
       }}
     >
       <TextField

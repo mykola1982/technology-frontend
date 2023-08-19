@@ -10,8 +10,11 @@ import {
 } from "@mui/material";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useAuth } from "hooks";
 
 export const UserList = ({ users, openModal }) => {
+  const loginedUser = useAuth().user;
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -28,6 +31,7 @@ export const UserList = ({ users, openModal }) => {
           {users?.map((user, index) => {
             const { _id, name, role } = user;
             const isAdmin = role === "ADMIN";
+
             return (
               <TableRow
                 key={_id}
@@ -43,7 +47,7 @@ export const UserList = ({ users, openModal }) => {
                     sx={{ color: "#1976d2" }}
                     aria-label="delete"
                     size="medium"
-                    disabled={isAdmin}
+                    disabled={isAdmin || loginedUser.role === "USER"}
                     onClick={() => openModal(_id)}
                   >
                     <DeleteForeverIcon fontSize="medium" />

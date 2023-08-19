@@ -4,12 +4,18 @@ import { useReactToPrint } from "react-to-print";
 
 import { toast } from "react-toastify";
 
-import { Container, Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Paper } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PrintIcon from "@mui/icons-material/Print";
 
 import * as ordersAPI from "services/orders-API";
+import { formatDate } from "utils/formatDate";
+import { formatTime } from "utils/formatTime";
 
+import { MyContainer } from "../../components/MyContainer";
 import { Loader } from "components/Loader";
+import { TableProducts } from "components/TableProducts";
+import { TableMaterials } from "components/TableMaterials";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
@@ -19,6 +25,8 @@ const OrderDetails = () => {
 
   const [detailsOrder, setDetailsOrder] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const date = new Date();
 
   useEffect(() => {
     async function getOrder() {
@@ -37,29 +45,28 @@ const OrderDetails = () => {
   }, [orderId]);
 
   const backLinkHref = location.state?.from ?? "/";
-  // console.log(orderId);
-  console.log(detailsOrder);
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: "Замовлення на метал ",
-    onAfterPrint: () => alert("друк успішний "),
+    documentTitle: `Замовлення на метал від ${formatDate(date)} ${formatTime(
+      date
+    )} `,
   });
 
   return (
     <>
       {isLoading && <Loader />}
-      <Container maxWidth="xl" sx={{ display: "flex", height: "100vh" }}>
+      <MyContainer>
         <Box
           sx={{
             width: "100%",
             borderRadius: 4,
-
             mt: 10,
-            mb: 2,
+            mb: 6,
             p: 2,
             backgroundColor: "#f5f5f5",
             boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
+            overflowX: "auto",
           }}
         >
           <Button
@@ -73,32 +80,83 @@ const OrderDetails = () => {
             Назад
           </Button>
           {detailsOrder ? (
-            <div>
-              <div ref={componentRef}>
-                <Typography
-                  variant="h5"
-                  align={"center"}
-                  sx={{ fontWeight: 700 }}
-                >
+            <Box
+              component={Paper}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "left",
+                gap: 1,
+              }}
+            >
+              <Button
+                type="button"
+                variant="contained"
+                size="large"
+                startIcon={<PrintIcon />}
+                onClick={handlePrint}
+                sx={{
+                  maxWidth: "250px",
+                  ml: 4,
+                  mt: 4,
+                }}
+              >
+                Друкувати
+              </Button>
+              <Box
+                ref={componentRef}
+                sx={{
+                  width: "100%",
+                  height: "window:innerHeight",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "left",
+                  gap: 1,
+                  p: 4,
+                }}
+              >
+                <Typography variant="h5" align="left" sx={{ fontWeight: 700 }}>
                   Замовлення на метал
                 </Typography>
-                <Typography variant="p" align={"left"} sx={{ fontWeight: 700 }}>
-                  Користувач: {detailsOrder.user}
-                </Typography>
-                <Typography variant="p" align={"left"} sx={{ fontWeight: 700 }}>
-                  Дата створення замовлення: {detailsOrder.createdAt}
-                </Typography>
-              </div>
-
-              <Button onClick={handlePrint}>друкувати</Button>
-            </div>
+                <Box>
+                  <Typography variant="p" sx={{ fontWeight: 700 }}>
+                    Користувач що створив замовлення:
+                  </Typography>{" "}
+                  <Typography variant="p">{detailsOrder.user}</Typography>
+                </Box>
+                <Box>
+                  <Typography variant="p" sx={{ fontWeight: 700 }}>
+                    Дата створення замовлення:
+                  </Typography>{" "}
+                  <Typography variant="p">
+                    {formatDate(detailsOrder.createdAt)}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="p" sx={{ fontWeight: 700 }}>
+                    Час створення замовлення:
+                  </Typography>{" "}
+                  <Typography variant="p">
+                    {formatTime(detailsOrder.createdAt)}
+                  </Typography>
+                </Box>
+                <Typography variant="p" sx={{ fontWeight: 700 }}>
+                  Деталі на які замовляється метал:
+                </Typography>{" "}
+                <TableProducts data={detailsOrder.products} />
+                <Typography variant="p" sx={{ fontWeight: 700 }}>
+                  Метаріали що потрібен для виготовлення даних деталей:
+                </Typography>{" "}
+                <TableMaterials data={detailsOrder.materials} />
+              </Box>
+            </Box>
           ) : (
             <Typography variant="h5" component="p" sx={{ fontWeight: 700 }}>
               Дані на замовлення не знайдено...
             </Typography>
           )}
         </Box>
-      </Container>
+      </MyContainer>
     </>
   );
 };
