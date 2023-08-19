@@ -183,6 +183,7 @@ export const Header = () => {
 
           <IconButton
             sx={{ display: { xs: "flex", md: "none" }, color: "white" }}
+            onClick={handleLogOut}
           >
             <LogoutIcon />
           </IconButton>
