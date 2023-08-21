@@ -137,6 +137,7 @@ const ProductDetails = () => {
             p: 2,
             backgroundColor: "#f5f5f5",
             boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
+            overflowX: "auto",
           }}
         >
           <Button
@@ -207,6 +208,7 @@ const ProductDetails = () => {
 
       <ModalSmall open={showModalDelete} onClose={closeModalDelete}>
         <ContentModalDelete
+          title={"Ви бажаєте видалити дану деталь"}
           onDelete={hendelDelete}
           onClose={closeModalDelete}
         />

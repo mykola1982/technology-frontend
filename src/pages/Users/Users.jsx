@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { toast } from "react-toastify";
 
 import { Box } from "@mui/material";
@@ -10,13 +11,13 @@ import { AddUserForm } from "components/AddUserForm";
 import { UserList } from "components/UserList";
 import { ModalSmall } from "components/ModalSmall";
 import { ContentModalDelete } from "components/ContentModalDelete";
+import { Loader } from "components/Loader";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [idUserToDeleteUser, setIdUserToDeleteUser] = useState(null);
-  // якусь діч придумав ТРеба згадати як підняти стан. через location в модал контент змінити тест
 
   useEffect(() => {
     async function getAllUsers() {
@@ -27,6 +28,7 @@ const Users = () => {
         setUsers(data);
       } catch (error) {
         toast.error(`Щось пішло не так. Спробуй знову...`);
+        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
@@ -45,8 +47,9 @@ const Users = () => {
   const addUser = async (credentials) => {
     const newUsers = credentials;
     try {
+      setIsLoading(true);
       const { data } = await usersAPI.addUserAPI(newUsers);
-      setUsers((prevUsers) => [data.user, ...prevUsers]);
+      setUsers((prevUsers) => [...prevUsers, data.user]);
       toast.success(
         ` Користувача  ${credentials.name} успішно додана до списку`
       );
@@ -55,19 +58,24 @@ const Users = () => {
         toast.error(`Користувач з іменем ${credentials.name} вже є в списку`);
       } else {
         toast.error(`Щось пішло не так. Спробуй знову...`);
+        setIsLoading(false);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const deleteUser = async (id) => {
     try {
+      setIsLoading(true);
       await usersAPI.removeUserAPI(id);
-
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
-
       toast.success(`Користувач успішно видалений`);
     } catch (error) {
       toast.error(`Щось пішло не так. Спробуй знову...`);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,6 +87,7 @@ const Users = () => {
 
   return (
     <>
+      {isLoading && <Loader />}
       <MyContainer>
         <Box
           sx={{
@@ -117,6 +126,7 @@ const Users = () => {
       </MyContainer>
       <ModalSmall open={showModalDelete} onClose={closeModalDelete}>
         <ContentModalDelete
+          title={"Ви бажаєте видалити користувача"}
           onDelete={handleDelete}
           onClose={closeModalDelete}
         />

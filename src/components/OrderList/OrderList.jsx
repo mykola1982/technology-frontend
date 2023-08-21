@@ -11,9 +11,11 @@ import {
   Paper,
   IconButton,
   Typography,
+  Checkbox,
 } from "@mui/material";
 
 import PrintIcon from "@mui/icons-material/Print";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { nanoid } from "nanoid";
 import { formatDate } from "utils";
@@ -38,7 +40,9 @@ export const OrderList = ({ orders, location }) => {
             <TableCell align="center">
               Сортамент та кількість потрібного металу для виконання замовлення
             </TableCell>
-            <TableCell align="center">Дії</TableCell>
+            <TableCell align="center">Друкувати</TableCell>
+            <TableCell align="center">Видалити</TableCell>
+            <TableCell align="center">На видалення</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -81,16 +85,20 @@ export const OrderList = ({ orders, location }) => {
                   })}
                 </TableCell>
                 <TableCell aling="center">
-                  {materials.map(({ sheet, thickness, amount }, index) => {
-                    return (
-                      <p key={nanoid()}>
-                        {index + 1}. {thickness}x{sheet} - {amount.toFixed(3)}{" "}
-                        листів.
-                      </p>
-                    );
-                  })}
+                  <>
+                    {" "}
+                    {materials.map(({ sheet, thickness, amount }, index) => {
+                      return (
+                        <p key={nanoid()}>
+                          {index + 1}. {thickness}x{sheet} - {amount.toFixed(3)}{" "}
+                          листів.
+                        </p>
+                      );
+                    })}
+                    <p>Загальна вага: кг</p>
+                  </>
                 </TableCell>
-                <TableCell aling="center">
+                <TableCell align="center">
                   <IconButton
                     component={Link}
                     to={`/orders/${_id}`}
@@ -101,6 +109,27 @@ export const OrderList = ({ orders, location }) => {
                   >
                     <PrintIcon fontSize="medium" />
                   </IconButton>
+                </TableCell>
+                <TableCell align="center">
+                  <IconButton
+                    sx={{ color: "#1976d2" }}
+                    aria-label="delete order"
+                    size="medium"
+                  >
+                    <DeleteForeverIcon fontSize="medium" />
+                  </IconButton>
+                </TableCell>
+                <TableCell align="center">
+                  <Checkbox
+                    inputProps={{ "aria-label": "Checkbox demo" }}
+                    defaultChecked
+                    sx={{
+                      color: "#1976d2",
+                      "&.Mui-checked": {
+                        color: "#DC143C",
+                      },
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             );
