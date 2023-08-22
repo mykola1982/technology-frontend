@@ -54,7 +54,8 @@ export const OrderList = ({ orders, location, openModal }) => {
         </TableHead>
         <TableBody>
           {reverseOrders.map((order, index) => {
-            const { _id, user, createdAt, products, materials } = order;
+            const { _id, user, createdAt, products, materials, toRemove } =
+              order;
 
             return (
               <TableRow
@@ -81,15 +82,12 @@ export const OrderList = ({ orders, location, openModal }) => {
                 <TableCell aling="center" sx={{ verticalAlign: "top" }}>
                   {products.map(({ name, number, reserved }, index) => {
                     return (
-                      <Box
-                        key={nanoid()}
-                        sx={{ display: "flex", flexDirection: "column", mb: 1 }}
-                      >
+                      <Box key={nanoid()} sx={{ mb: 1 }}>
                         <Typography variant="p">
-                          {index + 1}. {name} {number}
+                          {index + 1}. {name} {number}{" "}
                         </Typography>
-                        <Typography variant="p" sx={{ ml: 2, fontWeight: 500 }}>
-                          {reserved} шт.
+                        <Typography variant="p" sx={{ fontWeight: 500 }}>
+                          - {reserved} шт.
                         </Typography>
                       </Box>
                     );
@@ -101,7 +99,7 @@ export const OrderList = ({ orders, location, openModal }) => {
                       return (
                         <Box key={nanoid()} sx={{ mb: 1 }}>
                           <Typography variant="p">
-                            {index + 1}. {thickness}x{sheet}
+                            {index + 1}. {thickness}x{sheet}{" "}
                           </Typography>
                           <Typography variant="p" sx={{ fontWeight: 500 }}>
                             - {amount.toFixed(3)} листів.
@@ -140,7 +138,12 @@ export const OrderList = ({ orders, location, openModal }) => {
                 <TableCell align="center">
                   <Checkbox
                     inputProps={{ "aria-label": "Checkbox demo" }}
-                    defaultChecked
+                    defaultChecked={toRemove}
+                    onChange={() => {
+                      console.log(_id);
+
+                      // тут код добавити
+                    }}
                     sx={{
                       color: "#1976d2",
                       "&.Mui-checked": {
