@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/technology-frontend/static/css/main.0a6e57fa.css",
-    "main.js": "/technology-frontend/static/js/main.2369999e.js",
+    "main.js": "/technology-frontend/static/js/main.fc204ded.js",
     "static/js/128.328a8f6b.chunk.js": "/technology-frontend/static/js/128.328a8f6b.chunk.js",
     "static/js/50.e91c5510.chunk.js": "/technology-frontend/static/js/50.e91c5510.chunk.js",
     "static/js/691.b233aacd.chunk.js": "/technology-frontend/static/js/691.b233aacd.chunk.js",
-    "static/js/481.ba952f5f.chunk.js": "/technology-frontend/static/js/481.ba952f5f.chunk.js",
+    "static/js/277.edb3e49c.chunk.js": "/technology-frontend/static/js/277.edb3e49c.chunk.js",
     "static/js/505.78db0c60.chunk.js": "/technology-frontend/static/js/505.78db0c60.chunk.js",
     "static/js/949.f64bca24.chunk.js": "/technology-frontend/static/js/949.f64bca24.chunk.js",
     "static/js/177.8237d0b1.chunk.js": "/technology-frontend/static/js/177.8237d0b1.chunk.js",
@@ -18,11 +18,11 @@
     "static/media/press-svgrepo-com.svg": "/technology-frontend/static/media/press-svgrepo-com.b03c9718f93ef0ee6035caa2c096d111.svg",
     "index.html": "/technology-frontend/index.html",
     "main.0a6e57fa.css.map": "/technology-frontend/static/css/main.0a6e57fa.css.map",
-    "main.2369999e.js.map": "/technology-frontend/static/js/main.2369999e.js.map",
+    "main.fc204ded.js.map": "/technology-frontend/static/js/main.fc204ded.js.map",
     "128.328a8f6b.chunk.js.map": "/technology-frontend/static/js/128.328a8f6b.chunk.js.map",
     "50.e91c5510.chunk.js.map": "/technology-frontend/static/js/50.e91c5510.chunk.js.map",
     "691.b233aacd.chunk.js.map": "/technology-frontend/static/js/691.b233aacd.chunk.js.map",
-    "481.ba952f5f.chunk.js.map": "/technology-frontend/static/js/481.ba952f5f.chunk.js.map",
+    "277.edb3e49c.chunk.js.map": "/technology-frontend/static/js/277.edb3e49c.chunk.js.map",
     "505.78db0c60.chunk.js.map": "/technology-frontend/static/js/505.78db0c60.chunk.js.map",
     "949.f64bca24.chunk.js.map": "/technology-frontend/static/js/949.f64bca24.chunk.js.map",
     "177.8237d0b1.chunk.js.map": "/technology-frontend/static/js/177.8237d0b1.chunk.js.map",
@@ -35,6 +35,6 @@
   },
   "entrypoints": [
     "static/css/main.0a6e57fa.css",
-    "static/js/main.2369999e.js"
+    "static/js/main.fc204ded.js"
   ]
 }
