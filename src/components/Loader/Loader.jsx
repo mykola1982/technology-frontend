@@ -12,6 +12,7 @@ export const Loader = () => {
         width: "100vw",
         height: "100vh",
         backgroundColor: "#E8F0FE",
+        zIndex: 99,
       }}
     >
       <Box

@@ -20,7 +20,9 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small">
         <TableHead>
-          <TableRow>
+          <TableRow
+            sx={{ position: "sticky", top: 0, zIndex: 1, background: "#fff" }}
+          >
             <TableCell align="center">№ п.п.</TableCell>
             <TableCell align="center">Найменування</TableCell>
             <TableCell align="center">Кіл.(шт.)</TableCell>

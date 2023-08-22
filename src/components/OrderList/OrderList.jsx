@@ -18,20 +18,27 @@ import PrintIcon from "@mui/icons-material/Print";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { nanoid } from "nanoid";
+
 import { formatDate } from "utils";
 import { formatTime } from "utils";
 
-export const OrderList = ({ orders, location }) => {
+import { useAuth } from "hooks";
+
+export const OrderList = ({ orders, location, openModal }) => {
   // винести в окрему функцію
   const reverseOrders = orders.reduce((acc, element) => {
     return (acc = [element, ...acc]);
   }, []);
 
+  const loginedUser = useAuth().user;
+
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow
+            sx={{ position: "sticky", top: 0, zIndex: 1, background: "#fff" }}
+          >
             <TableCell align="center"> № п.п </TableCell>
             <TableCell align="center"> Користувач, дата та час </TableCell>
             <TableCell align="center">
@@ -61,41 +68,50 @@ export const OrderList = ({ orders, location }) => {
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",
-
                       gap: "4px",
                     }}
                   >
-                    <Typography variant="p" sx={{ fontWeight: 700 }}>
+                    <Typography variant="p" sx={{ fontWeight: 500 }}>
                       {user}
                     </Typography>
                     <Typography variant="p">{formatDate(createdAt)}</Typography>
                     <Typography variant="p">{formatTime(createdAt)}</Typography>
                   </Box>
                 </TableCell>
-                <TableCell aling="center">
+                <TableCell aling="center" sx={{ verticalAlign: "top" }}>
                   {products.map(({ name, number, reserved }, index) => {
                     return (
-                      <p key={nanoid()}>
-                        {" "}
-                        {index + 1}. {name}
-                        {"  "}
-                        {number} - {reserved} шт.
-                      </p>
+                      <Box
+                        key={nanoid()}
+                        sx={{ display: "flex", flexDirection: "column", mb: 1 }}
+                      >
+                        <Typography variant="p">
+                          {index + 1}. {name} {number}
+                        </Typography>
+                        <Typography variant="p" sx={{ ml: 2, fontWeight: 500 }}>
+                          {reserved} шт.
+                        </Typography>
+                      </Box>
                     );
                   })}
                 </TableCell>
-                <TableCell aling="center">
+                <TableCell aling="center" sx={{ verticalAlign: "top" }}>
                   <>
-                    {" "}
                     {materials.map(({ sheet, thickness, amount }, index) => {
                       return (
-                        <p key={nanoid()}>
-                          {index + 1}. {thickness}x{sheet} - {amount.toFixed(3)}{" "}
-                          листів.
-                        </p>
+                        <Box key={nanoid()} sx={{ mb: 1 }}>
+                          <Typography variant="p">
+                            {index + 1}. {thickness}x{sheet}
+                          </Typography>
+                          <Typography variant="p" sx={{ fontWeight: 500 }}>
+                            - {amount.toFixed(3)} листів.
+                          </Typography>
+                        </Box>
                       );
                     })}
-                    <p>Загальна вага: кг</p>
+                    <Typography variant="p" sx={{ fontWeight: 700, ml: 2 }}>
+                      Загальна вага: кг
+                    </Typography>
                   </>
                 </TableCell>
                 <TableCell align="center">
@@ -115,6 +131,8 @@ export const OrderList = ({ orders, location }) => {
                     sx={{ color: "#1976d2" }}
                     aria-label="delete order"
                     size="medium"
+                    onClick={() => openModal(_id)}
+                    disabled={loginedUser.role !== "ADMIN"}
                   >
                     <DeleteForeverIcon fontSize="medium" />
                   </IconButton>

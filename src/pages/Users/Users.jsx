@@ -17,7 +17,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
-  const [idUserToDeleteUser, setIdUserToDeleteUser] = useState(null);
+  const [idUserToDelete, setIdUserToDelete] = useState(null);
 
   useEffect(() => {
     async function getAllUsers() {
@@ -38,7 +38,7 @@ const Users = () => {
 
   const openModalDelete = (id) => {
     setShowModalDelete(true);
-    setIdUserToDeleteUser(id);
+    setIdUserToDelete(id);
   };
   const closeModalDelete = () => {
     setShowModalDelete(false);
@@ -80,8 +80,8 @@ const Users = () => {
   };
 
   const handleDelete = async () => {
-    await deleteUser(idUserToDeleteUser);
-    setIdUserToDeleteUser(null);
+    await deleteUser(idUserToDelete);
+    setIdUserToDelete(null);
     closeModalDelete();
   };
 
@@ -126,7 +126,7 @@ const Users = () => {
       </MyContainer>
       <ModalSmall open={showModalDelete} onClose={closeModalDelete}>
         <ContentModalDelete
-          title={"Ви бажаєте видалити користувача"}
+          title={"Бажаєте видалити користувача?"}
           onDelete={handleDelete}
           onClose={closeModalDelete}
         />

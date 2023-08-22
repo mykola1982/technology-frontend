@@ -18,6 +18,6 @@ export const addOrderAPI = async (body) => {
 };
 
 export const removeOrderAPI = async (id) => {
-  const { data } = await axios.delete(`/order/${id}`);
+  const { data } = await axios.delete(`/orders/${id}`);
   return data;
 };

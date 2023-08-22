@@ -208,7 +208,7 @@ const ProductDetails = () => {
 
       <ModalSmall open={showModalDelete} onClose={closeModalDelete}>
         <ContentModalDelete
-          title={"Ви бажаєте видалити дану деталь"}
+          title={"Бажаєте видалити дану деталь?"}
           onDelete={hendelDelete}
           onClose={closeModalDelete}
         />

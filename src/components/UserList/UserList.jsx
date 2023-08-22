@@ -19,7 +19,9 @@ export const UserList = ({ users, openModal }) => {
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow
+            sx={{ position: "sticky", top: 0, zIndex: 1, background: "#fff" }}
+          >
             <TableCell align="center">№ п.п.</TableCell>
             <TableCell align="center">Ім'я</TableCell>
             <TableCell align="center">Права</TableCell>
