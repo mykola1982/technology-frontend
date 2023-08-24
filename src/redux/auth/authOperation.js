@@ -58,6 +58,7 @@ export const logOut = createAsyncThunk("auth/logOut", async (_, thunkAPI) => {
     await authAPI.logoutUser();
     authAPI.clearAuthHeader();
   } catch (error) {
+    toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -76,6 +77,7 @@ export const refreshUser = createAsyncThunk(
       const response = await authAPI.refreshUser();
       return response.data;
     } catch (error) {
+      toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
       return thunkAPI.rejectWithValue(error.message);
     }
   }

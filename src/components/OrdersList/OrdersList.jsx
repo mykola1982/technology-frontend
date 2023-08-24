@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -24,13 +25,18 @@ import { formatTime } from "utils";
 
 import { useAuth } from "hooks";
 
-export const OrderList = ({ orders, location, openModal }) => {
+export const OrdersList = ({
+  orders,
+  location,
+  openModal,
+  updateToDeleteOrder,
+}) => {
+  const loginedUser = useAuth().user;
+
   // винести в окрему функцію
   const reverseOrders = orders.reduce((acc, element) => {
     return (acc = [element, ...acc]);
   }, []);
-
-  const loginedUser = useAuth().user;
 
   return (
     <TableContainer component={Paper}>
@@ -138,11 +144,9 @@ export const OrderList = ({ orders, location, openModal }) => {
                 <TableCell align="center">
                   <Checkbox
                     inputProps={{ "aria-label": "Checkbox demo" }}
-                    defaultChecked={toRemove}
+                    checked={toRemove}
                     onChange={() => {
-                      console.log(_id);
-
-                      // тут код добавити
+                      updateToDeleteOrder(_id);
                     }}
                     sx={{
                       color: "#1976d2",

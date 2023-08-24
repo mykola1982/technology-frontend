@@ -21,3 +21,8 @@ export const removeOrderAPI = async (id) => {
   const { data } = await axios.delete(`/orders/${id}`);
   return data;
 };
+
+export const updateToRemoveOrderAPI = async (id) => {
+  const { data } = await axios.patch(`/orders/${id}`);
+  return data;
+};
