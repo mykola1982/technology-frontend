@@ -184,6 +184,7 @@ const Products = () => {
       toast.success(
         "Деталі успішно додані в замовлення на розрахунок матеріалу."
       );
+      navigate("/orders");
     } catch (error) {
       toast.error("Щось пішло не так. Спробуй знову...");
     }
@@ -284,7 +285,6 @@ const Products = () => {
             disabled={selectedProducts.length <= 0}
             onClick={() => {
               addOrder(selectedProducts);
-              navigate("/orders");
             }}
           >
             Сформувати замовлення
