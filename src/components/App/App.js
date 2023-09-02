@@ -12,6 +12,7 @@ import { PablicRoute } from "../../utils/Routes/PablicRoute";
 import { PrivateRoute } from "../../utils/Routes/PrivateRoute";
 import { useAuth } from "../../hooks";
 import { refreshUser } from "../../redux/auth/authOperation";
+import { fetchMaterials } from "../../redux/materials/materialsOperation";
 
 import { Loader } from "../Loader/Loader";
 
@@ -32,7 +33,13 @@ function App() {
     if (!token) {
       return;
     }
-    dispatch(refreshUser());
+    // dispatch(refreshUser());
+
+    dispatch(refreshUser()).then((res) => {
+      if (!res.error) {
+        dispatch(fetchMaterials());
+      }
+    });
   }, [dispatch, token]);
   return isRefreshing ? (
     <Loader />

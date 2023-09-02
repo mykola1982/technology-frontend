@@ -67,10 +67,7 @@ const Orders = () => {
 
   const handleUpdateToDeleteOrder = async (id) => {
     try {
-      setIsLoading(true);
-
       const { data } = await orderAPI.updateToRemoveOrderAPI(id);
-
       setOrders((prevState) => {
         const updatedOrders = prevState.map((order) => {
           if (order._id === id) {
@@ -82,15 +79,12 @@ const Orders = () => {
       });
 
       if (data.toRemove) {
-        toast.success(`Замовлення позначено "На видалення"`);
+        toast.success(`Додано до списку "На видалення"`);
       } else {
-        toast.success(`Замовлення прибрано з "На видалення"`);
+        toast.success(`Видалено зі списку "На видалення"`);
       }
     } catch (error) {
       toast.error(`Щось пішло не так. Спробуй знову...`);
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
     }
   };
   return (

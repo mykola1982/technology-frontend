@@ -13,6 +13,7 @@ import {
 } from "redux-persist";
 
 import { authReducer } from "./auth/authSlice";
+import { materialsReducer } from "./materials/materialsSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -28,7 +29,10 @@ const middleware = (getDefaultMiddleware) =>
   });
 
 export const store = configureStore({
-  reducer: { auth: persistReducer(authPersistConfig, authReducer) },
+  reducer: {
+    auth: persistReducer(authPersistConfig, authReducer),
+    materials: materialsReducer,
+  },
   middleware,
 });
 

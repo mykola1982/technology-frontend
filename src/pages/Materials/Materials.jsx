@@ -1,134 +1,99 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-// import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
+import { Box } from "@mui/material";
+
+import {
+  selectMaterials,
+  selectIsLoading,
+  selectError,
+} from "redux/materials/materialsSelector";
 
 import { getMaterials } from "../../data/fakeAPI";
-// import { autocompleteClasses } from "@mui/material";
+import { Loader } from "components/Loader";
+import { MyContainer } from "components/MyContainer";
+import { MaterialsList } from "components/MaterialsList";
+import { useEffect } from "react";
+import { fetchMaterials } from "../../redux/materials/materialsOperation";
 
-const columns = [
-  { id: "index", label: "№ п.п", minWidth: 50, align: "center" },
-  {
-    id: "sizeSheet",
-    label: "Розмір та тип листа",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "thicknessSheet",
-    label: "Товщина листа, мм",
-    minWidth: 100,
-    align: "center",
-    // format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "weightSheet",
-    label: "Вага листа, мм.",
-    minWidth: 100,
-    align: "center",
-    format: (value) => value.toFixed(2),
-  },
-  {
-    id: "event",
-    label: "Видалити",
-    minWidth: 100,
-    align: "center",
-  },
-];
+// const columns = [
+//   { id: "index", label: "№ п.п", minWidth: 50, align: "center" },
+//   {
+//     id: "sizeSheet",
+//     label: "Розмір та тип листа",
+//     minWidth: 100,
+//     align: "center",
+//   },
+//   {
+//     id: "thicknessSheet",
+//     label: "Товщина листа, мм",
+//     minWidth: 100,
+//     align: "center",
+//     // format: (value) => value.toLocaleString("en-US"),
+//   },
+//   {
+//     id: "weightSheet",
+//     label: "Вага листа, мм.",
+//     minWidth: 100,
+//     align: "center",
+//     format: (value) => value.toFixed(2),
+//   },
+//   {
+//     id: "event",
+//     label: "Видалити",
+//     minWidth: 100,
+//     align: "center",
+//   },
+// ];
 
 const Materials = () => {
-  const [materials, setMaterials] = useState(getMaterials());
+  const materials = useSelector(selectMaterials);
+
+  // const isLoading = useSelector(selectIsLoading);
+  console.log(materials);
+
+  // useEffect(() => dispath(fetchMaterials()), [dispath]);
   return (
-    <Paper
-      sx={{
-        width: 850,
-        // overflow: "hidden",
-        marginLeft: "auto",
-        marginRight: "auto",
-      }}
-    >
-      <TableContainer>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {materials.map((material, index) => {
-              return (
-                <>
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={material.id}
-                  >
-                    {columns.map((column) => {
-                      let value = null;
-                      if (column.id === "index") {
-                        value = index + 1;
-                      } else {
-                        value = material[column.id];
-                      }
-                      if (column.id === "event") {
-                        value = <button>Видалити дані</button>;
-                      }
+    <>
+      {/* {isloading && <Loader />}
+      <MyContainer>
+        <Box
+          sx={{
+            width: "380px",
+            justifyContent: "center",
+            borderRadius: 4,
+            display: "flex",
+            mt: 10,
+            mb: 6,
+            p: 1,
+            pt: 3,
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
+          }}
+        />
 
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                </>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* <table>
-        <thead>
-          <tr>
-            <th>№ п.п </th>
-            <th>Розмір та тип листа</th>
-            <th>Товщина листа, мм.</th>
-            <th>Вага листа, мм.</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {materials.map(
-            ({ id, sizeSheet, thicknessSheet, weightSheet }, index) => (
-              <tr key={id}>
-                <td>{index + 1}</td>
-                <td> {sizeSheet}</td>
-                <td>{thicknessSheet}</td>
-                <td>{weightSheet}</td>
-              </tr>
-            )
-          )}
-        </tbody>
-      </table> */}
-    </Paper>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: { xs: "none", md: "flex" },
+            borderRadius: 4,
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "12px",
+            mt: 10,
+            mb: 6,
+            p: 1,
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0 0 8px 0 rgba(0,0,0,.3)",
+          }}
+        >
+          <MaterialsList
+            materials={materials}
+            // openModal={openModalDelete}////.
+          />
+        </Box>
+      </MyContainer> */}
+    </>
   );
 };
 
