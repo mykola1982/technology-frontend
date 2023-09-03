@@ -107,12 +107,12 @@ export const AddUserForm = ({ addUser }) => {
         error={formik.touched.password && Boolean(formik.errors.password)}
         helperText={formik.touched.password && formik.errors.password}
       />
-      <FormLabel id="radio-buttons-group-label">Права:</FormLabel>
+      <FormLabel id="radio-buttons-group-role">Права:</FormLabel>
       <RadioGroup
-        aria-labelledby="radio-buttons-group-label"
+        name="role"
+        aria-labelledby="radio-buttons-group-role"
         value={formik.values.role}
         onChange={formik.handleChange}
-        name="role"
       >
         <FormControlLabel
           value="ADMIN"

@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 import {
   TableContainer,
   Table,
@@ -11,7 +13,11 @@ import {
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-export const MaterialsList = ({ materials }) => {
+import { selectMaterials } from "redux/materials/materialsSelector";
+
+export const MaterialsList = () => {
+  const materials = useSelector(selectMaterials);
+  console.log(materials);
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -28,19 +34,32 @@ export const MaterialsList = ({ materials }) => {
 
         <TableBody>
           {materials?.map((material, index) => {
-            console.log(material);
-            const { _id, sizeSheet, thicknessSheet, weightSheet } = material;
+            // const { _id, type, brand, sheetParameters, rodParameters, weight } =
+            //   material;
 
+            // const { diameter } = rodParameters;
+
+            // const { width, length, thickness } = sheetParameters;
             return (
               <TableRow
-                key={_id}
+                key={material._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="center">{index + 1}</TableCell>
-                <TableCell align="center">
-                  {thicknessSheet}x{sizeSheet}
-                </TableCell>
-                <TableCell align="center">{weightSheet}</TableCell>
+                {material.type === "sheet" && (
+                  <TableCell align="center">
+                    {material.sheetParameters.thickness}x
+                    {material.sheetParameters.length}x
+                    {material.sheetParameters.width}
+                  </TableCell>
+                )}
+                {material.type === "rod" && (
+                  <TableCell align="center">
+                    {material.rodParameters.diameter}
+                  </TableCell>
+                )}
+
+                <TableCell align="center">{material.weight}</TableCell>
                 <TableCell align="center">
                   <IconButton
                     sx={{ color: "#1976d2" }}

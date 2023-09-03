@@ -10,7 +10,7 @@ import * as ordersAPI from "services/orders-API";
 import { getMaterialsForOneOrder } from "utils";
 
 import { MyContainer } from "components/MyContainer";
-import { AddForm } from "components/AddForm";
+import { AddProductForm } from "components/AddProductForm";
 import { Filter } from "components/Filter";
 import { ProductsList } from "components/ProductsList";
 import { SelectedProductList } from "components/SelectedProductList";
@@ -293,7 +293,7 @@ const Products = () => {
       </MyContainer>
 
       <ModalBig open={showModal} onClose={closeModal}>
-        <AddForm onSubmit={addProduct} onClose={closeModal} />
+        <AddProductForm onSubmit={addProduct} onClose={closeModal} />
       </ModalBig>
 
       <ModalSmall open={showModalFormQuantity} onClose={closeModalFormQuantity}>

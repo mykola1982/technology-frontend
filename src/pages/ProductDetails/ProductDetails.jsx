@@ -11,7 +11,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import * as productsAPI from "services/products-API";
 
 import { MyContainer } from "components/MyContainer";
-import { AddForm } from "components/AddForm";
+import { AddProductForm } from "components/AddProductForm";
 import { ModalBig } from "components/ModalBig";
 import { ModalSmall } from "components/ModalSmall";
 import { ProductDetailsDescription } from "components/ProductDetailsDescription";
@@ -199,7 +199,7 @@ const ProductDetails = () => {
       </MyContainer>
 
       <ModalBig open={showModalUpdate} onClose={closeModalUpdate}>
-        <AddForm
+        <AddProductForm
           onSubmit={updateProduct}
           onClose={closeModalUpdate}
           productForUpdate={detailsProduct}

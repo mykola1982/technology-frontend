@@ -9,7 +9,6 @@ export const fetchMaterials = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await materialsAPI.featchAllMaterialsAPI();
-      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

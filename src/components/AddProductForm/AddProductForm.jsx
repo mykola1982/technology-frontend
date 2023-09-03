@@ -45,7 +45,11 @@ const initialValues = {
   sheet: "",
 };
 
-export const AddForm = ({ onSubmit, onClose, productForUpdate = null }) => {
+export const AddProductForm = ({
+  onSubmit,
+  onClose,
+  productForUpdate = null,
+}) => {
   if (productForUpdate) {
     initialValues.name = productForUpdate.name;
     initialValues.number = productForUpdate.number;
