@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { TextField, Typography, MenuItem, Box } from "@mui/material";
 
 import { AddSheetForm } from "components/AddSheetForm";
+import { AddRodForm } from "components/AddRodForm";
 
 const TYPEMATERIAL = [
   { label: "Лист", value: "sheet" },
@@ -48,6 +49,7 @@ export const AddMaterialForm = () => {
       </TextField>
 
       {materialType === "sheet" && <AddSheetForm type={materialType} />}
+      {materialType === "rod" && <AddRodForm type={materialType} />}
     </Box>
   );
 };

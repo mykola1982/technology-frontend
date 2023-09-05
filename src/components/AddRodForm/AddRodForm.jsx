@@ -8,29 +8,18 @@ import { addMaterial } from "redux/materials/materialsOperation";
 
 const initialValues = {
   brand: "",
-  width: "",
-  length: "",
-  thickness: "",
+  diameter: "",
   weight: "",
 };
 
 const validationSchema = yup.object().shape({
   brand: yup.string().required("Це поле є обов'язковим"),
-  width: yup
+  diameter: yup
     .number()
     .required("Це поле є обов'язковим")
     .moreThan(0, "Значення повинно бути більше 0")
     .notOneOf([0], "Значення не може бути рівним 0"),
-  length: yup
-    .number()
-    .required("Це поле є обов'язковим")
-    .moreThan(0, "Значення повинно бути більше 0")
-    .notOneOf([0], "Значення не може бути рівним 0"),
-  thickness: yup
-    .number()
-    .required("Це поле є обов'язковим")
-    .moreThan(0, "Значення повинно бути більше 0")
-    .notOneOf([0], "Значення не може бути рівним 0"),
+
   weight: yup
     .number()
     .required("Це поле є обов'язковим")
@@ -38,17 +27,14 @@ const validationSchema = yup.object().shape({
     .notOneOf([0], "Значення не може бути рівним 0"),
 });
 
-export const AddSheetForm = ({ type }) => {
+export const AddRodForm = ({ type }) => {
   const dispath = useDispatch();
 
-  const handleSubmit = (
-    { brand, width, length, thickness, weight },
-    { resetForm }
-  ) => {
+  const handleSubmit = ({ brand, diameter, weight }, { resetForm }) => {
     const newMaterial = {
       type,
       brand,
-      sheetParameters: { width, length, thickness },
+      rodParameters: { diameter },
       weight,
     };
 
@@ -86,57 +72,27 @@ export const AddSheetForm = ({ type }) => {
       />
 
       <TextField
-        id="thickness"
+        id="diameter"
         type="number"
-        name="thickness"
-        inputProps={{ min: "0", step: "0.1" }}
-        label="Товщина листа, мм."
-        placeholder="Введіть товщину листа."
+        name="diameter"
+        inputProps={{ min: "0", step: "0,1" }}
+        label="Діаметр круга, мм."
+        placeholder="Введіть діаметр круга"
         size="small"
-        value={formik.values.thickness}
+        value={formik.values.diameter}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        error={formik.touched.thickness && Boolean(formik.errors.thickness)}
-        helperText={formik.touched.thickness && formik.errors.thickness}
-      />
-
-      <TextField
-        id="length"
-        type="number"
-        name="length"
-        inputProps={{ min: "0", step: "0.1" }}
-        label="Довжина листа, мм."
-        placeholder="Введіть довжину листа"
-        size="small"
-        value={formik.values.length}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.length && Boolean(formik.errors.length)}
-        helperText={formik.touched.length && formik.errors.length}
-      />
-
-      <TextField
-        id="width"
-        type="number"
-        name="width"
-        inputProps={{ min: "0", step: "0.1" }}
-        label="Ширина листа, мм."
-        placeholder="Введіть ширину листа"
-        size="small"
-        value={formik.values.width}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.width && Boolean(formik.errors.width)}
-        helperText={formik.touched.width && formik.errors.width}
+        error={formik.touched.diameter && Boolean(formik.errors.diameter)}
+        helperText={formik.touched.diameter && formik.errors.diameter}
       />
 
       <TextField
         id="weight"
         type="number"
         name="weight"
-        inputProps={{ min: "0", step: "0.001" }}
-        label="Вага листа,кг."
-        placeholder="Введіть вагу листа"
+        inputProps={{ min: "0.001", step: "0.001" }}
+        label="Вага одного м.п. круга,кг."
+        placeholder="Введіть вагу одного м.п. круга"
         size="small"
         value={formik.values.weight}
         onChange={formik.handleChange}
