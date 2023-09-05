@@ -33,7 +33,6 @@ function App() {
     if (!token) {
       return;
     }
-    // dispatch(refreshUser());
 
     dispatch(refreshUser()).then((res) => {
       if (!res.error) {
@@ -99,7 +98,6 @@ function App() {
             <Route
               path="/users"
               element={<PrivateRoute redirectTo="/" component={<Users />} />}
-              S
             />
             <Route
               path="*"

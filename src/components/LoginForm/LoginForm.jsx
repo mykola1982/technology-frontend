@@ -11,6 +11,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 
 import { logIn } from "redux/auth/authOperation";
+import { fetchMaterials } from "../../redux/materials/materialsOperation";
 import { useAuth } from "hooks/useAuth";
 
 const validationSchema = yup.object().shape({
@@ -36,10 +37,13 @@ export const LoginForm = () => {
     }
   };
 
-  const handleSubmit = async (values) => {
-    try {
-      await dispatch(logIn(values));
-    } catch (error) {}
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(logIn(values)).then((res) => {
+      if (!res.error) {
+        dispatch(fetchMaterials());
+        resetForm();
+      }
+    });
   };
 
   const formik = useFormik({
