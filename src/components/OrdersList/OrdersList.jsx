@@ -39,7 +39,7 @@ export const OrdersList = ({
 
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow
             sx={{ position: "sticky", top: 0, zIndex: 1, background: "#fff" }}

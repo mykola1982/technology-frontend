@@ -35,7 +35,6 @@ const validationSchema = yup.object().shape({
   sheet: yup.string().required("Це поле є обов'язковим"),
 });
 
-console.log(validationSchema);
 const initialValues = {
   name: "",
   number: "",

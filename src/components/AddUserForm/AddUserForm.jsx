@@ -50,7 +50,6 @@ export const AddUserForm = ({ addUser }) => {
     validationSchema,
     onSubmit: handleSubmit,
   });
-  console.log("userformik", formik);
 
   const handleDocumentClick = useCallback(
     (event) => {

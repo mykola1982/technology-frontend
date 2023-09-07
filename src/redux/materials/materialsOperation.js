@@ -21,7 +21,7 @@ export const addMaterial = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const { data } = await materialsAPI.addMaterialAPI(body);
-      toast.success(`Mатеріал ${body} успішно додано до списку`);
+      toast.success(`Mатеріал успішно додано до списку`);
       return data;
     } catch (error) {
       toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
@@ -34,9 +34,9 @@ export const deleteMaterial = createAsyncThunk(
   "materials/deleteMaterial",
   async (id, thunkAPI) => {
     try {
-      const { data } = await materialsAPI.removeMaterialsAPI(id);
+      const result = await materialsAPI.removeMaterialsAPI(id);
       toast.success(`Mатеріал  успішно видалено зі списку`);
-      return data;
+      return result;
     } catch (error) {
       toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
       return thunkAPI.rejectWithValue(error.message);

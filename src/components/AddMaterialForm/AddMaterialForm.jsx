@@ -7,13 +7,14 @@ import { TextField, Typography, MenuItem, Box } from "@mui/material";
 import { AddSheetForm } from "components/AddSheetForm";
 import { AddRodForm } from "components/AddRodForm";
 
-const TYPEMATERIAL = [
-  { label: "Лист", value: "sheet" },
-  { label: "Круг", value: "rod" },
-];
+import { typeMaterialData } from "data/typeMaterialData";
 
-export const AddMaterialForm = () => {
+export const AddMaterialForm = ({ onClose }) => {
   const [materialType, setMaterialType] = useState("");
+
+  const handleClearType = () => {
+    setMaterialType("");
+  };
 
   const handleTypeChange = (e) => {
     const selectedType = e.target.value;
@@ -41,15 +42,27 @@ export const AddMaterialForm = () => {
         label="Тип матеріалу"
         onChange={handleTypeChange}
       >
-        {TYPEMATERIAL.map(({ label, value }) => (
+        {typeMaterialData.map(({ label, value }) => (
           <MenuItem key={nanoid()} value={value}>
             {label}
           </MenuItem>
         ))}
       </TextField>
 
-      {materialType === "sheet" && <AddSheetForm type={materialType} />}
-      {materialType === "rod" && <AddRodForm type={materialType} />}
+      {materialType === "sheet" && (
+        <AddSheetForm
+          type={materialType}
+          onClearType={handleClearType}
+          onClose={onClose}
+        />
+      )}
+      {materialType === "rod" && (
+        <AddRodForm
+          type={materialType}
+          onClearType={handleClearType}
+          onClose={onClose}
+        />
+      )}
     </Box>
   );
 };

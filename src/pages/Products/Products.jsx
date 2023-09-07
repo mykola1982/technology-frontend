@@ -108,7 +108,8 @@ const Products = () => {
 
     try {
       const { data } = await productsAPI.addProductAPI(newProduct);
-      setProducts((prevProducts) => [data.product, ...prevProducts]);
+      console.log(data);
+      setProducts((prevProducts) => [data, ...prevProducts]);
       toast.success(`Деталь  ${name}-${number} успішно додана до списку`);
     } catch (error) {
       if (error.response.status === 409) {

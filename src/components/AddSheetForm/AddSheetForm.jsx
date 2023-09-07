@@ -38,7 +38,7 @@ const validationSchema = yup.object().shape({
     .notOneOf([0], "Значення не може бути рівним 0"),
 });
 
-export const AddSheetForm = ({ type }) => {
+export const AddSheetForm = ({ type, onClearType, onClose }) => {
   const dispath = useDispatch();
 
   const handleSubmit = (
@@ -55,6 +55,8 @@ export const AddSheetForm = ({ type }) => {
     dispath(addMaterial(newMaterial)).then((res) => {
       if (!res.error) {
         resetForm();
+        onClearType();
+        onClose();
       }
     });
   };

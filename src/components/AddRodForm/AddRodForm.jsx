@@ -27,8 +27,8 @@ const validationSchema = yup.object().shape({
     .notOneOf([0], "Значення не може бути рівним 0"),
 });
 
-export const AddRodForm = ({ type }) => {
-  const dispath = useDispatch();
+export const AddRodForm = ({ type, onClearType, onClose }) => {
+  const dispatch = useDispatch();
 
   const handleSubmit = ({ brand, diameter, weight }, { resetForm }) => {
     const newMaterial = {
@@ -38,9 +38,11 @@ export const AddRodForm = ({ type }) => {
       weight,
     };
 
-    dispath(addMaterial(newMaterial)).then((res) => {
+    dispatch(addMaterial(newMaterial)).then((res) => {
       if (!res.error) {
         resetForm();
+        onClearType();
+        onClose();
       }
     });
   };
