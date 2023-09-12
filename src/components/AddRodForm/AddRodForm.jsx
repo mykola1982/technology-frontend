@@ -4,7 +4,10 @@ import { useFormik } from "formik";
 
 import { Button, FormControl, TextField } from "@mui/material";
 
-import { addMaterial } from "redux/materials/materialsOperation";
+import {
+  addMaterial,
+  updateMaterial,
+} from "redux/materials/materialsOperation";
 
 const initialValues = {
   brand: "",
@@ -27,24 +30,58 @@ const validationSchema = yup.object().shape({
     .notOneOf([0], "Значення не може бути рівним 0"),
 });
 
-export const AddRodForm = ({ type, onClearType, onClose }) => {
+export const AddRodForm = ({
+  type,
+  onClearType,
+  onClose,
+  materialToUpdate = null,
+}) => {
+  if (materialToUpdate) {
+    initialValues.brand = materialToUpdate.brand;
+    initialValues.diameter = materialToUpdate.rodParameters.diameter;
+    initialValues.weight = materialToUpdate.weight;
+  } else {
+    initialValues.brand = "";
+    initialValues.diameter = "";
+    initialValues.weight = "";
+  }
+
   const dispatch = useDispatch();
 
   const handleSubmit = ({ brand, diameter, weight }, { resetForm }) => {
-    const newMaterial = {
-      type,
-      brand,
-      rodParameters: { diameter },
-      weight,
-    };
+    if (!materialToUpdate) {
+      const newMaterial = {
+        type,
+        brand,
+        rodParameters: { diameter },
+        weight,
+      };
 
-    dispatch(addMaterial(newMaterial)).then((res) => {
-      if (!res.error) {
-        resetForm();
-        onClearType();
-        onClose();
-      }
-    });
+      dispatch(addMaterial(newMaterial)).then((res) => {
+        if (!res.error) {
+          resetForm();
+          onClearType();
+          onClose();
+        }
+      });
+    } else {
+      const data = {
+        id: materialToUpdate._id,
+        body: {
+          type: materialToUpdate.type,
+          brand,
+          rodParameters: { diameter },
+          weight,
+        },
+      };
+
+      dispatch(updateMaterial(data)).then((res) => {
+        if (!res.error) {
+          resetForm();
+          onClose();
+        }
+      });
+    }
   };
 
   const formik = useFormik({
@@ -58,6 +95,13 @@ export const AddRodForm = ({ type, onClearType, onClose }) => {
       variant="standard"
       component="form"
       onSubmit={formik.handleSubmit}
+      sx={{
+        display: "flex",
+        gap: "12px",
+        flexDirection: "column",
+        width: "100%",
+        padding: materialToUpdate ? "8px" : "0",
+      }}
     >
       <TextField
         id="brand"
@@ -109,7 +153,7 @@ export const AddRodForm = ({ type, onClearType, onClose }) => {
         size="large"
         sx={{ width: "300px", margin: "0 auto" }}
       >
-        Додати матеріал
+        {!materialToUpdate ? "Додати матеріал" : "Редагувати матеріал"}
       </Button>
     </FormControl>
   );

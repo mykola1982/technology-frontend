@@ -96,7 +96,6 @@ export const AddProductForm = ({
         display: "flex",
         gap: "12px",
         flexDirection: "column",
-
         width: "100%",
         padding: "8px",
       }}

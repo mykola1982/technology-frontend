@@ -49,10 +49,15 @@ export const updateMaterial = createAsyncThunk(
   async ({ id, body }, thunkAPI) => {
     try {
       const { data } = await materialsAPI.updateMaterialAPI(id, body);
-      toast.success("матеріал успішно новлено");
+      toast.success("Mатеріал успішно оновлено");
       return data;
     } catch (error) {
-      toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
+      if (error.response.status === 409) {
+        toast.error(`Матеріал з такими параметрами вже є в списку`);
+      } else {
+        toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
+      }
+
       return thunkAPI.rejectWithValue(error.message);
     }
   }

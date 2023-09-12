@@ -58,12 +58,29 @@ const materialsSlice = createSlice({
       state.isLoading = false;
       state.error = null;
 
-      const index = state.items.finIndex(
-        (item) => item._id === action.payload.id
+      const index = state.items.findIndex(
+        (item) => item._id === action.payload._id
       );
 
-      console.log(index);
-      ///// дописати логіку оновлення
+      state.items[index].brand = action.payload.brand;
+
+      if (action.payload.type === "rod") {
+        state.items[index].rodParameters.diameter =
+          action.payload.rodParameters.diameter;
+      }
+
+      if (action.payload.type === "sheet") {
+        state.items[index].sheetParameters.length =
+          action.payload.sheetParameters.length;
+        state.items[index].sheetParameters.width =
+          action.payload.sheetParameters.width;
+        state.items[index].sheetParameters.thickness =
+          action.payload.sheetParameters.thickness;
+        state.items[index].sheetParameters.weight =
+          action.payload.sheetParameters.weight;
+      }
+
+      state.items[index].weight = action.payload.weight;
     },
     [updateMaterial.rejected]: handleRejected,
   },

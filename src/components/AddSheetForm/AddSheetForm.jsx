@@ -4,12 +4,15 @@ import { useFormik } from "formik";
 
 import { Button, FormControl, TextField } from "@mui/material";
 
-import { addMaterial } from "redux/materials/materialsOperation";
+import {
+  addMaterial,
+  updateMaterial,
+} from "redux/materials/materialsOperation";
 
 const initialValues = {
   brand: "",
-  width: "",
   length: "",
+  width: "",
   thickness: "",
   weight: "",
 };
@@ -38,27 +41,65 @@ const validationSchema = yup.object().shape({
     .notOneOf([0], "Значення не може бути рівним 0"),
 });
 
-export const AddSheetForm = ({ type, onClearType, onClose }) => {
-  const dispath = useDispatch();
+export const AddSheetForm = ({
+  type,
+  onClearType,
+  onClose,
+  materialToUpdate = null,
+}) => {
+  if (materialToUpdate) {
+    initialValues.brand = materialToUpdate.brand;
+    initialValues.width = materialToUpdate.sheetParameters.width;
+    initialValues.length = materialToUpdate.sheetParameters.length;
+    initialValues.thickness = materialToUpdate.sheetParameters.thickness;
+    initialValues.weight = materialToUpdate.weight;
+  } else {
+    initialValues.brand = "";
+    initialValues.width = "";
+    initialValues.length = "";
+    initialValues.thickness = "";
+    initialValues.weight = "";
+  }
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (
     { brand, width, length, thickness, weight },
     { resetForm }
   ) => {
-    const newMaterial = {
-      type,
-      brand,
-      sheetParameters: { width, length, thickness },
-      weight,
-    };
+    if (!materialToUpdate) {
+      const newMaterial = {
+        type,
+        brand,
+        sheetParameters: { width, length, thickness },
+        weight,
+      };
 
-    dispath(addMaterial(newMaterial)).then((res) => {
-      if (!res.error) {
-        resetForm();
-        onClearType();
-        onClose();
-      }
-    });
+      dispatch(addMaterial(newMaterial)).then((res) => {
+        if (!res.error) {
+          resetForm();
+          onClearType();
+          onClose();
+        }
+      });
+    } else {
+      const data = {
+        id: materialToUpdate._id,
+        body: {
+          type: materialToUpdate.type,
+          brand,
+          sheetParameters: { width, length, thickness },
+          weight,
+        },
+      };
+
+      dispatch(updateMaterial(data)).then((res) => {
+        if (!res.error) {
+          resetForm();
+          onClose();
+        }
+      });
+    }
   };
 
   const formik = useFormik({
@@ -72,6 +113,13 @@ export const AddSheetForm = ({ type, onClearType, onClose }) => {
       variant="standard"
       component="form"
       onSubmit={formik.handleSubmit}
+      sx={{
+        display: "flex",
+        gap: "12px",
+        flexDirection: "column",
+        width: "100%",
+        padding: materialToUpdate ? "8px" : "0",
+      }}
     >
       <TextField
         id="brand"
@@ -153,7 +201,7 @@ export const AddSheetForm = ({ type, onClearType, onClose }) => {
         size="large"
         sx={{ width: "300px", margin: "0 auto" }}
       >
-        Додати матеріал
+        {!materialToUpdate ? "Додати матеріал" : "Редагувати матеріал"}
       </Button>
     </FormControl>
   );

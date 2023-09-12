@@ -18,15 +18,29 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { selectMaterials } from "redux/materials/materialsSelector";
 import { ModalSmall } from "components/ModalSmall";
+import { ModalBig } from "components/ModalBig";
 import { ContentModalDelete } from "components/ContentModalDelete";
+import { AddSheetForm } from "components/AddSheetForm";
+import { AddRodForm } from "components/AddRodForm";
 
 export const MaterialsList = () => {
+  const [showModalUpdate, setShowModaUpdate] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [idMaterialToDelete, setIdMaterialToDelete] = useState(null);
+  const [materialToUpdate, setMaterialToUpdate] = useState(null);
 
   const materials = useSelector(selectMaterials);
 
   const dispatch = useDispatch();
+
+  const openModalUpdate = (material) => {
+    setShowModaUpdate(true);
+    setMaterialToUpdate(material);
+  };
+  const closeModalUpdate = () => {
+    setMaterialToUpdate(null);
+    setShowModaUpdate(false);
+  };
 
   const openModalDelete = (id) => {
     setShowModalDelete(true);
@@ -74,7 +88,7 @@ export const MaterialsList = () => {
 
                   {material.type === "sheet" && (
                     <TableCell align="center">
-                      {material.sheetParameters.thickness}x
+                      {material.sheetParameters.thickness.toFixed(1)}x
                       {material.sheetParameters.length}x
                       {material.sheetParameters.width}
                     </TableCell>
@@ -92,6 +106,7 @@ export const MaterialsList = () => {
                       sx={{ color: "#1976d2" }}
                       aria-label="delete"
                       size="medium"
+                      onClick={() => openModalUpdate(material)}
                     >
                       <EditIcon fontSize="medium" />
                     </IconButton>
@@ -121,6 +136,21 @@ export const MaterialsList = () => {
           onClose={closeModalDelete}
         />
       </ModalSmall>
+
+      <ModalBig open={showModalUpdate} onClose={closeModalUpdate}>
+        {materialToUpdate?.type === "sheet" && (
+          <AddSheetForm
+            materialToUpdate={materialToUpdate}
+            onClose={closeModalUpdate}
+          />
+        )}
+        {materialToUpdate?.type === "rod" && (
+          <AddRodForm
+            materialToUpdate={materialToUpdate}
+            onClose={closeModalUpdate}
+          />
+        )}
+      </ModalBig>
     </>
   );
 };
