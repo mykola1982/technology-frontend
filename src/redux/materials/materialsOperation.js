@@ -24,7 +24,11 @@ export const addMaterial = createAsyncThunk(
       toast.success(`Mатеріал успішно додано до списку`);
       return data;
     } catch (error) {
-      toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
+      if (error.response.status === 409) {
+        toast.error(`Матеріал з такими параметрами вже є в списку`);
+      } else {
+        toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }

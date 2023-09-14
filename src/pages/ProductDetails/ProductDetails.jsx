@@ -87,8 +87,7 @@ const ProductDetails = () => {
     weight,
     quantity,
     workshop,
-    thickness,
-    sheet,
+    material,
   }) => {
     const updateData = {
       name,
@@ -96,10 +95,7 @@ const ProductDetails = () => {
       weight,
       quantity,
       workshop,
-      material: {
-        thickness,
-        sheet,
-      },
+      material,
     };
 
     try {

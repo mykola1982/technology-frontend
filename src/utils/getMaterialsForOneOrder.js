@@ -3,29 +3,22 @@ export function getMaterialsForOneOrder(products) {
   const getAssortmentUnique = (products) => {
     const assortmentUnique = products
       .map((product) => product.material)
-      .reduce((acc, product) => {
-        const isUnique = acc.some(
-          (element) =>
-            element.thickness === product.thickness &&
-            element.sheet === product.sheet
-        );
+      .reduce((acc, material) => {
+        const isUnique = acc.some((element) => element._id === material._id);
 
         if (!isUnique) {
-          acc.push({ ...product });
+          acc.push({ ...material });
         }
         return acc;
       }, []);
     return assortmentUnique;
   };
+  const uniqueMaterials = getAssortmentUnique(products);
 
-  //  для кожного унікального значення матеріалу додаємо норму витрати
-  //   металу при збігу зі знаеннями розкою листа та товщини.
-  const materialsForOneOrder = getAssortmentUnique(products).map((material) => {
+  //  для кожного унікального значення матеріалу додаємо норму витрати металу при збігу id.
+  const materialsForOneOrder = uniqueMaterials.map((material) => {
     const amountOfMaterial = products.reduce((acc, product) => {
-      if (
-        material.thickness === product.material.thickness &&
-        material.sheet === product.material.sheet
-      ) {
+      if (material._id === product.material._id) {
         acc = acc + (1 / product.quantity) * product.reserved;
       }
       return acc;

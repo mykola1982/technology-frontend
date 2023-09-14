@@ -55,15 +55,12 @@ const Products = () => {
     setShowModal(false);
   };
 
-  // можливо прописати функцію окрему для закриття і відкриття різних модалок.
   const openModalFormQuantity = () => {
     setShowModalFormQuantity(true);
   };
   const closeModalFormQuantity = () => {
     setShowModalFormQuantity(false);
   };
-
-  //
 
   useEffect(() => {
     async function getAllProducts() {
@@ -91,8 +88,7 @@ const Products = () => {
     weight,
     quantity,
     workshop,
-    thickness,
-    sheet,
+    material,
   }) => {
     const newProduct = {
       name,
@@ -100,15 +96,13 @@ const Products = () => {
       weight,
       quantity,
       workshop,
-      material: {
-        thickness,
-        sheet,
-      },
+      material,
     };
 
     try {
       const { data } = await productsAPI.addProductAPI(newProduct);
       console.log(data);
+
       setProducts((prevProducts) => [data, ...prevProducts]);
       toast.success(`Деталь  ${name}-${number} успішно додана до списку`);
     } catch (error) {
@@ -154,6 +148,13 @@ const Products = () => {
   const addProductToOrder = (reserved, product) => {
     const productOne = { ...product, reserved };
 
+    if (!productOne.material) {
+      toast.error(
+        `В даталі що вибрали не заданий матеріал. Добавте матеріал та спробуйте знову.`
+      );
+      return;
+    }
+
     setSelectedProducts((prevSelectedProducts) => [
       ...prevSelectedProducts,
       productOne,
@@ -177,18 +178,18 @@ const Products = () => {
       ),
       materials: getMaterialsForOneOrder(products),
     };
+    console.log("newOrder", newOrder);
 
-    try {
-      await ordersAPI.addOrderAPI(newOrder);
-      localStorage.removeItem("selectedProducts");
-
-      toast.success(
-        "Деталі успішно додані в замовлення на розрахунок матеріалу."
-      );
-      navigate("/orders");
-    } catch (error) {
-      toast.error("Щось пішло не так. Спробуй знову...");
-    }
+    // try {
+    //   await ordersAPI.addOrderAPI(newOrder);
+    //   localStorage.removeItem("selectedProducts");
+    //   toast.success(
+    //     "Деталі успішно додані в замовлення на розрахунок матеріалу."
+    //   );
+    //   navigate("/orders");
+    // } catch (error) {
+    //   toast.error("Щось пішло не так. Спробуй знову...");
+    // }
   };
 
   return (

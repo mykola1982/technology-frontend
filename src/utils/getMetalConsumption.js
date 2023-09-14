@@ -1,15 +1,10 @@
-import { getMaterials } from "../data/fakeAPI";
-
-const materials = getMaterials();
-
-export function getMetalConsumption(quantity, sheet, thickness) {
-  const isMaterial = materials.find(
-    (material) =>
-      material.sizeSheet === sheet && material.thicknessSheet === thickness
-  );
-
+export function getMetalConsumption(material, quantity) {
   if (quantity !== 0) {
-    return (isMaterial.weightSheet / quantity).toFixed(3);
+    if (material.type === "sheet") {
+      return (material.weight / quantity).toFixed(3);
+    } else if (material.type === "rod") {
+      return ((material.weight * 6) / quantity).toFixed(3);
+    }
   } else {
     return Infinity;
   }

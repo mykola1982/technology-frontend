@@ -35,15 +35,8 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
         </TableHead>
         <TableBody>
           {products.map((product, index) => {
-            const {
-              _id,
-              name,
-              number,
-              reserved,
-              weight,
-              quantity,
-              material: { sheet, thickness },
-            } = product;
+            const { _id, name, number, reserved, weight, quantity, material } =
+              product;
             return (
               <TableRow
                 key={_id}
@@ -67,12 +60,31 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
                   </Box>
                 </TableCell>
                 <TableCell align="center">{reserved}</TableCell>
-                <TableCell align="center">
-                  {product.material.thickness}x{product.material.sheet}
-                </TableCell>
+
+                {material?.type === "sheet" && (
+                  <TableCell align="center">
+                    Лист {material.sheetParameters.thickness}x
+                    {material.sheetParameters.length}x
+                    {material.sheetParameters.width} {material.brand}
+                    <Typography component="span" sx={{ fontWeight: 700 }}>
+                      {" "}
+                      ({material.weight} кг.)
+                    </Typography>
+                  </TableCell>
+                )}
+
+                {material?.type === "rod" && (
+                  <TableCell align="center">
+                    Круг {material.rodParameters.diameter} {material.brand}
+                    <Typography component="span" sx={{ fontWeight: 700 }}>
+                      {" "}
+                      ({material.weight} кг.)
+                    </Typography>
+                  </TableCell>
+                )}
                 <TableCell align="center">{weight}</TableCell>
                 <TableCell align="center">
-                  {getMetalConsumption(quantity, sheet, thickness)}
+                  {getMetalConsumption(material, quantity)}
                 </TableCell>
                 <TableCell align="center">
                   {(1 / product.quantity).toFixed(5)}
