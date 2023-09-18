@@ -9,3 +9,7 @@ export * from "./Routes";
 export * from "./formatDate";
 
 export * from "./formatTime";
+
+export * from "./normalizeProductsForOrder";
+
+export * from "./normalizeMaterialsForOrder";

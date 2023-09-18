@@ -7,7 +7,11 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import * as productsAPI from "services/products-API";
 import * as ordersAPI from "services/orders-API";
-import { getMaterialsForOneOrder } from "utils";
+import {
+  getMaterialsForOneOrder,
+  normalizeProductsForOrder,
+  normalizeMaterialsForOrder,
+} from "utils";
 
 import { MyContainer } from "components/MyContainer";
 import { AddProductForm } from "components/AddProductForm";
@@ -25,6 +29,7 @@ const Products = () => {
   const [filter, setFilter] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+
   // const [isLoadingAddOrder, setIsLoadingAddOrder] = useState(true);
 
   const [selectedProducts, setSelectedProducts] = useState(() => {
@@ -79,7 +84,17 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+    const selectedProductToLocal = selectedProducts.map(
+      ({ _id, reserved }) => ({
+        _id,
+        reserved,
+      })
+    );
+
+    localStorage.setItem(
+      "selectedProducts",
+      JSON.stringify(selectedProductToLocal)
+    );
   }, [selectedProducts]);
 
   const addProduct = async ({
@@ -101,7 +116,6 @@ const Products = () => {
 
     try {
       const { data } = await productsAPI.addProductAPI(newProduct);
-      console.log(data);
 
       setProducts((prevProducts) => [data, ...prevProducts]);
       toast.success(`Деталь  ${name}-${number} успішно додана до списку`);
@@ -111,6 +125,7 @@ const Products = () => {
       } else {
         toast.error(`Щось пішло не так. Спробуй знову...`);
       }
+      return error;
     }
   };
 
@@ -169,28 +184,41 @@ const Products = () => {
   };
 
   const addOrder = async (products) => {
+    const materialsForOneOrder = getMaterialsForOneOrder(products);
+    console.log("materialsForOneOrder", materialsForOneOrder);
     const newOrder = {
       user: user.name,
-      products: products.map(
-        ({ name, number, weight, quantity, material, reserved }) => {
-          return { name, number, weight, quantity, material, reserved };
-        }
-      ),
-      materials: getMaterialsForOneOrder(products),
+      products: normalizeProductsForOrder(products),
+      materials: normalizeMaterialsForOrder(materialsForOneOrder),
     };
-    console.log("newOrder", newOrder);
 
-    // try {
-    //   await ordersAPI.addOrderAPI(newOrder);
-    //   localStorage.removeItem("selectedProducts");
-    //   toast.success(
-    //     "Деталі успішно додані в замовлення на розрахунок матеріалу."
-    //   );
-    //   navigate("/orders");
-    // } catch (error) {
-    //   toast.error("Щось пішло не так. Спробуй знову...");
-    // }
+    try {
+      await ordersAPI.addOrderAPI(newOrder);
+      localStorage.removeItem("selectedProducts");
+      toast.success(
+        "Деталі успішно додані в замовлення на розрахунок матеріалу."
+      );
+      navigate("/orders");
+    } catch (error) {
+      toast.error("Щось пішло не так. Спробуй знову...");
+    }
   };
+
+  // ----- можливо винести в окрему функцію, також можна почистити сам обєкт , не можна а треба
+
+  const formatedSecectedProducts = selectedProducts.reduce(
+    (acc, selectedProduct) => {
+      const product = products.find(
+        (product) => product._id === selectedProduct._id
+      );
+      if (product) {
+        acc.push({ ...product, reserved: selectedProduct.reserved });
+      }
+
+      return acc;
+    },
+    []
+  );
 
   return (
     <>
@@ -278,7 +306,7 @@ const Products = () => {
           )} */}
 
           <SelectedProductList
-            products={selectedProducts}
+            products={formatedSecectedProducts}
             onDeleteProductFromOrder={deleteProductFromOrder}
           />
           <Button
@@ -286,7 +314,7 @@ const Products = () => {
             size="large"
             disabled={selectedProducts.length <= 0}
             onClick={() => {
-              addOrder(selectedProducts);
+              addOrder(formatedSecectedProducts);
             }}
           >
             Сформувати замовлення

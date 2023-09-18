@@ -75,10 +75,12 @@ export const AddProductForm = ({
   const sortedMaterials = sortMaterials(materials);
 
   const handleSubmit = (values, { resetForm }) => {
-    onSubmit(values);
-    onClose();
-
-    resetForm();
+    onSubmit(values).then((res) => {
+      if (!res) {
+        onClose();
+        resetForm();
+      }
+    });
   };
 
   const formik = useFormik({
