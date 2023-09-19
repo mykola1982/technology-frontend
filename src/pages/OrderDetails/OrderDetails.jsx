@@ -9,10 +9,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PrintIcon from "@mui/icons-material/Print";
 
 import * as ordersAPI from "services/orders-API";
-import { formatDate } from "utils/formatDate";
-import { formatTime } from "utils/formatTime";
+import { formatDate, formatTime, getTotalWeight } from "utils";
 
-import { MyContainer } from "../../components/MyContainer";
+import { MyContainer } from "components/MyContainer";
 import { Loader } from "components/Loader";
 import { TableProducts } from "components/TableProducts";
 import { TableMaterials } from "components/TableMaterials";
@@ -148,6 +147,9 @@ const OrderDetails = () => {
                   Метаріали що потрібен для виготовлення даних деталей:
                 </Typography>{" "}
                 <TableMaterials data={detailsOrder.materials} />
+                <Typography variant="p" sx={{ fontWeight: 700, mt: 2 }}>
+                  Загальна вага: {getTotalWeight(detailsOrder.materials)} кг
+                </Typography>
               </Box>
             </Box>
           ) : (

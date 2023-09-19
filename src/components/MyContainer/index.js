@@ -1,1 +1,1 @@
-export * from "./MyContainer";
+export * from "./MyContainer.jsx";

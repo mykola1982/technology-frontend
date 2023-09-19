@@ -30,7 +30,9 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
             <TableCell align="center">Вага(кг.)</TableCell>
             <TableCell align="center">Норма(кг.)</TableCell>
             <TableCell align="center">
-              Hoрма(в част. листа/ в част м. п.){" "}
+              Hoрма <br />
+              (в част. листа/
+              <br /> в част м. п.)
             </TableCell>
             <TableCell align="center">Видалити</TableCell>
           </TableRow>
