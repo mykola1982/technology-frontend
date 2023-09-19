@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/technology-frontend/static/css/main.0a6e57fa.css",
-    "main.js": "/technology-frontend/static/js/main.a7a56f36.js",
+    "main.js": "/technology-frontend/static/js/main.c7519c2b.js",
     "static/js/128.302c7c94.chunk.js": "/technology-frontend/static/js/128.302c7c94.chunk.js",
-    "static/js/50.4c901143.chunk.js": "/technology-frontend/static/js/50.4c901143.chunk.js",
+    "static/js/50.69c757f2.chunk.js": "/technology-frontend/static/js/50.69c757f2.chunk.js",
     "static/js/936.62786954.chunk.js": "/technology-frontend/static/js/936.62786954.chunk.js",
-    "static/js/822.9f7e2625.chunk.js": "/technology-frontend/static/js/822.9f7e2625.chunk.js",
-    "static/js/505.1da7505d.chunk.js": "/technology-frontend/static/js/505.1da7505d.chunk.js",
+    "static/js/822.65cd6a60.chunk.js": "/technology-frontend/static/js/822.65cd6a60.chunk.js",
+    "static/js/505.e09da6a8.chunk.js": "/technology-frontend/static/js/505.e09da6a8.chunk.js",
     "static/js/949.16acf413.chunk.js": "/technology-frontend/static/js/949.16acf413.chunk.js",
     "static/js/357.de11ca9b.chunk.js": "/technology-frontend/static/js/357.de11ca9b.chunk.js",
     "static/js/273.6c209e32.chunk.js": "/technology-frontend/static/js/273.6c209e32.chunk.js",
@@ -20,12 +20,12 @@
     "static/media/press-svgrepo-com.svg": "/technology-frontend/static/media/press-svgrepo-com.b03c9718f93ef0ee6035caa2c096d111.svg",
     "index.html": "/technology-frontend/index.html",
     "main.0a6e57fa.css.map": "/technology-frontend/static/css/main.0a6e57fa.css.map",
-    "main.a7a56f36.js.map": "/technology-frontend/static/js/main.a7a56f36.js.map",
+    "main.c7519c2b.js.map": "/technology-frontend/static/js/main.c7519c2b.js.map",
     "128.302c7c94.chunk.js.map": "/technology-frontend/static/js/128.302c7c94.chunk.js.map",
-    "50.4c901143.chunk.js.map": "/technology-frontend/static/js/50.4c901143.chunk.js.map",
+    "50.69c757f2.chunk.js.map": "/technology-frontend/static/js/50.69c757f2.chunk.js.map",
     "936.62786954.chunk.js.map": "/technology-frontend/static/js/936.62786954.chunk.js.map",
-    "822.9f7e2625.chunk.js.map": "/technology-frontend/static/js/822.9f7e2625.chunk.js.map",
-    "505.1da7505d.chunk.js.map": "/technology-frontend/static/js/505.1da7505d.chunk.js.map",
+    "822.65cd6a60.chunk.js.map": "/technology-frontend/static/js/822.65cd6a60.chunk.js.map",
+    "505.e09da6a8.chunk.js.map": "/technology-frontend/static/js/505.e09da6a8.chunk.js.map",
     "949.16acf413.chunk.js.map": "/technology-frontend/static/js/949.16acf413.chunk.js.map",
     "357.de11ca9b.chunk.js.map": "/technology-frontend/static/js/357.de11ca9b.chunk.js.map",
     "273.6c209e32.chunk.js.map": "/technology-frontend/static/js/273.6c209e32.chunk.js.map",
@@ -38,6 +38,6 @@
   },
   "entrypoints": [
     "static/css/main.0a6e57fa.css",
-    "static/js/main.a7a56f36.js"
+    "static/js/main.c7519c2b.js"
   ]
 }
