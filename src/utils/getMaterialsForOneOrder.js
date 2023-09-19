@@ -17,13 +17,25 @@ export function getMaterialsForOneOrder(products) {
 
   //  для кожного унікального значення матеріалу додаємо норму витрати металу при збігу id.
   const materialsForOneOrder = uniqueMaterials.map((material) => {
-    const amountOfMaterial = products.reduce((acc, product) => {
-      if (material._id === product.material._id) {
-        acc = acc + (1 / product.quantity) * product.reserved;
-      }
-      return acc;
-    }, 0);
-    return { ...material, amount: amountOfMaterial.toFixed(3) };
+    let amountOfMaterial = null;
+    if (material.type === "sheet") {
+      amountOfMaterial = products.reduce((acc, product) => {
+        if (material._id === product.material._id) {
+          acc = acc + (1 / product.quantity) * product.reserved;
+        }
+        return acc;
+      }, 0);
+    }
+    if (material.type === "rod") {
+      amountOfMaterial = products.reduce((acc, product) => {
+        if (material._id === product.material._id) {
+          acc = acc + (6 / product.quantity) * product.reserved;
+        }
+        return acc;
+      }, 0);
+    }
+
+    return { ...material, amount: amountOfMaterial?.toFixed(3) };
   });
 
   return materialsForOneOrder;

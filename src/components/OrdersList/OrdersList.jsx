@@ -19,8 +19,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { nanoid } from "nanoid";
 
-import { formatDate } from "utils";
-import { formatTime } from "utils";
+import { formatDate, formatTime, getTotalWeight } from "utils";
 
 import { useAuth } from "hooks";
 
@@ -100,20 +99,67 @@ export const OrdersList = ({
                 </TableCell>
                 <TableCell aling="center" sx={{ verticalAlign: "top" }}>
                   <>
-                    {materials.map(({ sheet, thickness, amount }, index) => {
+                    {materials.map((material, index) => {
+                      const { type, brand, amount, weight } = material;
+
                       return (
                         <Box key={nanoid()} sx={{ mb: 1 }}>
                           <Typography variant="p">
-                            {index + 1}. {thickness}x{sheet}{" "}
-                          </Typography>
-                          <Typography variant="p" sx={{ fontWeight: 500 }}>
-                            - {amount.toFixed(3)} листів.
+                            {index + 1}.
+                            {type === "sheet" && (
+                              <>
+                                {" "}
+                                <Typography component="span">
+                                  {" "}
+                                  Лист {brand}{" "}
+                                  {material.sheetParameters.thickness.toFixed(
+                                    1
+                                  )}
+                                  x{material.sheetParameters.length}x
+                                  {material.sheetParameters.width}
+                                </Typography>{" "}
+                                <Typography
+                                  component="span"
+                                  sx={{ fontWeight: 500 }}
+                                >
+                                  ({weight} кг.)
+                                </Typography>{" "}
+                                <Typography
+                                  component="span"
+                                  sx={{ fontWeight: 500 }}
+                                >
+                                  - {amount.toFixed(3)} листів
+                                </Typography>
+                              </>
+                            )}
+                            {type === "rod" && (
+                              <>
+                                {" "}
+                                <Typography component="span">
+                                  {" "}
+                                  Круг {brand}{" "}
+                                  {material.rodParameters.diameter.toFixed(1)}
+                                </Typography>{" "}
+                                <Typography
+                                  component="span"
+                                  sx={{ fontWeight: 500 }}
+                                >
+                                  ({weight} кг.)
+                                </Typography>{" "}
+                                <Typography
+                                  component="span"
+                                  sx={{ fontWeight: 500 }}
+                                >
+                                  - {amount.toFixed(3)} м.п.
+                                </Typography>
+                              </>
+                            )}
                           </Typography>
                         </Box>
                       );
                     })}
                     <Typography variant="p" sx={{ fontWeight: 700, ml: 2 }}>
-                      Загальна вага: кг
+                      Загальна вага: {getTotalWeight(materials)} кг
                     </Typography>
                   </>
                 </TableCell>

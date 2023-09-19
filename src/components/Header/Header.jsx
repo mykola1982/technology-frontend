@@ -51,18 +51,6 @@ export const Header = () => {
     <AppBar>
       <Container maxWidth="x1">
         <Toolbar disableGutters>
-          <SvgIcon
-            size="medium"
-            sx={{
-              display: { xs: "none", md: "flex" },
-              mr: 1,
-              fontSize: 36,
-              color: "#fff",
-            }}
-          >
-            <PressIcon fontSize="medium" />
-          </SvgIcon>
-
           <Typography
             variant="h5"
             noWrap
@@ -78,6 +66,17 @@ export const Header = () => {
               textDecoration: "none",
             }}
           >
+            <SvgIcon
+              size="medium"
+              sx={{
+                display: { xs: "none", md: "flex" },
+                mr: 1,
+                fontSize: 36,
+                color: "#fff",
+              }}
+            >
+              <PressIcon fontSize="medium" />
+            </SvgIcon>
             TECHNOLOGIST
           </Typography>
 

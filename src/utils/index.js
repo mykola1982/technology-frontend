@@ -13,3 +13,5 @@ export * from "./formatTime";
 export * from "./normalizeProductsForOrder";
 
 export * from "./normalizeMaterialsForOrder";
+
+export * from "./getTotalWeight";

@@ -67,7 +67,7 @@ export const MaterialsList = () => {
               <TableCell align="center">Марка матеріалу</TableCell>
               <TableCell align="center">Cортамент</TableCell>
               <TableCell align="center">Розміри, мм.</TableCell>
-              <TableCell align="center">Вага листа, кг.</TableCell>
+              <TableCell align="center">Вага листа(1 м.п.), кг.</TableCell>
               <TableCell align="center">Редагувати</TableCell>
               <TableCell align="center">Видалити</TableCell>
             </TableRow>

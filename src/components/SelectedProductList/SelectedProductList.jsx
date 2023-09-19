@@ -29,7 +29,9 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
             <TableCell align="center">Матеріал</TableCell>
             <TableCell align="center">Вага(кг.)</TableCell>
             <TableCell align="center">Норма(кг.)</TableCell>
-            <TableCell align="center">Hoрма(в част. листа) </TableCell>
+            <TableCell align="center">
+              Hoрма(в част. листа/ в част м. п.){" "}
+            </TableCell>
             <TableCell align="center">Видалити</TableCell>
           </TableRow>
         </TableHead>
@@ -86,9 +88,19 @@ export const SelectedProductList = ({ products, onDeleteProductFromOrder }) => {
                 <TableCell align="center">
                   {getMetalConsumption(material, quantity)}
                 </TableCell>
-                <TableCell align="center">
-                  {(1 / product.quantity).toFixed(5)}
-                </TableCell>
+
+                {material?.type === "sheet" && (
+                  <TableCell align="center">
+                    {(1 / product.quantity).toFixed(4)}
+                  </TableCell>
+                )}
+
+                {material?.type === "rod" && (
+                  <TableCell align="center">
+                    {(6 / product.quantity).toFixed(4)}
+                  </TableCell>
+                )}
+
                 <TableCell align="center">
                   <IconButton
                     aria-label="delete"

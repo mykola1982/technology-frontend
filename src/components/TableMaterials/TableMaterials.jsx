@@ -1,12 +1,17 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+} from "@mui/material";
+
+import { tableCellClasses } from "@mui/material/TableCell";
 
 import { nanoid } from "nanoid";
 
@@ -63,8 +68,29 @@ export const TableMaterials = ({ data }) => {
               >
                 {index + 1}
               </StyledTableCell>
+
               <StyledTableCell align="left" sx={{ p: 1 }}>
-                {el.thickness}x{el.sheet}
+                {el.type === "sheet" && (
+                  <>
+                    <Typography component="span">
+                      Лист {el.brand} {el.sheetParameters.thickness.toFixed(1)}x
+                      {el.sheetParameters.length}x{el.sheetParameters.width}
+                    </Typography>{" "}
+                    <Typography component="span" sx={{ fontWeight: 500 }}>
+                      ({el.weight} кг.)
+                    </Typography>
+                  </>
+                )}
+                {el.type === "rod" && (
+                  <>
+                    <Typography component="span">
+                      Круг {el.brand} {el.rodParameters.diameter.toFixed(1)}
+                    </Typography>{" "}
+                    <Typography component="span" sx={{ fontWeight: 500 }}>
+                      ({el.weight} кг.)
+                    </Typography>
+                  </>
+                )}
               </StyledTableCell>
               <StyledTableCell align="center" sx={{ p: 1 }}>
                 {Math.ceil(el.amount)}({el.amount.toFixed(2)})

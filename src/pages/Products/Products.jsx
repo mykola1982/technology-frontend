@@ -185,7 +185,7 @@ const Products = () => {
 
   const addOrder = async (products) => {
     const materialsForOneOrder = getMaterialsForOneOrder(products);
-    console.log("materialsForOneOrder", materialsForOneOrder);
+
     const newOrder = {
       user: user.name,
       products: normalizeProductsForOrder(products),
