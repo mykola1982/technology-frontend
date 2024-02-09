@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { nanoid } from "nanoid";
 
-import { Box, Button, Typography, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  CircularProgress,
+  TextField,
+  MenuItem,
+} from "@mui/material";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import * as productsAPI from "services/products-API";
@@ -23,6 +31,8 @@ import { FormQuantityProduct } from "components/FormQuantityProduct";
 import { ModalSmall } from "components/ModalSmall";
 
 import { useAuth } from "hooks";
+
+import { typeProduct } from "data/typeProduct";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -248,8 +258,29 @@ const Products = () => {
               width: "300px",
             }}
           >
-            Добавити деталь
+            Створити деталь
           </Button>
+
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<PostAddIcon />}
+            sx={{ width: "300px" }}
+          >
+            Створити виріб
+          </Button>
+          <TextField
+            select
+            size="small"
+            label="Сортування"
+            sx={{ width: "300px" }}
+          >
+            {typeProduct.map(({ label, value }) => (
+              <MenuItem key={nanoid()} value={value}>
+                {label}
+              </MenuItem>
+            ))}
+          </TextField>
 
           <Filter value={filter} onChange={handleChangeFilter} />
           <Typography

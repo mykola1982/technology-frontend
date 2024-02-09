@@ -9,6 +9,7 @@ export const Filter = ({ value, onChange }) => {
         type="search"
         variant="outlined"
         name="filter"
+        size="small"
         sx={{
           width: "300px",
         }}
