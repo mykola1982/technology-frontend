@@ -23,6 +23,7 @@ import {
 
 import { MyContainer } from "components/MyContainer";
 import { AddProductForm } from "components/AddProductForm";
+import { AddComponentForm } from "components/AddComponentForm";
 import { Filter } from "components/Filter";
 import { ProductsList } from "components/ProductsList";
 import { SelectedProductList } from "components/SelectedProductList";
@@ -55,19 +56,31 @@ const Products = () => {
 
   const [selectedOneProduct, setSelectedOneProduct] = useState(null);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModalСreateProduct, setShowModalCreateProduct] = useState(false);
+  const [showModalCreateComponent, setShowModalCreateComponent] =
+    useState(false);
   const [showModalFormQuantity, setShowModalFormQuantity] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const openModal = () => {
-    setShowModal(true);
+  // можливо написати функцію яка буде працювати на відкриття і закриття модалок
+
+  const openModalCreateProduct = () => {
+    setShowModalCreateProduct(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeModalCreateProduct = () => {
+    setShowModalCreateProduct(false);
+  };
+
+  const openModalCreateComponent = () => {
+    setShowModalCreateComponent(true);
+  };
+
+  const closeModalCreateComponent = () => {
+    setShowModalCreateComponent(false);
   };
 
   const openModalFormQuantity = () => {
@@ -253,7 +266,7 @@ const Products = () => {
             variant="contained"
             size="large"
             startIcon={<PostAddIcon />}
-            onClick={openModal}
+            onClick={openModalCreateProduct}
             sx={{
               width: "300px",
             }}
@@ -265,6 +278,7 @@ const Products = () => {
             variant="contained"
             size="large"
             startIcon={<PostAddIcon />}
+            onClick={openModalCreateComponent}
             sx={{ width: "300px" }}
           >
             Створити виріб
@@ -353,8 +367,19 @@ const Products = () => {
         </Box>
       </MyContainer>
 
-      <ModalBig open={showModal} onClose={closeModal}>
-        <AddProductForm onSubmit={addProduct} onClose={closeModal} />
+      <ModalBig open={showModalСreateProduct} onClose={closeModalCreateProduct}>
+        <AddProductForm
+          onSubmit={addProduct}
+          onClose={closeModalCreateProduct}
+        />
+      </ModalBig>
+
+      <ModalBig
+        open={showModalCreateComponent}
+        onClose={closeModalCreateComponent}
+      >
+        {" "}
+        <AddComponentForm />
       </ModalBig>
 
       <ModalSmall open={showModalFormQuantity} onClose={closeModalFormQuantity}>
