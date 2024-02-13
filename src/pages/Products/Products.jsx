@@ -378,8 +378,7 @@ const Products = () => {
         open={showModalCreateComponent}
         onClose={closeModalCreateComponent}
       >
-        {" "}
-        <AddComponentForm />
+        <AddComponentForm onClose={closeModalCreateComponent} />
       </ModalBig>
 
       <ModalSmall open={showModalFormQuantity} onClose={closeModalFormQuantity}>
