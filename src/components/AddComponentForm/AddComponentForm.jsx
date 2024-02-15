@@ -5,7 +5,13 @@ import * as yup from "yup";
 
 import { useFormik } from "formik";
 
-import { FormControl, Button, TextField, Formlabel } from "@mui/material";
+import {
+  FormControl,
+  Button,
+  TextField,
+  Formlabel,
+  IconButton,
+} from "@mui/material";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
@@ -20,7 +26,22 @@ const initialValues = {
 };
 
 export const AddComponentForm = ({ onClose }) => {
-  const [counterProducts, setCounterProducts] = useState(1);
+  const [inputFields, setInputFields] = useState([{}]);
+
+  const handleAddInput = () => {
+    setInputFields([...inputFields, {}]);
+    // console.log(inputFields);
+  };
+
+  const handleDeleteInput = (index) => {
+    console.log("index", index);
+
+    const newInputFields = [...inputFields];
+
+    newInputFields.splice(index, 1);
+
+    setInputFields(newInputFields);
+  };
 
   const handleSubmit = (values, { resetForm }) => {
     console.log("клацнув на відправку форми");
@@ -73,31 +94,26 @@ export const AddComponentForm = ({ onClose }) => {
         error={formik.touched.number && Boolean(formik.errors.number)}
         helperText={formik.touched.number && formik.errors.number}
       />
-      <div>
-        <TextField select size="small" /> <TextField type="number" />
-        <Button
-          type="button"
-          variant="contained"
-          size="small"
-          startIcon={<RemoveCircleOutlineIcon />}
-          onClick={() => {
-            setCounterProducts(
-              (prevCounterProducts) => prevCounterProducts - 1
-            );
-            console.log(counterProducts);
-          }}
-        />
-      </div>
+      {inputFields.map((input, index) => (
+        <div key={index}>
+          <span>Деталь {index + 1}</span>
+          <TextField select size="small" /> <TextField type="number" />
+          <Button
+            type="button"
+            variant="contained"
+            size="small"
+            startIcon={<RemoveCircleOutlineIcon />}
+            onClick={() => handleDeleteInput(index)}
+          />
+        </div>
+      ))}
 
       <Button
         type="button"
         variant="contained"
         size="small"
         startIcon={<PostAddIcon />}
-        onClick={() => {
-          setCounterProducts((prevCounterProducts) => prevCounterProducts + 1);
-          console.log(counterProducts);
-        }}
+        onClick={handleAddInput}
       />
       <Button
         type="submit"
