@@ -11,6 +11,7 @@ export const fetchMaterials = createAsyncThunk(
       const { data } = await materialsAPI.featchAllMaterialsAPI();
       return data;
     } catch (error) {
+      toast.error("Щось пішло не так... Спробуйте перезавантажити сторінку");
       return thunkAPI.rejectWithValue(error.message);
     }
   }

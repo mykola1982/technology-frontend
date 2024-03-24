@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
@@ -12,6 +13,8 @@ import {
   MenuItem,
 } from "@mui/material";
 import PostAddIcon from "@mui/icons-material/PostAdd";
+
+import { selectProducts } from "redux/products/productsSelector";
 
 import * as productsAPI from "services/products-API";
 import * as ordersAPI from "services/orders-API";
@@ -36,10 +39,14 @@ import { useAuth } from "hooks";
 import { typeProduct } from "data/typeProduct";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const products = useSelector(selectProducts);
+
+  console.log("productsFromRedux:", products);
 
   // const [isLoadingAddOrder, setIsLoadingAddOrder] = useState(true);
 
@@ -89,22 +96,24 @@ const Products = () => {
   const closeModalFormQuantity = () => {
     setShowModalFormQuantity(false);
   };
+  // завантаження всіх продуктів без редакс ----------------
+  // useEffect(() => {
+  //   async function getAllProducts() {
+  //     try {
+  //       setIsLoading(true);
+  //       const { data } = await productsAPI.fetchAllProductsAPI();
 
-  useEffect(() => {
-    async function getAllProducts() {
-      try {
-        setIsLoading(true);
-        const { data } = await productsAPI.fetchAllProductsAPI();
+  //       setProducts(data);
+  //     } catch (error) {
+  //       toast.error(`Щось пішло не так. Спробуй знову...`);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   getAllProducts();
+  // }, []);
 
-        setProducts(data);
-      } catch (error) {
-        toast.error(`Щось пішло не так. Спробуй знову...`);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    getAllProducts();
-  }, []);
+  // завантаження всіх продуктів без редакс ----------------
 
   useEffect(() => {
     const selectedProductToLocal = selectedProducts.map(

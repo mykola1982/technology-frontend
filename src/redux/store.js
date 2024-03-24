@@ -14,6 +14,7 @@ import {
 
 import { authReducer } from "./auth/authSlice";
 import { materialsReducer } from "./materials/materialsSlice";
+import { productsReducer } from "./products/productsSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -32,6 +33,7 @@ export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
     materials: materialsReducer,
+    products: productsReducer,
   },
   middleware,
 });

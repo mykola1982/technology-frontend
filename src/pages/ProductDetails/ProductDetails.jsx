@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
+
+import { useSelector, useDispatch } from "react-redux";
+
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
+
+import { fetchProduct } from "../../redux/products/productsOperation";
 
 import { Box, Typography, Button } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -9,6 +14,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import * as productsAPI from "services/products-API";
+
+import { selectProduct } from "redux/products/productsSelector";
 
 import { MyContainer } from "components/MyContainer";
 import { AddProductForm } from "components/AddProductForm";
@@ -25,7 +32,10 @@ const ProductDetails = () => {
 
   const { productId } = useParams();
 
-  const [detailsProduct, setDetailsProduct] = useState(null);
+  const dispatch = useDispatch();
+
+  // const [detailsProduct, setDetailsProduct] = useState(null);
+  const detailsProduct = useSelector(selectProduct);
   const [isloading, setIsLoading] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -46,20 +56,25 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    async function getProduct() {
-      try {
-        setIsLoading(true);
-        const response = await productsAPI.fetchProductAPI(productId);
-        setDetailsProduct(response.data);
-      } catch (error) {
-        toast.error(`Щось пішло не так. Спробуй знову...`);
-        setIsLoading(false);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    getProduct();
+    console.log(productId);
+    dispatch(fetchProduct(productId));
   }, [productId]);
+
+  // useEffect(() => {
+  //   async function getProduct() {
+  //     try {
+  //       setIsLoading(true);
+  //       const response = await productsAPI.fetchProductAPI(productId);
+  //       setDetailsProduct(response.data);
+  //     } catch (error) {
+  //       toast.error(`Щось пішло не так. Спробуй знову...`);
+  //       setIsLoading(false);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   getProduct();
+  // }, [productId]);
 
   const deleteProduct = async (id) => {
     try {

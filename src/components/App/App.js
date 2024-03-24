@@ -13,6 +13,7 @@ import { PrivateRoute } from "../../utils/Routes/PrivateRoute";
 import { useAuth } from "../../hooks";
 import { refreshUser } from "../../redux/auth/authOperation";
 import { fetchMaterials } from "../../redux/materials/materialsOperation";
+import { fetchAllProducts } from "../../redux/products/productsOperation";
 
 import { Loader } from "../Loader/Loader";
 
@@ -37,6 +38,7 @@ function App() {
     dispatch(refreshUser()).then((res) => {
       if (!res.error) {
         dispatch(fetchMaterials());
+        dispatch(fetchAllProducts());
       }
     });
   }, [dispatch, token]);
